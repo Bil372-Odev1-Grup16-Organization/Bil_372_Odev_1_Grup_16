@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 08 Kas 2020, 21:18:24
+-- Üretim Zamanı: 09 Kas 2020, 21:56:29
 -- Sunucu sürümü: 10.4.14-MariaDB
 -- PHP Sürümü: 7.4.11
 
@@ -62,6 +62,13 @@ CREATE TABLE `country` (
   `Country_Name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Tablo döküm verisi `country`
+--
+
+INSERT INTO `country` (`COUNTRY_CODE`, `Country_Name`) VALUES
+('TUR', 'Turkiye');
+
 -- --------------------------------------------------------
 
 --
@@ -73,6 +80,13 @@ CREATE TABLE `country_city` (
   `CITY_NAME` varchar(100) NOT NULL,
   `COUNTRY_CODE` char(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Tablo döküm verisi `country_city`
+--
+
+INSERT INTO `country_city` (`CITY_ID`, `CITY_NAME`, `COUNTRY_CODE`) VALUES
+(1, 'Ankara', 'TUR');
 
 -- --------------------------------------------------------
 
@@ -124,13 +138,24 @@ CREATE TABLE `manufacturers` (
 CREATE TABLE `organisations` (
   `ORG_ID` int(11) NOT NULL,
   `ORG_NAME` varchar(100) NOT NULL,
-  `PARENT_ORG` int(11) DEFAULT NULL,
+  `PARENT_ORG` int(11) NOT NULL,
   `ORG_ABSTRACT` tinyint(1) NOT NULL,
   `ORG_ADDRESS` varchar(200) NOT NULL,
   `ORG_CITY` int(11) NOT NULL,
   `ORG_DISTRICT` varchar(50) DEFAULT NULL,
   `ORG_TYPE` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Tablo döküm verisi `organisations`
+--
+
+INSERT INTO `organisations` (`ORG_ID`, `ORG_NAME`, `PARENT_ORG`, `ORG_ABSTRACT`, `ORG_ADDRESS`, `ORG_CITY`, `ORG_DISTRICT`, `ORG_TYPE`) VALUES
+(1, 'Kocalar A.S', 0, 1, 'aaa', 1, NULL, 1),
+(2, 'Hasanlar', 1, 1, 'ddfsfdsf', 1, NULL, 2),
+(4, 'Babalar', 0, 1, 'adfaf', 1, NULL, 2),
+(5, 'Hasanlar', 4, 0, 'sadfaf', 1, NULL, 1),
+(7, 'Karahan', 4, 1, 'Yenimahalle', 1, '', 1);
 
 -- --------------------------------------------------------
 
@@ -147,6 +172,14 @@ CREATE TABLE `org_owner` (
   `FAX` varchar(50) NOT NULL,
   `ADRESS` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Tablo döküm verisi `org_owner`
+--
+
+INSERT INTO `org_owner` (`ORG_NAME`, `NAME`, `SURNAME`, `EMAIL`, `PHONE`, `FAX`, `ADRESS`) VALUES
+('FAS', 'FASD', 'ASF', 'SADFA', 'SDFS', 'DFASDF', 'DSAF'),
+('Karahan', 'Ahmet', 'Polat', 'apolat@gmail.com', '888 888 8888', '22 222 222 2222', 'Yenimahalle');
 
 -- --------------------------------------------------------
 
@@ -199,6 +232,7 @@ CREATE TABLE `product_features` (
 
 CREATE TABLE `users` (
   `USER_ID` int(11) NOT NULL,
+  `NAME` varchar(60) DEFAULT NULL,
   `PASSWORD` varchar(50) NOT NULL,
   `USERNAME` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -207,8 +241,9 @@ CREATE TABLE `users` (
 -- Tablo döküm verisi `users`
 --
 
-INSERT INTO `users` (`USER_ID`, `PASSWORD`, `USERNAME`) VALUES
-(1, 'admin', 'admin');
+INSERT INTO `users` (`USER_ID`, `NAME`, `PASSWORD`, `USERNAME`) VALUES
+(1, 'Admin', 'admin', 'admin'),
+(4, 'Ahmet Polat', '1234', 'dsaffs');
 
 --
 -- Dökümü yapılmış tablolar için indeksler
@@ -271,13 +306,14 @@ ALTER TABLE `manufacturers`
 --
 ALTER TABLE `organisations`
   ADD PRIMARY KEY (`ORG_ID`),
+  ADD UNIQUE KEY `ORG_NAME` (`ORG_NAME`,`PARENT_ORG`),
   ADD KEY `ORG_CITY` (`ORG_CITY`);
 
 --
 -- Tablo için indeksler `org_owner`
 --
 ALTER TABLE `org_owner`
-  ADD PRIMARY KEY (`ORG_NAME`);
+  ADD PRIMARY KEY (`ORG_NAME`,`NAME`,`SURNAME`,`EMAIL`,`PHONE`,`FAX`,`ADRESS`);
 
 --
 -- Tablo için indeksler `product`
@@ -305,7 +341,8 @@ ALTER TABLE `product_features`
 -- Tablo için indeksler `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`USER_ID`);
+  ADD PRIMARY KEY (`USER_ID`),
+  ADD UNIQUE KEY `USERNAME` (`USERNAME`);
 
 --
 -- Dökümü yapılmış tablolar için AUTO_INCREMENT değeri
@@ -321,7 +358,7 @@ ALTER TABLE `brand_orgs`
 -- Tablo için AUTO_INCREMENT değeri `country_city`
 --
 ALTER TABLE `country_city`
-  MODIFY `CITY_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `CITY_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `features`
@@ -339,7 +376,7 @@ ALTER TABLE `manufacturers`
 -- Tablo için AUTO_INCREMENT değeri `organisations`
 --
 ALTER TABLE `organisations`
-  MODIFY `ORG_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ORG_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `product`
@@ -351,7 +388,7 @@ ALTER TABLE `product`
 -- Tablo için AUTO_INCREMENT değeri `users`
 --
 ALTER TABLE `users`
-  MODIFY `USER_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `USER_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Dökümü yapılmış tablolar için kısıtlamalar

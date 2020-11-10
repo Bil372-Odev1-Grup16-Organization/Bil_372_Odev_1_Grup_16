@@ -1,4 +1,5 @@
 <?php
+//city dropdown olarak verilecek
 include("connect.php");
 $error="";
 $isOkay=FALSE;
@@ -11,9 +12,11 @@ if(isset($_POST['submit'])) {
     $fax = mysqli_real_escape_string($conn,$_POST['fax']); 
     $adress = mysqli_real_escape_string($conn,$_POST['adress']);
     $cityName = mysqli_real_escape_string($conn,$_POST['city']);
+
     $sql="SELECT CITY_ID FROM COUNTRY_CITY WHERE CITY_NAME = \"$cityName\"";
     $result = mysqli_query($conn,$sql);
     $row =mysqli_fetch_assoc($result);
+    
     $city= $row["CITY_ID"];
 
 
@@ -95,13 +98,14 @@ if(isset($_POST['submit'])) {
     $sql = "INSERT INTO USERS (NAME,PASSWORD,USERNAME) VALUES ('$name $surname','$password','$username')";
     if (!mysqli_query($conn, $sql)){
         if(strpos(mysqli_error($conn), "Duplicate") !== false){
-            $error .= "This username aldrady exists" . "<br>";
+            $error .= "This username already exists" . "<br>";
         }   
         else{
             echo "Error: "  . mysqli_error($conn); 
         }         
     } 
-}     
+    header("location: logins.php");
+    }     
 
 }
 
@@ -178,8 +182,15 @@ if(isset($_POST['submit'])) {
             <input type="text" class="form-control" name="adress" placeholder="Adress" required="required" >
         </div>
         
-        <div class="form-group">
-            <input type="text" class="form-control" name="city" placeholder="City" required="required" >
+        <div class="form-group">       
+            <select class="form-control" name="city"  required="required" >
+                <option value="" disabled selected>City</option>
+                <?php  $sql = "SELECT CITY_NAME FROM COUNTRY_CITY";
+                       $result = mysqli_query($conn,$sql);  
+                       while($row = mysqli_fetch_assoc($result)) {        ?>
+                            <option><?php echo $row["CITY_NAME"] ;  ?></option>
+                        <?php   }           ?>      
+            </select>
         </div>
         <div class="form-group">
             <input type="text" class="form-control" name="district" placeholder="District" >
@@ -203,7 +214,7 @@ if(isset($_POST['submit'])) {
                        while($row = mysqli_fetch_assoc($result)) {
                         $a= $row["ORG_ID"];
                         if($row["PARENT_ORG"]== 0){ ?>
-                            <option><?php echo $row["ORG_NAME"]. "--" ."NONE" ;  ?></option> })
+                            <option><?php echo $row["ORG_NAME"]. "--" ."NONE" ;  ?></option> 
                         <?php }    
                         $sql2="SELECT ORG_NAME FROM ORGANISATIONS WHERE PARENT_ORG = $a ";
                         $result2 = mysqli_query($conn,$sql2);

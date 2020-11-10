@@ -1,12 +1,17 @@
 <?php
    include("connect.php");
+   session_start();
    
    $error="";
    if(isset($_POST['submit'])) {
       
       
       $username = mysqli_real_escape_string($conn,$_POST['username']);
-      $password = mysqli_real_escape_string($conn,$_POST['password']); 
+      $password = mysqli_real_escape_string($conn,$_POST['password']);
+      $sql = "SELECT NAME FROM USERS WHERE USERNAME = '$username' and PASSWORD = '$password'";
+      $result = mysqli_query($conn,$sql);
+      $row =mysqli_fetch_assoc($result);
+      $name= $row["NAME"];
       
       $sql = "SELECT * FROM USERS WHERE USERNAME = '$username' and PASSWORD = '$password'";
       $result = mysqli_query($conn,$sql);
@@ -17,8 +22,8 @@
       
 		
       if($count == 1) {    
-         
-         header("location: welcome.php");
+        $_SESSION['NAME'] = $name;
+         header("location: index.php");
       }else {
          $error = "USERNAME OR PASSWORD IS INVALID";
          

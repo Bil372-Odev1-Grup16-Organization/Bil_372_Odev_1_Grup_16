@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 09 Kas 2020, 21:56:29
+-- Üretim Zamanı: 10 Kas 2020, 21:25:20
 -- Sunucu sürümü: 10.4.14-MariaDB
 -- PHP Sürümü: 7.4.11
 
@@ -155,7 +155,8 @@ INSERT INTO `organisations` (`ORG_ID`, `ORG_NAME`, `PARENT_ORG`, `ORG_ABSTRACT`,
 (2, 'Hasanlar', 1, 1, 'ddfsfdsf', 1, NULL, 2),
 (4, 'Babalar', 0, 1, 'adfaf', 1, NULL, 2),
 (5, 'Hasanlar', 4, 0, 'sadfaf', 1, NULL, 1),
-(7, 'Karahan', 4, 1, 'Yenimahalle', 1, '', 1);
+(7, 'Karahan', 4, 1, 'Yenimahalle', 1, '', 1),
+(21, 'Deneme', 0, 0, 'Yenimahalle', 1, '', 0);
 
 -- --------------------------------------------------------
 
@@ -178,6 +179,7 @@ CREATE TABLE `org_owner` (
 --
 
 INSERT INTO `org_owner` (`ORG_NAME`, `NAME`, `SURNAME`, `EMAIL`, `PHONE`, `FAX`, `ADRESS`) VALUES
+('Deneme', 'Deneme', 'Uye', 'duye@gmail.com', '888 888 8888', '22 222 222 2222', 'Yenimahalle'),
 ('FAS', 'FASD', 'ASF', 'SADFA', 'SDFS', 'DFASDF', 'DSAF'),
 ('Karahan', 'Ahmet', 'Polat', 'apolat@gmail.com', '888 888 8888', '22 222 222 2222', 'Yenimahalle');
 
@@ -197,6 +199,13 @@ CREATE TABLE `product` (
   `M_CATEGORY` varchar(12) NOT NULL,
   `IS_ACTIVE` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Tablo döküm verisi `product`
+--
+
+INSERT INTO `product` (`M_SYSCODE`, `M_CODE`, `M_NAME`, `M_SHORTNAME`, `M_PARENTCODE`, `M_ABSTRACT`, `M_CATEGORY`, `IS_ACTIVE`) VALUES
+(1, '1', '', 'short', '2', 1, 'Deterjan', 1);
 
 -- --------------------------------------------------------
 
@@ -243,7 +252,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`USER_ID`, `NAME`, `PASSWORD`, `USERNAME`) VALUES
 (1, 'Admin', 'admin', 'admin'),
-(4, 'Ahmet Polat', '1234', 'dsaffs');
+(21, 'Deneme Uye', 'deneme', 'deneme');
 
 --
 -- Dökümü yapılmış tablolar için indeksler
@@ -275,6 +284,7 @@ ALTER TABLE `country`
 --
 ALTER TABLE `country_city`
   ADD PRIMARY KEY (`CITY_ID`),
+  ADD UNIQUE KEY `CITY_NAME` (`CITY_NAME`),
   ADD KEY `COUNTRY_CODE` (`COUNTRY_CODE`);
 
 --
@@ -376,19 +386,19 @@ ALTER TABLE `manufacturers`
 -- Tablo için AUTO_INCREMENT değeri `organisations`
 --
 ALTER TABLE `organisations`
-  MODIFY `ORG_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `ORG_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `product`
 --
 ALTER TABLE `product`
-  MODIFY `M_SYSCODE` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `M_SYSCODE` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `users`
 --
 ALTER TABLE `users`
-  MODIFY `USER_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `USER_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Dökümü yapılmış tablolar için kısıtlamalar

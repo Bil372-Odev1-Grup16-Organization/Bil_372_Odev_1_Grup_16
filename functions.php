@@ -26,7 +26,8 @@ echo <<<EOT
     	<div>
     		<h1>Add the project name here</h1>
             <a href="index.php"><i class="fas fa-home"></i>Home</a>
-    		<a href="read.php"><i class="fas fa-toolbox"></i>Products</a>
+    		<a href="read_product.php"><i class="fas fa-toolbox"></i>Products</a>
+		<a href="read_feature.php"><i class="fas fa-toolbox"></i>Features</a>
     	</div>
     </nav>
 EOT;

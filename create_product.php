@@ -27,7 +27,7 @@ if (!empty($_POST)) {
 <?=template_header('Create')?>
 
 <div class="content update">
-	<h2>Create Contact</h2>
+	<h2>Create Product</h2>
     <form action="create_product.php" method="post">
         <!-- <label for="M_SYSCODE">SYSCODE</label> -->
         <label for="M_CODE">Code</label>

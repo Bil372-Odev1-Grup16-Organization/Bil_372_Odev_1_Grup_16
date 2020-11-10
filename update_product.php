@@ -2,10 +2,8 @@
 include 'functions.php';
 $pdo = pdo_connect_mysql();
 $msg = '';
-// Check if the contact id exists, for example update.php?id=1 will get the contact with the id of 1
 if (isset($_GET['M_SYSCODE'])) {
     if (!empty($_POST)) {
-        // This part is similar to the create.php, but instead we update a record and not insert
         $syscode = isset($_POST['M_SYSCODE']) ? $_POST['M_SYSCODE'] : NULL;
         $code = isset($_POST['M_CODE']) ? $_POST['M_CODE'] : '';
         $name = isset($_POST['M_NAME']) ? $_POST['M_NAME'] : '';
@@ -19,7 +17,6 @@ if (isset($_GET['M_SYSCODE'])) {
         $stmt->execute([$syscode, $code, $name, $shortname, $parentcode, $abstract, $category, $created, $_GET['M_SYSCODE']]);
         $msg = 'Updated Successfully!';
     }
-    // Get the contact from the contacts table
     $stmt = $pdo->prepare('SELECT * FROM PRODUCT WHERE M_SYSCODE = ?');
     $stmt->execute([$_GET['M_SYSCODE']]);
     $contact = $stmt->fetch(PDO::FETCH_ASSOC);

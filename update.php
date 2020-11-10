@@ -20,7 +20,7 @@ if (isset($_GET['id'])) {
         $msg = 'Updated Successfully!';
     }
     // Get the contact from the contacts table
-    $stmt = $pdo->prepare('SELECT * FROM contacts WHERE id = ?');
+    $stmt = $pdo->prepare('SELECT * FROM PRODUCT WHERE id = ?');
     $stmt->execute([$_GET['id']]);
     $contact = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$contact) {

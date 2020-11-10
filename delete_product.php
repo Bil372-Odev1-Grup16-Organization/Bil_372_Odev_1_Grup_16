@@ -2,24 +2,24 @@
 include 'functions.php';
 $pdo = pdo_connect_mysql();
 $msg = '';
-// Check that the contact ID exists
+
+//check if the given item with the primary key exists 
 if (isset($_GET['M_SYSCODE'])) {
-    // Select the record that is going to be deleted
+
     $stmt = $pdo->prepare('SELECT * FROM PRODUCT WHERE M_SYSCODE = ?');
     $stmt->execute([$_GET['M_SYSCODE']]);
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$product) {
         exit('Product doesn\'t exist with that primary key!');
     }
-    // Make sure the user confirms beore deletion
+   
+    //Asking the users second time if they really want to delete the item
     if (isset($_GET['confirm'])) {
         if ($_GET['confirm'] == 'yes') {
-            // User clicked the "Yes" button, delete record
             $stmt = $pdo->prepare('DELETE FROM PRODUCT WHERE M_SYSCODE = ?');
             $stmt->execute([$_GET['M_SYSCODE']]);
             $msg = 'You have deleted the selecteed product!';
         } else {
-            // User clicked the "No" button, redirect them back to the read page
             header('Location: read_product.php');
             exit;
         }

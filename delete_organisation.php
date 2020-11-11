@@ -41,7 +41,7 @@ if (isset($_GET['ORG_ID'])) {
 	<p>Are you sure you want to delete the selected organisation #<?=$organisation['ORG_ID']?>?</p>
     <div class="yesno">
         <a href="delete_organisation.php?ORG_ID=<?=$organisation['ORG_ID']?>&confirm=yes">Yes</a>
-        <a href="delete_product.php?ORG_ID=<?=$organisation['ORG_ID']?>&confirm=no">No</a>
+        <a href="delete_organisation.php?ORG_ID=<?=$organisation['ORG_ID']?>&confirm=no">No</a>
     </div>
     <?php endif; ?>
 </div>

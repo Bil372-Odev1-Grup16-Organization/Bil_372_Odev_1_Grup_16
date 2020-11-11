@@ -11,7 +11,6 @@ $stmt->bindValue(':record_per_page', $records_per_page, PDO::PARAM_INT);
 $stmt->execute();
 $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
 ?>
 
 <?=template_header('Read')?>
@@ -24,19 +23,17 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <tr>
                 <td>#</td>
                 <td>FEATURE_NAME</td>
-
                 <td></td>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($product as $product): ?>
+            <?php foreach ($product as $contact): ?>
             <tr>
-                <td><?=$product['FEATURE_ID']?></td>
-                <td><?=$product['FEATURE_NAME']?></td>
-
+                <td><?=$contact['FEATURE_ID']?></td>
+                <td><?=$contact['FEATURE_NAME']?></td>
                 <td class="actions">
-                    <a href="update_feature.php?FEATURE_ID=<?=$product['FEATURE_ID']?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
-                    <a href="delete_feature.php?FEATURE_ID=<?=$product['FEATURE_ID']?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
+                    <a href="update_feature.php?FEATURE_ID=<?=$contact['FEATURE_ID']?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="delete_feature.php?FEATURE_ID=<?=$contact['FEATURE_ID']?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -46,7 +43,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		<?php if ($page > 1): ?>
 		<a href="read_feature.php?page=<?=$page-1?>"><i class="fas fa-angle-double-left fa-sm"></i></a>
 		<?php endif; ?>
-		<?php if ($page*$records_per_page < $num_products): ?>
+		<?php if ($page*$records_per_page < $num_contacts): ?>
 		<a href="read_feature.php?page=<?=$page+1?>"><i class="fas fa-angle-double-right fa-sm"></i></a>
 		<?php endif; ?>
 	</div>

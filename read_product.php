@@ -44,7 +44,6 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?=$contact['M_ABSTRACT']?></td>
                 <td><?=$contact['M_CATEGORY']?></td>
                 <td><?=$contact['IS_ACTIVE']?></td>
-                <td><?=$contact['created']?></td>
                 <td class="actions">
                     <a href="update_product.php?M_SYSCODE=<?=$contact['M_SYSCODE']?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
                     <a href="delete_product.php?M_SYSCODE=<?=$contact['M_SYSCODE']?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
@@ -57,9 +56,8 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		<?php if ($page > 1): ?>
 		<a href="read_product.php?page=<?=$page-1?>"><i class="fas fa-angle-double-left fa-sm"></i></a>
 		<?php endif; ?>
-		<?php if ($page*$records_per_page < $num_contacts): ?>
 		<a href="read_product.php?page=<?=$page+1?>"><i class="fas fa-angle-double-right fa-sm"></i></a>
-		<?php endif; ?>
+		
 	</div>
 </div>
 

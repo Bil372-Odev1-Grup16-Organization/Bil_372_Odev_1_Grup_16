@@ -49,9 +49,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		<?php if ($page > 1): ?>
 		<a href="read_manufacturers.php?page=<?=$page-1?>"><i class="fas fa-angle-double-left fa-sm"></i></a>
 		<?php endif; ?>
-		<?php if ($page*$records_per_page < $num_contacts): ?>
-		<a href="read_manufacturers.php?page=<?=$page+1?>"><i class="fas fa-angle-double-right fa-sm"></i></a>
-		<?php endif; ?>
+		<a href="read_manufacturers.php?page=<?=$page+1?>"><i class="fas fa-angle-double-right fa-sm"></i></a>		
 	</div>
 </div>
 

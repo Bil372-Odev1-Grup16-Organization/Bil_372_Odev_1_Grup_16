@@ -22,7 +22,7 @@ if (!empty($_POST)) {
 <?=template_header('Create')?>
 
 <div class="content update">
-	<h2>Create Product</h2>
+	<h2>Add Manufacturer</h2>
     <form action="create_manufacturers.php" method="post">
         <label for="MANUFACTURER_ID">ID</label>
         <label for="MANUFACTURER_NAME">Name</label>

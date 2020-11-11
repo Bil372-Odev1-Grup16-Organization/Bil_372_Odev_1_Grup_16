@@ -17,7 +17,7 @@ if (isset($_GET['FEATURE_ID'])) {
         if ($_GET['confirm'] == 'yes') {
             $stmt = $pdo->prepare('DELETE FROM FEATURES WHERE FEATURE_ID = ?');
             $stmt->execute([$_GET['FEATURE_ID']]);
-            $msg = 'You have deleted the selecteed product!';
+            $msg = 'You have deleted the selecteed feature!';
         } else {
             header('Location: read_feature.php');
             exit;

@@ -19,21 +19,15 @@ if (isset($_GET['M_SYSCODE'])) {
             //$stmt = $pdo->prepare('DELETE FROM PRODUCT WHERE M_SYSCODE = ?');
             //$stmt->execute([$_GET['M_SYSCODE']]);          
                 if($_GET['option'] == 'cascade'){ 
-                    //urun abstract ise inactive yap degilse cascade sil 
-                    //select that product's id
-                    //delete that product
-                    //delete all product  have that id as parent-code
-                    //update other tables also
-
+                    //urun abstract ise inactive yap 
+                    //abstract degilse bu urunu ve altindakileri inactive yap
+                    
                     $msg = 'You have deleted the selected product! (CASCADE)';
                 }
                 else if ($_GET['option'] == 'link'){
                     //abstract ise secilemez degilse bu urunu parent alanlarin parentini guncelle.
-                    //abstract olmayan urunler zaten diger tablolarda yer alamaz. kategori belirtiyorlar aslinda.
-                    //select that product's  parent id
-                    //delete that product
-                    //update all products parent id 
-
+                    //bu urunu inactive yap
+                    
 
                     $msg = 'You have deleted the selected product! (LINK)';
                 }          

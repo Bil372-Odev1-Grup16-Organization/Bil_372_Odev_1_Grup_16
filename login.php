@@ -8,10 +8,7 @@
       
       $username = mysqli_real_escape_string($conn,$_POST['username']);
       $password = mysqli_real_escape_string($conn,$_POST['password']);
-      $sql = "SELECT NAME FROM USERS WHERE USERNAME = '$username' and PASSWORD = '$password'";
-      $result = mysqli_query($conn,$sql);
-      $row =mysqli_fetch_assoc($result);
-      $name= $row["NAME"];
+      
       
       $sql = "SELECT * FROM USERS WHERE USERNAME = '$username' and PASSWORD = '$password'";
       $result = mysqli_query($conn,$sql);
@@ -22,6 +19,10 @@
       
 		
       if($count == 1) {    
+        $sql = "SELECT NAME FROM USERS WHERE USERNAME = '$username' and PASSWORD = '$password'";
+        $result = mysqli_query($conn,$sql);
+        $row =mysqli_fetch_assoc($result);
+        $name= $row["NAME"];
         $_SESSION['NAME'] = $name;
          header("location: index.php");
       }else {

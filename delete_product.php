@@ -3,16 +3,15 @@ include 'functions.php';
 $pdo = pdo_connect_mysql();
 $msg = '';
 
-//check if the given item with the primary key exists 
+//check if the given item with the primary key exists
 if (isset($_GET['M_SYSCODE'])) {
-
     $stmt = $pdo->prepare('SELECT * FROM PRODUCT WHERE M_SYSCODE = ?');
     $stmt->execute([$_GET['M_SYSCODE']]);
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$product) {
         exit('Product doesn\'t exist with that primary key!');
     }
-   
+
     //Asking the users second time if they really want to delete the item
     if (isset($_GET['confirm'])) {
         if ($_GET['confirm'] == 'yes') {

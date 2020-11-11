@@ -2,6 +2,7 @@
 include 'functions.php';
 $pdo = pdo_connect_mysql();
 $msg = '';
+
 // Check if the data is empty
 if (!empty($_POST)) {
     // Insert values into columns
@@ -47,6 +48,7 @@ if (!empty($_POST)) {
         <label for="created">Created on </label>
         <input type="text" name="IS_ACTIVE" placeholder="example value" id="IS_ACTIVE">
         <input type="datetime-local" name="created" value="<?=date('Y-m-d\TH:i')?>" id="created">
+        
         <input type="submit" value="Create">
     </form>
     <?php if ($msg): ?>

@@ -1,5 +1,6 @@
 <?php
 include 'functions.php';
+
 $pdo = pdo_connect_mysql();
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 $records_per_page = 5;

@@ -21,8 +21,28 @@ if (isset($_GET['M_SYSCODE'])) {
                 if($_GET['option'] == 'cascade'){ 
                     //urun abstract ise inactive yap 
                     //abstract degilse bu urunu ve altindakileri inactive yap
+                    $stmt = $pdo->prepare('SELECT M_ABSTRACT, M_PARENTCODE,M_CODE FROM PRODUCT WHERE M_SYSCODE = ?');
+                    $stmt->execute([$_GET['M_SYSCODE']]);
+                    $product = $stmt->fetch();
+                    $msg .= $product['M_ABSTRACT'] ;
+                    if($product['M_ABSTRACT'] >= 1){ //abstract
+                        $stmt = $pdo->prepare('UPDATE PRODUCT SET IS_ACTIVE=0 WHERE M_SYSCODE = ?');
+                        $stmt->execute([$_GET['M_SYSCODE']]);                      
+                    }
+                    else{ //not abstract
+                       // $parentOfThisProduct=$product['M_PARENTCODE'];
+                        //$codeOfThisProduct=$product['M_CODE'];
                     
-                    $msg = 'You have deleted the selected product! (CASCADE)';
+                        $stmt = $pdo->prepare('UPDATE PRODUCT SET IS_ACTIVE=0 WHERE M_SYSCODE = ?'); //set inactive
+                        $stmt->execute([$_GET['M_SYSCODE']]);
+
+                        $stmt = $pdo->prepare('UPDATE PRODUCT SET IS_ACTIVE=0 WHERE M_PARENTCODE =  ?');
+                        $stmt->execute([$product['M_CODE']]);
+
+
+                    }
+                    
+                    $msg .= 'You have deleted the selected product! (CASCADE)';
                 }
                 else if ($_GET['option'] == 'link'){
                     //abstract ise secilemez degilse bu urunu parent alanlarin parentini guncelle.

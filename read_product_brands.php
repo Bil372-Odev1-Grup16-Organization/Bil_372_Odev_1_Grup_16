@@ -3,14 +3,14 @@ include 'functions.php';
 
 $pdo = pdo_connect_mysql();
 
-//TODO : Some PHP work to do
-//$stmt = $pdo->prepare('SELECT * FROM MANUFACTURERS ORDER BY MANUFACTURER_ID');
+$stmt = $pdo->prepare(
+    'SELECT * FROM PRODUCT_BRANDS ORDER BY M_SYSCODE, BRAND_BARCODE'
+);
 $stmt->execute();
 $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
 
-<?=template_header('Read')?>
+<?= template_header('Read') ?>
 
 <div class="content read">
 	<h2>All Product Brands</h2>
@@ -21,23 +21,33 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td>#</td>
                 <td>BRAND_BARCODE</td>
                 <td>BRAND_NAME</td>
-                <td>MANUFACTURER_ID</td>
-                <td>M_SYSCODE</td>
+                <td>MANUFACTURER_NAME</td>
                 <td></td>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($product as $contact): ?>
+            <?php foreach ($product as $element): ?>
             <tr>
-                <td><?=$contact['BRAND_BARCODE']?></td>
-                <td><?=$contact['BRAND_NAME']?></td>
-                <td><?=$contact['MANUFACTURER_ID']?></td>
-                <td><?=$contact['M_SYSCODE']?></td>
+				<td><?= $element['M_SYSCODE'] ?></td>
+                <td><?= $element['BRAND_BARCODE'] ?></td>
+                <td><?= $element['BRAND_NAME'] ?></td>
+				<?php
+					$stmt = $pdo->prepare('SELECT MANUFACTURER_NAME FROM MANUFACTURERS  WHERE MANUFACTURER_ID = ?');
+                	$stmt->execute([$element['MANUFACTURER_ID']]);
+                	$temp = $stmt->fetch();
+				?>
+                <td><?= $temp['MANUFACTURER_NAME'] ?></td>
                 <td class="actions">
-										<!-- Double primary key lookup
-                    <a href="update_product_brands.php?MANUFACTURER_ID=<?=$contact['MANUFACTURER_ID']?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
-                    <a href="delete_product_brands.php?MANUFACTURER_ID=<?=$contact['MANUFACTURER_ID']?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
-										<-->
+                    <a href="update_product_brands.php?BRAND_BARCODE=<?= $element[
+                        'BRAND_BARCODE'
+                    ] ?>&M_SYSCODE=<?= $element[
+    'M_SYSCODE'
+] ?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="delete_product_brands.php?BRAND_BARCODE=<?= $element[
+                        'BRAND_BARCODE'
+                    ] ?>&M_SYSCODE=<?= $element[
+    'M_SYSCODE'
+] ?>" class="trash"><i class="fas fa-trash fa-xs"></i></a
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -45,4 +55,5 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </table>
 </div>
 
-<?=template_footer()?>
+<?= template_footer()
+?>

@@ -1,6 +1,8 @@
 <?php
 // Front-end kismi gelene kadar gecici, sonrasinda duzenlenecek.
 include ("connect.php");
+include 'functions.php';
+$msg = '';
 if(isset($_POST['submit'])) {
     $orgName = mysqli_real_escape_string($conn,$_POST['org-name']);
     $adress = mysqli_real_escape_string($conn,$_POST['adress']);
@@ -65,9 +67,79 @@ if(isset($_POST['submit'])) {
         }             
 
     } 
-    header("location: logins.php");
-        
-
+}
+?>
+<style>
+select {
+  width: 400px;
+  height:43px;
+  border-radius: 4px;
+  background-color: #f1f1f1;
 }
 
-?>
+
+</style>
+
+
+
+
+<?=template_header('Create')?>
+
+<div class="content update">
+	<h2>Create Organisation</h2>
+    <form action="create_organisation.php" method="post">
+        <label for="org_name">Org_name</label>
+        <label for="parent">Parent</label>
+        <input type="text" name="org-name" placeholder="Organisation Name" required="required" autofocus >
+        <select  name="parent"  required="required" >
+                <option value="" disabled selected>   Select your parent Company   </option>
+                <option>NONE</option>
+                <?php  $sql = "SELECT * FROM ORGANISATIONS";
+                       $result = mysqli_query($conn,$sql);  
+                       while($row = mysqli_fetch_assoc($result)) {
+                        $tmp= $row["ORG_ID"];
+                        if($row["PARENT_ORG"]== 0){ ?>
+                            <option><?php echo $row["ORG_NAME"]. "--" ."NONE" ;  ?></option> 
+                        <?php }    
+                        $sql2="SELECT ORG_NAME FROM ORGANISATIONS WHERE PARENT_ORG = $tmp ";
+                        $result2 = mysqli_query($conn,$sql2);
+                        while($row2=mysqli_fetch_assoc($result2)){  
+                                            ?>
+                            <option><?php echo $row2["ORG_NAME"]. "--" .$row["ORG_NAME"] ;  ?></option>
+                        <?php   }}               ?>      
+            </select>
+
+        <label for="ORG_ABSTRACT">Is Abstract? </label>
+        <label for="ORG_ADRESS">ORG_ADRESS</label>
+        <input type="text" name="ORG_ABSTRACT" placeholder="evample value" >
+        <input type="text" name="ORG_ADDRESS" placeholder="example value" >
+
+        <label for="ORG_DISTRICT">ORG_DISTRICT</label>
+        <label for="ORG_CITY">City</label>
+        <input type="text" name="ORG_DISTRICT" placeholder="example value" >
+        <select  name="city"  required="required" class= 'select' >
+                <option value="" disabled selected>City</option>
+                <?php  $sql = "SELECT CITY_NAME FROM COUNTRY_CITY";
+                       $result = mysqli_query($conn,$sql);  
+                       while($row = mysqli_fetch_assoc($result)) {        ?>
+                            <option><?php echo $row["CITY_NAME"] ;  ?></option>
+                       <?php   }           ?>      
+            </select>
+                       
+        <label for="ORG_TYPE">Type</label>
+        <label for="ORG_TYPE"> </label>
+        <select  name="dropdown"  >
+                <option>Supplier</option>
+                <option>Consumer</option>
+                <option>Both</option>            
+            </select>
+        <!--<label for="created">Created on </label>
+         <input type="datetime-local" name="created" value="<?=date('Y-m-d\TH:i')?>" -->                
+        <input type="submit" value="Create" style="margin: 0px 0px 0px 100px ;">
+    </form>
+    <?php if ($msg): ?>
+    <p><?=$msg?></p>
+    <?php endif; ?>
+</div>
+
+<?=template_footer()?>

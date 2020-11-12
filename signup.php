@@ -189,7 +189,7 @@ if(isset($_POST['submit'])) {
                        $result = mysqli_query($conn,$sql);  
                        while($row = mysqli_fetch_assoc($result)) {        ?>
                             <option><?php echo $row["CITY_NAME"] ;  ?></option>
-                        <?php   }           ?>      
+                       <?php   }           ?>      
             </select>
         </div>
         <div class="form-group">

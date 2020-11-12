@@ -1,0 +1,16 @@
+<?php
+
+$pdo = new PDO('mysql:host=localhost;dbname=TEST', 'root', '');
+
+$sql = "SELECT M_NAME, M_SHORTNAME FROM PRODUCT";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$users = $stmt->fetchAll();
+
+?>
+
+<select>
+    <?php foreach($users as $user): ?>
+        <option value="<?= $user['M_NAME']; ?>"><?= $user['M_SHORTNAME']; ?></option>
+    <?php endforeach; ?>
+</select>

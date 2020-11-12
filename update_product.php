@@ -4,17 +4,17 @@ $pdo = pdo_connect_mysql();
 $msg = '';
 if (isset($_GET['M_SYSCODE'])) {
     if (!empty($_POST)) {
-        $syscode = isset($_POST['M_SYSCODE']) ? $_POST['M_SYSCODE'] : NULL;
+        //$syscode = isset($_POST['M_SYSCODE']) ? $_POST['M_SYSCODE'] : '';
         $code = isset($_POST['M_CODE']) ? $_POST['M_CODE'] : '';
         $name = isset($_POST['M_NAME']) ? $_POST['M_NAME'] : '';
         $shortname = isset($_POST['M_SHORTNAME']) ? $_POST['M_SHORTNAME'] : '';
         $parentcode = isset($_POST['M_PARENTCODE']) ? $_POST['M_PARENTCODE'] : '';
         $abstract = isset($_POST['M_ABSTRACT']) ? $_POST['M_ABSTRACT'] : '';
         $category = isset($_POST['M_CATEGORY']) ? $_POST['M_CATEGORY'] : '';
-        $created = isset($_POST['created']) ? $_POST['created'] : date('Y-m-d H:i:s');
+        $active = isset($_POST['IS_ACTIVE']) ? $_POST['IS_ACTIVE'] : '';
         // Update the record
-        $stmt = $pdo->prepare('UPDATE PRODUCT SET M_SYSCODE = ?, M_CODE = ?, NAME = ?,M_SHORTNAME = ?, M_PARENTCODE = ?, M_ABSTRACT = ?, M_CATEGORY = ?, created = ? WHERE M_SYSCODE = ?');
-        $stmt->execute([$syscode, $code, $name, $shortname, $parentcode, $abstract, $category, $created, $_GET['M_SYSCODE']]);
+        $stmt = $pdo->prepare('UPDATE PRODUCT SET M_CODE = ?, M_NAME = ?,M_SHORTNAME = ?, M_PARENTCODE = ?, M_ABSTRACT = ?, M_CATEGORY = ?, IS_ACTIVE = ? WHERE M_SYSCODE = ?');
+        $stmt->execute([$code, $name, $shortname, $parentcode, $abstract, $category, $active, $_GET['M_SYSCODE']]);
         $msg = 'Updated Successfully!';
     }
     $stmt = $pdo->prepare('SELECT * FROM PRODUCT WHERE M_SYSCODE = ?');
@@ -28,7 +28,7 @@ if (isset($_GET['M_SYSCODE'])) {
 }
 ?>
 
-<?=template_header('Read')?>
+<?=template_header('Update')?>
 
 <div class="content update">
 	<h2>Update Product #<?=$contact['M_SYSCODE']?></h2>
@@ -49,9 +49,9 @@ if (isset($_GET['M_SYSCODE'])) {
         <input type="text" name="M_CATEGORY" placeholder="Example Value" value="<?=$contact['M_CATEGORY']?>" id="M_CATEGORY">
 
         <label for="IS_ACTIVE">IS_ACTIVE</label>
-        <label for="created">Created</label>
+        <label></label>
         <input type="text" name="IS_ACTIVE" placeholder="Example Value" value="<?=$contact['IS_ACTIVE']?>" id="IS_ACTIVE">
-        <input type="datetime-local" name="created" value="<?=date('Y-m-d\TH:i', strtotime($contact['created']))?>" id="created">
+        <label></label>
         <input type="submit" value="Update">
     </form>
     <?php if ($msg): ?>

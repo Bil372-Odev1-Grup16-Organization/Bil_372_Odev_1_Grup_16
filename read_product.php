@@ -25,7 +25,6 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td>M_ABSTRACT</td>
                 <td>M_CATEGORY</td>
                 <td>IS_ACTIVE</td>
-                <td>Created</td>
                 <td></td>
             </tr>
         </thead>

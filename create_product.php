@@ -13,10 +13,9 @@ if (!empty($_POST)) {
     $abstract = isset($_POST['M_ABSTRACT']) ? $_POST['M_ABSTRACT'] : '';
     $category = isset($_POST['M_CATEGORY']) ? $_POST['M_CATEGORY'] : '';
     $active = isset($_POST['IS_ACTIVE']) ? $_POST['IS_ACTIVE'] : '';
-    $created = isset($_POST['created']) ? $_POST['created'] : date('Y-m-d H:i:s');
     // Insert new record into the contacts table
-    $stmt = $pdo->prepare('INSERT INTO PRODUCT VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-    $stmt->execute([$code, $name, $shortname, $parentcode, $abstract, $category, $active, $created]);
+    $stmt = $pdo->prepare('INSERT INTO PRODUCT VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)');
+    $stmt->execute([$code, $name, $shortname, $parentcode, $abstract, $category, $active]);
     // Output message
     $msg = 'Created Successfully!';
 }
@@ -48,7 +47,7 @@ if (!empty($_POST)) {
         <label for="created">Created on </label>
         <input type="text" name="IS_ACTIVE" placeholder="example value" id="IS_ACTIVE">
         <input type="datetime-local" name="created" value="<?=date('Y-m-d\TH:i')?>" id="created">
-        
+
         <input type="submit" value="Create">
     </form>
     <?php if ($msg): ?>

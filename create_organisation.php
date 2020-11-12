@@ -1,11 +1,10 @@
 <?php
-// Front-end kismi gelene kadar gecici, sonrasinda duzenlenecek.
 include ("connect.php");
 include 'functions.php';
 $msg = '';
 if(isset($_POST['submit'])) {
     $orgName = mysqli_real_escape_string($conn,$_POST['org-name']);
-    $adress = mysqli_real_escape_string($conn,$_POST['adress']);
+    $address = mysqli_real_escape_string($conn,$_POST['address']);
     $cityName = mysqli_real_escape_string($conn,$_POST['city']);
     $sql="SELECT CITY_ID FROM COUNTRY_CITY WHERE CITY_NAME = \"$cityName\"";
     $result = mysqli_query($conn,$sql);
@@ -18,7 +17,7 @@ if(isset($_POST['submit'])) {
     else{
         $abstract=0;
     }
-    $typeString=mysqli_real_escape_string($conn,$_POST['dropdown']); 
+    $typeString=mysqli_real_escape_string($conn,$_POST['type']); 
     if(strcmp($typeString,"Supplier") == 0){
         $type=0;
     }
@@ -57,7 +56,7 @@ if(isset($_POST['submit'])) {
     }
     }  
 
-    $sql = "INSERT   INTO ORGANISATIONS (ORG_NAME, PARENT_ORG , ORG_ABSTRACT, ORG_ADDRESS, ORG_CITY,ORG_DISTRICT,ORG_TYPE) VALUES ('$orgName',$parentid,$abstract,'$adress','$city','$district',$type)";
+    $sql = "INSERT   INTO ORGANISATIONS (ORG_NAME, PARENT_ORG , ORG_ABSTRACT, ORG_ADDRESS, ORG_CITY,ORG_DISTRICT,ORG_TYPE) VALUES ('$orgName',$parentid,$abstract,'$address','$city','$district',$type)";
     if (!mysqli_query($conn, $sql)){  
         if(strpos(mysqli_error($conn), "Duplicate") !== false){
             $error = "A Organisation which has this name and parent already exists ". "<br>";
@@ -66,7 +65,8 @@ if(isset($_POST['submit'])) {
             echo "Error: "  . mysqli_error($conn); 
         }             
 
-    } 
+    }
+    $msg = "Created Successfully"; 
 }
 ?>
 <style>
@@ -74,17 +74,12 @@ select {
   width: 400px;
   height:43px;
   border-radius: 4px;
-  background-color: #f1f1f1;
 }
-
-
 </style>
 
 
-
-
 <?=template_header('Create')?>
-
+  
 <div class="content update">
 	<h2>Create Organisation</h2>
     <form action="create_organisation.php" method="post">
@@ -111,12 +106,12 @@ select {
 
         <label for="ORG_ABSTRACT">Is Abstract? </label>
         <label for="ORG_ADRESS">ORG_ADRESS</label>
-        <input type="text" name="ORG_ABSTRACT" placeholder="evample value" >
-        <input type="text" name="ORG_ADDRESS" placeholder="example value" >
+        <input type="text" name="abstract" placeholder="evample value" >
+        <input type="text" name="address" placeholder="example value" >
 
         <label for="ORG_DISTRICT">ORG_DISTRICT</label>
         <label for="ORG_CITY">City</label>
-        <input type="text" name="ORG_DISTRICT" placeholder="example value" >
+        <input type="text" name="district" placeholder="example value" >
         <select  name="city"  required="required" class= 'select' >
                 <option value="" disabled selected>City</option>
                 <?php  $sql = "SELECT CITY_NAME FROM COUNTRY_CITY";
@@ -128,17 +123,18 @@ select {
                        
         <label for="ORG_TYPE">Type</label>
         <label for="ORG_TYPE"> </label>
-        <select  name="dropdown"  >
+        <select  name="type"  >
                 <option>Supplier</option>
                 <option>Consumer</option>
                 <option>Both</option>            
             </select>
         <!--<label for="created">Created on </label>
          <input type="datetime-local" name="created" value="<?=date('Y-m-d\TH:i')?>" -->                
-        <input type="submit" value="Create" style="margin: 0px 0px 0px 100px ;">
+        <input type="submit" name="submit" value="Create" style="margin: 0px 0px 0px 100px ;">
     </form>
     <?php if ($msg): ?>
-    <p><?=$msg?></p>
+    <p><?php echo("<script>alert('$msg')</script>");
+     echo("<script>window.location = 'read_organisations.php';</script>");    ?></p>
     <?php endif; ?>
 </div>
 

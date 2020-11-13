@@ -11,12 +11,7 @@ if(isset($_POST['submit'])) {
     $row =mysqli_fetch_assoc($result);
     $city= $row["CITY_ID"];
     $district = mysqli_real_escape_string($conn,$_POST['district']);     
-    if(isset($_POST['checkbox'])){
-        $abstract = 1;
-    }
-    else{
-        $abstract=0;
-    }
+    $abstract =  mysqli_real_escape_string($conn,$_POST['abstract']); 
     $typeString=mysqli_real_escape_string($conn,$_POST['type']); 
     if(strcmp($typeString,"Supplier") == 0){
         $type=0;
@@ -56,9 +51,9 @@ if(isset($_POST['submit'])) {
     }
     }  
 
-    $sql = "INSERT   INTO ORGANISATIONS (ORG_NAME, PARENT_ORG , ORG_ABSTRACT, ORG_ADDRESS, ORG_CITY,ORG_DISTRICT,ORG_TYPE) VALUES ('$orgName',$parentid,$abstract,'$address','$city','$district',$type)";
+    $sql = "INSERT   INTO ORGANISATIONS (ORG_NAME, PARENT_ORG , ORG_ABSTRACT, ORG_ADDRESS, ORG_CITY,ORG_DISTRICT,ORG_TYPE) VALUES ('$orgName',$parentid,$abstract,'$address',$city,'$district',$type)";
     if (!mysqli_query($conn, $sql)){  
-        if(strpos(mysqli_error($conn), "Duplicate") !== false){
+        if(strpos(mysqli_error($conn), "Duplicate")){
             $error = "A Organisation which has this name and parent already exists ". "<br>";
         }   
         else{
@@ -83,7 +78,7 @@ select {
 <div class="content update">
 	<h2>Create Organisation</h2>
     <form action="create_organisation.php" method="post">
-        <label for="org_name">Org_name</label>
+        <label for="org-name">Org_name</label>
         <label for="parent">Parent</label>
         <input type="text" name="org-name" placeholder="Organisation Name" required="required" autofocus >
         <select  name="parent"  required="required" >
@@ -102,24 +97,24 @@ select {
                                             ?>
                             <option><?php echo $row2["ORG_NAME"]. "--" .$row["ORG_NAME"] ;  ?></option>
                         <?php   }}               ?>      
-            </select>
+        </select>
 
         <label for="ORG_ABSTRACT">Is Abstract? </label>
-        <label for="ORG_ADRESS">ORG_ADRESS</label>
+        <label for="ORG_ADDRESS">ORG_ADRESS</label>
         <input type="text" name="abstract" placeholder="evample value" >
         <input type="text" name="address" placeholder="example value" >
 
         <label for="ORG_DISTRICT">ORG_DISTRICT</label>
         <label for="ORG_CITY">City</label>
         <input type="text" name="district" placeholder="example value" >
-        <select  name="city"  required="required" class= 'select' >
+        <select  name="city"  required="required"  >
                 <option value="" disabled selected>City</option>
                 <?php  $sql = "SELECT CITY_NAME FROM COUNTRY_CITY";
                        $result = mysqli_query($conn,$sql);  
                        while($row = mysqli_fetch_assoc($result)) {        ?>
                             <option><?php echo $row["CITY_NAME"] ;  ?></option>
                        <?php   }           ?>      
-            </select>
+        </select>
                        
         <label for="ORG_TYPE">Type</label>
         <label for="ORG_TYPE"> </label>
@@ -127,7 +122,7 @@ select {
                 <option>Supplier</option>
                 <option>Consumer</option>
                 <option>Both</option>            
-            </select>
+        </select>
         <!--<label for="created">Created on </label>
          <input type="datetime-local" name="created" value="<?=date('Y-m-d\TH:i')?>" -->                
         <input type="submit" name="submit" value="Create" style="margin: 0px 0px 0px 100px ;">

@@ -33,7 +33,6 @@ if (isset($_GET['M_SYSCODE'])) {
                     $stmt->execute([$_GET['M_SYSCODE']]);
                 } else {
                     //not abstract
-                    //$parentOfThisProduct=$product['M_PARENTCODE'];
                     //$codeOfThisProduct=$product['M_CODE'];
 
                     $stmt = $pdo->prepare(
@@ -105,25 +104,15 @@ if (isset($_GET['M_SYSCODE'])) {
      'M_SYSCODE'
  ] ?>?</p>
     <div class="yesno">
-        <a href="delete_product.php?M_SYSCODE=<?= $product[
-            'M_SYSCODE'
-        ] ?>&confirm=yes">Yes</a>
-        <a href="delete_product.php?M_SYSCODE=<?= $product[
-            'M_SYSCODE'
-        ] ?>&confirm=no">No</a>
+        <a href="delete_product.php?M_SYSCODE=<?= $product['M_SYSCODE'] ?>&confirm=yes">Yes</a>
+        <a href="delete_product.php?M_SYSCODE=<?= $product['M_SYSCODE'] ?>&confirm=no">No</a>
     </div>
         <?php elseif ($_GET['confirm'] == 'yes'): ?>
 
-        <p>Cascade Delete or Link Child Products to Parent Product #<?= $product[
-            'M_SYSCODE'
-        ] ?>?</p>
+        <p>Cascade Delete or Link Child Products to Parent Product #<?= $product['M_SYSCODE'] ?>?</p>
         <div class="yesno">
-            <a href="delete_product.php?M_SYSCODE=<?= $product[
-                'M_SYSCODE'
-            ] ?>&confirm=yes&option=cascade">Cascade delete</a>
-            <a href="delete_product.php?M_SYSCODE=<?= $product[
-                'M_SYSCODE'
-            ] ?>&confirm=yes&option=link">Link child products to parent product</a>
+            <a href="delete_product.php?M_SYSCODE=<?= $product['M_SYSCODE'] ?>&confirm=yes&option=cascade">Cascade delete</a>
+            <a href="delete_product.php?M_SYSCODE=<?= $product[ 'M_SYSCODE'] ?>&confirm=yes&option=link">Link child products to parent product</a>
         </div>
         <?php endif; ?>
     <?php endif; ?>

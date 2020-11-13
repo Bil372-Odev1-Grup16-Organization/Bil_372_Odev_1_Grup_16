@@ -3,27 +3,24 @@ include 'functions.php';
 $pdo = pdo_connect_mysql();
 $msg = '';
 
-//check if the given item with the primary key exists
-/* double primary key situation
-if (isset($_GET['MANUFACTURER_ID'])) {
-    $stmt = $pdo->prepare('SELECT * FROM MANUFACTURERS WHERE MANUFACTURER_ID = ?');
-    $stmt->execute([$_GET['MANUFACTURER_ID']]);
-    */
+if (isset($_GET['BRAND_BARCODE']) & isset($_GET['M_SYSCODE'])) {
+    $stmt = $pdo->prepare('SELECT * FROM PRODUCT_BRANDS WHERE BRAND_BARCODE = ? AND M_SYSCODE = ?');
+    $stmt->execute([$_GET['BRAND_BARCODE'], $_GET['M_SYSCODE']]);
+
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$product) {
-        /* Error message might change due to double pk
-        exit('Product brand doesn\'t exist with that primary key!');
-        */
+        exit('Product brand doesn\'t exist with those primary keys!');
     }
 
     //Asking the users second time if they really want to delete the item
     if (isset($_GET['confirm'])) {
         if ($_GET['confirm'] == 'yes') {
-            /* WHERE and GET might change due to double pk
-            $stmt = $pdo->prepare('DELETE FROM MANUFACTURERS WHERE MANUFACTURER_ID = ?');
-            $stmt->execute([$_GET['MANUFACTURER_ID']]);
-            */
-            $msg = 'You have deleted the selecteed product brand!';
+            $stmt = $pdo->prepare('DELETE FROM PRODUCT_BRANDS WHERE BRAND_BARCODE = ? AND M_SYSCODE = ?');
+            $stmt->execute([$_GET['BRAND_BARCODE'], $_GET['M_SYSCODE']]);
+
+            $msg = 'You have deleted the selected product brand!';
+            header('Location: read_product_brands.php');
+            exit();
         } else {
             header('Location: read_product_brands.php');
             exit;

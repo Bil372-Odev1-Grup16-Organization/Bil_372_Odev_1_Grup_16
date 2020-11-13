@@ -3,18 +3,13 @@ include 'functions.php';
 $pdo = pdo_connect_mysql();
 $msg = '';
 
-// Check if the data is empty
 if (!empty($_POST)) {
-    // Insert values into columns
     $barcode = isset($_POST['BRAND_BARCODE']) ? $_POST['BRAND_BARCODE'] : '';
     $name = isset($_POST['BRAND_NAME']) ? $_POST['BRAND_NAME'] : '';
     $id = isset($_POST['MANUFACTURER_ID']) ? $_POST['MANUFACTURER_ID'] : '';
-    $code = isset($_POST['M_SYSCODE']) ? $_POST['M_SYSCODE'] : '';
 
-    // Insert new record into the contacts table
     $stmt = $pdo->prepare('INSERT INTO PRODUCT_BRANDS VALUES (?, ?, ?, ?)');
     $stmt->execute([$barcode, $name, $id, $code]);
-    // Output message
     $msg = 'Created Successfully!';
 }
 ?>
@@ -24,15 +19,16 @@ if (!empty($_POST)) {
 <div class="content update">
 	<h2>Create Product Brand</h2>
     <form action="create_product_brands.php" method="post">
-      <label for="BRAND_BARCODE">Brand Barcode</label>
-      <label for="BRAND_NAME">Brand Name</label>
+      <label for="BRAND_BARCODE">BRAND_BARCODE</label>
+      <label for="BRAND_NAME">BRAND_NAME</label>
       <input type="text" name="BRAND_BARCODE" placeholder="example value" id="BRAND_BARCODE">
       <input type="text" name="BRAND_NAME" placeholder="example value" id="BRAND_NAME">
 
-      <label for="MANUFACTURER_ID">Manufacturer ID</label>
-      <label for="M_SYSCODE">Bir seyler kodu</label>
+      <!-- MANUFACTURER_NAME will be selected by a dropdown menu <-->
+      <label for="MANUFACTURER_NAME">MANUFACTURER_NAME</label>
+      <label></label>
       <input type="text" name="MANUFACTURER_ID" placeholder="example value" id="MANUFACTURER_ID">
-      <input type="text" name="M_SYSCODE" placeholder="example value" id="M_SYSCODE">
+      <label></label>
 
       <input type="submit" value="Create">
     </form>

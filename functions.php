@@ -31,6 +31,7 @@ echo <<<EOT
             <a href="read_feature.php"><i class="fas fa-toolbox"></i>Features</a>
             <a href="read_manufacturers.php"><i class="fas fa-industry"></i>Manufacturers</a>
             <a href="read_product_brands.php"><i class="fas fa-copyright"></i>Product Brands</a>
+	    <a href="read_product_features.php"><i class="fas fa-toolbox"></i>Product Features</a>
             <a href="read_organisations.php"><i class="fas fa-sitemap"></i>Organisations</a>
           </div>
     	</div>

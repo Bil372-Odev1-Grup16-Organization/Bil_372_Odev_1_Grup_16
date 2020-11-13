@@ -1,29 +1,47 @@
 <?php
+//database de cascade delete eklenecek.
 include 'functions.php';
-include 'connect.php';
+$pdo = pdo_connect_mysql();
 $msg = '';
 
 //check if the given item with the primary key exists 
 if (isset($_GET['ORG_ID'])) {
-    $row=$_GET['ORG_ID'];
-    $sql = "SELECT * FROM ORGANISATIONS WHERE ORG_ID = $row";
-    $result = mysqli_query($conn,$sql);
-    $organisation =mysqli_fetch_assoc($result);
+    $stmt = $pdo->prepare('SELECT * FROM ORGANISATIONS WHERE ORG_ID = ?');
+    $stmt->execute([$_GET['ORG_ID']]);
+    $organisation = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$organisation) {
         exit('Organisation doesn\'t exist with that primary key!');
     }
    
     //Asking the users second time if they really want to delete the item
+    if (isset($_GET['confirm'])  and isset($_GET['option'])) {
+        if($_GET['option'] == 'cascade'){
+            $stmt = $pdo->prepare('DELETE FROM ORGANISATIONS  WHERE PARENT_ORG = ?'); //DELETE CHILDREN
+            $stmt->execute([ $_GET['ORG_ID']]);
+            
+            $stmt = $pdo->prepare('DELETE FROM ORGANISATIONS  WHERE ORG_ID = ?'); //DELETE ORGANISATION
+            $stmt->execute([ $_GET['ORG_ID']]);    
+            $msg = 'You have deleted the selected product! (CASCADE)';       
+        }
+        elseif($_GET['option'] == 'link'){
+            $stmt = $pdo->prepare('SELECT PARENT_ORG FROM ORGANISATIONS WHERE ORG_ID = ?');
+            $stmt->execute([$_GET['ORG_ID']]);
+            $parentOrg = $stmt->fetch();
+
+            $stmt = $pdo->prepare('UPDATE ORGANISATIONS SET PARENT_ORG = ?   WHERE PARENT_ORG = ?'); //LINK CHILDREN TO UPPER PARENT
+            $stmt->execute([$parentOrg['PARENT_ORG'], $_GET['ORG_ID']]);
+
+            $stmt = $pdo->prepare('DELETE FROM ORGANISATIONS  WHERE ORG_ID = ?'); //DELETE ORGANISATION
+            $stmt->execute([ $_GET['ORG_ID']]);           
+
+            $msg = 'You have deleted the selected product! (LINK)';
+
+        }   
+    } 
     if (isset($_GET['confirm'])) {
-        if ($_GET['confirm'] == 'yes') {
-
-            $sql = "DELETE FROM ORGANISATIONS WHERE ORG_ID = $row";
-            $result = mysqli_query($conn,$sql);
-
-            $msg = 'You have deleted the selected product!';
-        } else {
-            header('Location: read_organisation.php');
-            exit;
+        if ($_GET['confirm'] == 'no') {
+            header('Location: read_organisations.php');
+            exit();
         }
     }
 } else {
@@ -38,11 +56,20 @@ if (isset($_GET['ORG_ID'])) {
     <?php if ($msg): ?>
     <p><?=$msg?></p>
     <?php else: ?>
-	<p>Are you sure you want to delete the selected organisation #<?=$organisation['ORG_ID']?>?</p>
-    <div class="yesno">
-        <a href="delete_organisation.php?ORG_ID=<?=$organisation['ORG_ID']?>&confirm=yes">Yes</a>
-        <a href="delete_organisation.php?ORG_ID=<?=$organisation['ORG_ID']?>&confirm=no">No</a>
-    </div>
+    <?php if (!isset($_GET['confirm'])): ?>
+	    <p>Are you sure you want to delete the selected organisation #<?=$organisation['ORG_ID']?>?</p>
+        <div class="yesno">
+            <a href="delete_organisation.php?ORG_ID=<?=$organisation['ORG_ID']?>&confirm=yes">Yes</a>
+            <a href="delete_organisation.php?ORG_ID=<?=$organisation['ORG_ID']?>&confirm=no">No</a>
+        </div>
+    <?php elseif ($_GET['confirm'] == 'yes'): ?>
+        <p>Cascade Delete or Link Child Organisation to Parent Organisation #<?= $organisation['ORG_ID'] ?>?</p>
+        <div class="yesno">
+            <a href="delete_organisation.php?ORG_ID=<?= $organisation['ORG_ID'] ?>&confirm=yes&option=cascade">Cascade delete</a>
+            <a href="delete_organisation.php?ORG_ID=<?= $organisation['ORG_ID'] ?>&confirm=yes&option=link">Link child organisations to parent organisation</a>
+        </div>
+    <?php endif; ?>
+
     <?php endif; ?>
 </div>
 

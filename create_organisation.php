@@ -86,17 +86,19 @@ select {
                 <option>NONE</option>
                 <?php  $sql = "SELECT * FROM ORGANISATIONS";
                        $result = mysqli_query($conn,$sql);  
-                       while($row = mysqli_fetch_assoc($result)) {
-                        $tmp= $row["ORG_ID"];
-                        if($row["PARENT_ORG"]== 0){ ?>
-                            <option><?php echo $row["ORG_NAME"]. "--" ."NONE" ;  ?></option> 
-                        <?php }    
-                        $sql2="SELECT ORG_NAME FROM ORGANISATIONS WHERE PARENT_ORG = $tmp ";
-                        $result2 = mysqli_query($conn,$sql2);
-                        while($row2=mysqli_fetch_assoc($result2)){  
-                                            ?>
-                            <option><?php echo $row2["ORG_NAME"]. "--" .$row["ORG_NAME"] ;  ?></option>
-                        <?php   }}               ?>      
+                       while($row = mysqli_fetch_assoc($result)) {  
+                        if($row['ORG_ABSTRACT'] == 0):
+                            $tmp= $row["ORG_ID"];
+                            if($row["PARENT_ORG"]== 0){ ?>
+                                <option><?php echo $row["ORG_NAME"]. "--" ."NONE" ;  ?></option> 
+                            <?php }    
+                            $sql2="SELECT ORG_NAME,ORG_ABSTRACT FROM ORGANISATIONS WHERE PARENT_ORG = $tmp ";
+                            $result2 = mysqli_query($conn,$sql2);
+                            while($row2=mysqli_fetch_assoc($result2)){     ?>
+                              <?php  if($row2["ORG_ABSTRACT"] == 0): ?>
+                                    <option><?php echo $row2["ORG_NAME"]. "--" .$row["ORG_NAME"] ;  ?></option>
+                              <?php    endif;               ?> 
+                        <?php   } endif; }               ?>      
         </select>
 
         <label for="ORG_ABSTRACT">Is Abstract? </label>

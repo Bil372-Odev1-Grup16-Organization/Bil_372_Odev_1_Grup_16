@@ -102,17 +102,18 @@ select {
                        $sql = "SELECT * FROM ORGANISATIONS WHERE ORG_ID NOT LIKE $OrgId";
                        $result = mysqli_query($conn,$sql);  
                        while($row = mysqli_fetch_assoc($result)) {
+                        if($row['ORG_ABSTRACT'] == 0):   
                         $tmp= $row["ORG_ID"];
                         if($row["PARENT_ORG"]== 0){ ?>
                             <option><?php echo $row["ORG_NAME"]. "--" ."NONE" ;  ?></option> 
                         <?php }    
-                        $sql2="SELECT ORG_NAME, ORG_ID FROM ORGANISATIONS WHERE PARENT_ORG = $tmp ";
+                        $sql2="SELECT ORG_NAME, ORG_ID, ORG_ABSTRACT FROM ORGANISATIONS WHERE PARENT_ORG = $tmp ";
                         $result2 = mysqli_query($conn,$sql2);
                         while($row2=mysqli_fetch_assoc($result2)){
-                            if($row2['ORG_ID'] != $OrgId){ 
+                            if($row2['ORG_ID'] != $OrgId and $row2['ORG_ABSTRACT'] == 0){ 
                                             ?>
                                <option><?php echo $row2["ORG_NAME"]. "--" .$row["ORG_NAME"] ;  ?></option>
-                        <?php  } }}               ?>      
+                        <?php  } } endif;}               ?>      
         </select>
 
 

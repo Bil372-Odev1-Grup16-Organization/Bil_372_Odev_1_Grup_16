@@ -212,16 +212,18 @@ if(isset($_POST['submit'])) {
                 <?php  $sql = "SELECT * FROM ORGANISATIONS";
                        $result = mysqli_query($conn,$sql);  
                        while($row = mysqli_fetch_assoc($result)) {
+                        if($row['ORG_ABSTRACT'] == 0):
                         $a= $row["ORG_ID"];
                         if($row["PARENT_ORG"]== 0){ ?>
                             <option><?php echo $row["ORG_NAME"]. "--" ."NONE" ;  ?></option> 
                         <?php }    
-                        $sql2="SELECT ORG_NAME FROM ORGANISATIONS WHERE PARENT_ORG = $a ";
+                        $sql2="SELECT ORG_NAME,ORG_ABSTRACT FROM ORGANISATIONS WHERE PARENT_ORG = $a ";
                         $result2 = mysqli_query($conn,$sql2);
-                        while($row2=mysqli_fetch_assoc($result2)){  
-                                            ?>
-                            <option><?php echo $row2["ORG_NAME"]. "--" .$row["ORG_NAME"] ;  ?></option>
-                        <?php   }}               ?>      
+                        while($row2=mysqli_fetch_assoc($result2)){   ?>
+                                <?php  if($row2["ORG_ABSTRACT"] == 0): ?>
+                                    <option><?php echo $row2["ORG_NAME"]. "--" .$row["ORG_NAME"] ;  ?></option>
+                                <?php    endif;               ?> 
+                        <?php   } endif; }               ?>      
             </select>
         </div>
         <label style="font-size:10px;padding-left:20px"> Usage : A -- B = Your parent is company A whose parent company is B  </label> 

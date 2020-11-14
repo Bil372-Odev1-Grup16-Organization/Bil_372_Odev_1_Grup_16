@@ -1,26 +1,69 @@
 <?php
+include 'functions.php';
+$pdo = pdo_connect_mysql();
 
-$pdo = new PDO('mysql:host=localhost;dbname=TEST', 'root', '');
-$sql = "SELECT PRODUCT.M_SYSCODE, FEATURES.FEATURE_ID FROM PRODUCT, FEATURES";
+if (isset($_POST['submit'])) {
+    echo "afajfasfafas";
+    $stmt = $pdo->prepare('INSERT INTO PRODUCT_FEATURES(M_SYSCODE,FEATURE_ID,MINVAL,MAXVAL) VALUES (?,?,?,?)');
+    if($stmt->execute([$_POST['product'],$_POST['feature'], $_POST['minval'],$_POST['maxval']])){
+        echo("<script>alert('Created Successfully')</script>");
+        echo("<script>window.location = 'read_product_features.php';</script>");
+    }    
+}
+
+$sql = "SELECT M_SYSCODE, M_NAME FROM PRODUCT";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
-$users = $stmt->fetchAll();
+$products = $stmt->fetchAll();
+
+$sql = "SELECT FEATURE_ID, FEATURE_NAME FROM FEATURES";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$features = $stmt->fetchAll();
+
+
+
 ?>
+<style>
+select {
+  width: 400px;
+  height:43px;
+  border-radius: 4px;
+  
+}
+</style>
 
 
-<form action="submit.php" method="post">
-    <select name="first">
-        <?php foreach($users as $user): ?>
-            <option value="<?= $user['M_SYSCODE']; ?>"><?= $user['M_SYSCODE']; ?></option>
 
+
+
+<?=template_header('Create')?>
+
+<div class="content update">
+<form action="" method="post">
+    <label for="Product">Product</label>  
+    <label for="Feature">Feature</label>   
+    <select name="product" required="required">
+        <option disabled selected>Select a product </option>
+        <?php foreach($products as $product): ?>
+            <option value="<?= $product['M_SYSCODE']; ?>"><?= $product['M_NAME']; ?></option>
+        <?php endforeach; ?>
+    </select>
+        
+    <select name="feature" style="margin-left: 25px">
+        <option disabled selected required="required">Select a feature </option>
+        <?php foreach($features as $feature): ?>
+            <option value="<?= $feature['FEATURE_ID']; ?>"><?= $feature['FEATURE_NAME']; ?></option>
         <?php endforeach; ?>
     </select>
 
-    <select name="second">
-        <?php foreach($users as $user): ?>
-            <option value="<?= $user['FEATURE_ID']; ?>"><?= $user['FEATURE_ID']; ?></option>
+    <label for="MINVAL">MINVAL </label>
+    <label for="MAXVAL">MAXVAL</label>
+    <input type="number" name="minval" placeholder="example value" min="0" required="required">
+    <input type="number" name="maxval" placeholder="example value" min="0" required="required">      
 
-        <?php endforeach; ?>
-    </select>
-    <input type="submit" name="submit">
+
+
+    <input type="submit" name="submit" value="Link">
 </form>
+</div>

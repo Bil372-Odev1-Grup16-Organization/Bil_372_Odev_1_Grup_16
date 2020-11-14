@@ -14,18 +14,8 @@ if (!empty($_POST)) {
     $category = isset($_POST['M_CATEGORY']) ? $_POST['M_CATEGORY'] : '';
     $active = isset($_POST['IS_ACTIVE']) ? $_POST['IS_ACTIVE'] : '';
     // Insert new record into the contacts table
-    $stmt = $pdo->prepare(
-        'INSERT INTO PRODUCT VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)'
-    );
-    $stmt->execute([
-        $code,
-        $name,
-        $shortname,
-        $parentcode,
-        $abstract,
-        $category,
-        $active,
-    ]);
+    $stmt = $pdo->prepare('INSERT INTO PRODUCT VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)');
+    $stmt->execute([$code,$name, $shortname,$parentcode, $abstract, $category,$active,]);
     // Output message
     $msg = 'Created Successfully!';
     header("location: read_product.php");

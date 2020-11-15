@@ -10,14 +10,6 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?= template_header('Read') ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  
-</head>
-
-
-
 <div class="content read">
 	<h2>All Products</h2>
 	<a href="create_product.php" class="add-product">Add a new product</a>

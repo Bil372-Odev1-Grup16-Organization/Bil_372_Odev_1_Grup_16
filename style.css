@@ -176,18 +176,30 @@ body {
 .update form input[type="submit"]:hover {
   	background-color: #32a367;
 }
-.delete .yesno {
-  	display: flex;
+.delete {
+    text-align: center;
 }
-.delete .yesno a {
+.delete .yesno1 a {
   	display: inline-block;
   	text-decoration: none;
   	background-color: #38b673;
   	font-weight: bold;
   	color: #FFFFFF;
-  	padding: 10px 15px;
-  	margin: 15px 10px 15px 0;
+    padding: 15px 100px 15px 100px;
+    margin: 10px 10px 10px 10px;
 }
-.delete .yesno a:hover {
+.delete .yesno1 a:hover {
+  	background-color: #32a367;
+}
+.delete .yesno2 a {
+  	display: inline-block;
+  	text-decoration: none;
+  	background-color: #38b673;
+  	font-weight: bold;
+  	color: #FFFFFF;
+    padding: 15px 20px 15px 20px;
+    margin: 10px 10px 10px 10px;
+}
+.delete .yesno2 a:hover {
   	background-color: #32a367;
 }

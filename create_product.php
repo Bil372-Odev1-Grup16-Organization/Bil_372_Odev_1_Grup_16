@@ -6,6 +6,7 @@ $msg = '';
 // Check if the data is empty
 if (!empty($_POST)) {
     // Insert values into columns
+    $id = isset($_POST['M_SYSCODE']) && !empty($_POST['M_SYSCODE']) && $_POST['M_SYSCODE'] != 'auto' ? $_POST['M_SYSCODE'] : NULL;
     $code = isset($_POST['M_CODE']) ? $_POST['M_CODE'] : '';
     $name = isset($_POST['M_NAME']) ? $_POST['M_NAME'] : '';
     $shortname = isset($_POST['M_SHORTNAME']) ? $_POST['M_SHORTNAME'] : '';
@@ -14,8 +15,8 @@ if (!empty($_POST)) {
     $category = isset($_POST['M_CATEGORY']) ? $_POST['M_CATEGORY'] : '';
     $active = isset($_POST['IS_ACTIVE']) ? $_POST['IS_ACTIVE'] : '';
     // Insert new record into the contacts table
-    $stmt = $pdo->prepare('INSERT INTO PRODUCT VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)');
-    $stmt->execute([$code,$name, $shortname,$parentcode, $abstract, $category,$active,]);
+    $stmt = $pdo->prepare('INSERT INTO PRODUCT VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+    $stmt->execute([$id, $code,$name, $shortname,$parentcode, $abstract, $category,$active,]);
     // Output message
     $msg = 'Created Successfully!';
     header("location: read_product.php");

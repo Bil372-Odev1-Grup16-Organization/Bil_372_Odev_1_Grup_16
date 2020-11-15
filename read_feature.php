@@ -32,6 +32,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="content read">
 	<h2>All Features</h2>
 	<a href="create_feature.php" class="add-product">Add a new feature</a>
+	<input class="form-control" id="myInput" type="text" placeholder="Search..">
 	<table>
         <thead>
             <tr>
@@ -40,7 +41,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td></td>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable">
             <?php foreach ($product as $contact): ?>
             <tr>
                 <td><?=$contact['FEATURE_ID']?></td>

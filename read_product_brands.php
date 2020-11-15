@@ -15,6 +15,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="content read">
 	<h2>All Product Brands</h2>
 	<a href="create_product_brands.php" class="add-product">Add a new product brand</a>
+	<input class="form-control" id="myInput" type="text" placeholder="Search..">
 	<table>
         <thead>
             <tr>
@@ -26,7 +27,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td></td>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable">
             <?php foreach ($product as $element): ?>
             <tr>
 

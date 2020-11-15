@@ -4,11 +4,9 @@ $pdo = pdo_connect_mysql();
 $msg = '';
 if (isset($_GET['FEATURE_ID'])) {
     if (!empty($_POST)) {
-        $FEATURE_ID = isset($_POST['FEATURE_ID']) ? $_POST['FEATURE_ID'] : NULL;
-        $FEATURE_NAME = isset($_POST['FEATURE_NAME']) ? $_POST['FEATURE_NAME'] : '';
-        //$created = isset($_POST['created']) ? $_POST['created'] : date('Y-m-d H:i:s');
-        $stmt = $pdo->prepare('UPDATE FEATURES SET FEATURE_ID = ?, FEATURE_NAME = ? WHERE FEATURE_ID = ?');
-        $stmt->execute([$FEATURE_ID, $FEATURE_NAME, $_GET['FEATURE_ID']]);
+        $name = isset($_POST['FEATURE_NAME']) ? $_POST['FEATURE_NAME'] : '';
+        $stmt = $pdo->prepare('UPDATE FEATURES SET FEATURE_NAME = ? WHERE FEATURE_ID = ?');
+        $stmt->execute([$name, $_GET['FEATURE_ID']]);
         $msg = 'Updated Successfully!';
     }
     $stmt = $pdo->prepare('SELECT * FROM FEATURES WHERE FEATURE_ID = ?');
@@ -27,10 +25,8 @@ if (isset($_GET['FEATURE_ID'])) {
 <div class="content update">
 	<h2>Update Feature #<?=$contact['FEATURE_ID']?></h2>
     <form action="update_feature.php?FEATURE_ID=<?=$contact['FEATURE_ID']?>" method="post">
-        <label for="FEATURE_NAME">FEATURE_NAME</label>
-        <!-- <label for="created">Created</label> -->
+        <label for="FEATURE_NAME">Feature Name</label>
         <input type="text" name="FEATURE_NAME" placeholder="Example Value" value="<?=$contact['FEATURE_NAME']?>" id="FEATURE_NAME">
-        <!-- <input type="datetime-local" name="created" value="<?=date('Y-m-d\TH:i', strtotime($contact['created']))?>" id="created"> -->
         <input type="submit" value="Update">
     </form>
     <?php if ($msg): ?>

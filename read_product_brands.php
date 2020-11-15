@@ -18,25 +18,28 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	<table>
         <thead>
             <tr>
-                <td>#</td>
+
                 <td>BRAND_BARCODE</td>
                 <td>BRAND_NAME</td>
                 <td>MANUFACTURER_NAME</td>
+                <td>M_SYSCODE</td>
                 <td></td>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($product as $element): ?>
             <tr>
-				<td><?= $element['M_SYSCODE'] ?></td>
+
                 <td><?= $element['BRAND_BARCODE'] ?></td>
                 <td><?= $element['BRAND_NAME'] ?></td>
+
 				<?php
 					$stmt = $pdo->prepare('SELECT MANUFACTURER_NAME FROM MANUFACTURERS  WHERE MANUFACTURER_ID = ?');
                 	$stmt->execute([$element['MANUFACTURER_ID']]);
                 	$temp = $stmt->fetch();
 				?>
                 <td><?= $temp['MANUFACTURER_NAME'] ?></td>
+                <td><?= $element['M_SYSCODE'] ?></td>
                 <td class="actions">
                     <a href="update_product_brands.php?BRAND_BARCODE=<?= $element[
                         'BRAND_BARCODE'
@@ -57,3 +60,4 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?= template_footer()
 ?>
+

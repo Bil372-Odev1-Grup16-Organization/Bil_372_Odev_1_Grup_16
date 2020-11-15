@@ -18,8 +18,7 @@ if (!empty($_POST)) {
     $stmt = $pdo->prepare('INSERT INTO PRODUCT VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
     $stmt->execute([$id, $code,$name, $shortname,$parentcode, $abstract, $category,$active,]);
     // Output message
-    $msg = 'Created Successfully!';
-    header("location: read_product.php");
+    $msg = 'Product created successfully!';
 }
 ?>
 
@@ -28,22 +27,22 @@ if (!empty($_POST)) {
 <div class="content update">
 	<h2>Create Product</h2>
     <form action="create_product.php" method="post">
-        <label for="M_CODE">M_CODE</label>
-        <label for="M_NAME">M_NAME</label>
+        <label for="M_CODE">Product Code</label>
+        <label for="M_NAME">Product Name</label>
         <input type="text" name="M_CODE" placeholder="example value" id="M_CODE">
         <input type="text" name="M_NAME" placeholder="example value" id="M_NAME">
 
-        <label for="M_SHORTNAME">M_SHORTNAME</label>
-        <label for="M_PARENTCODE">M_PARENTCODE</label>
+        <label for="M_SHORTNAME">Product's Short Name</label>
+        <label for="M_PARENTCODE">Parent Product</label>
         <input type="text" name="M_SHORTNAME" placeholder="evample value" id="M_SHORTNAME">
         <input type="text" name="M_PARENTCODE" placeholder="example value" id="M_PARENTCODE">
 
-        <label for="M_ABSTRACT">M_ABSTRACT</label>
-        <label for="M_CATEGORY">M_CATEGORY</label>
+        <label for="M_ABSTRACT">Abstractness Status</label>
+        <label for="M_CATEGORY">Category</label>
         <input type="text" name="M_ABSTRACT" placeholder="example value" id="M_ABSTRACT">
         <input type="text" name="M_CATEGORY" placeholder="example value" id="M_CATEGORY">
 
-        <label for="IS_ACTIVE">IS_ACTIVE</label>
+        <label for="IS_ACTIVE">Activity Status</label>
         <label></label>
         <input type="text" name="IS_ACTIVE" placeholder="example value" id="IS_ACTIVE">
         <label></label>
@@ -51,7 +50,10 @@ if (!empty($_POST)) {
         <input type="submit" value="Create">
     </form>
     <?php if ($msg): ?>
-    <p><?= $msg ?></p>
+    <p><?php
+    echo "<script>alert('$msg')</script>";
+    echo "<script>window.location = 'read_product.php';</script>";
+    ?></p>
     <?php endif; ?>
 </div>
 

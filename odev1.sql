@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 10 Kas 2020, 21:25:20
+-- Üretim Zamanı: 15 Kas 2020, 15:47:36
 -- Sunucu sürümü: 10.4.14-MariaDB
 -- PHP Sürümü: 7.4.11
 
@@ -34,6 +34,13 @@ CREATE TABLE `alternative_brands` (
   `ALTERNATIVE_M_SYSCODE` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Tablo döküm verisi `alternative_brands`
+--
+
+INSERT INTO `alternative_brands` (`BRAND_BARCODE`, `M_SYSCODE`, `ALTERNATIVE_BRAND_BARCODE`, `ALTERNATIVE_M_SYSCODE`) VALUES
+('123345', 705, '1233452', 705);
+
 -- --------------------------------------------------------
 
 --
@@ -48,7 +55,8 @@ CREATE TABLE `brand_orgs` (
   `BASE_PRICE` float DEFAULT NULL,
   `IN_AMOUNT` float NOT NULL,
   `OUT_AMOUNT` float NOT NULL,
-  `QUANTITY` float GENERATED ALWAYS AS (`IN_AMOUNT` + `OUT_AMOUNT`) VIRTUAL
+  `QUANTITY` float GENERATED ALWAYS AS (`IN_AMOUNT` + `OUT_AMOUNT`) VIRTUAL,
+  `UNIT` enum('litres','kg','number') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -99,6 +107,15 @@ CREATE TABLE `features` (
   `FEATURE_NAME` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Tablo döküm verisi `features`
+--
+
+INSERT INTO `features` (`FEATURE_ID`, `FEATURE_NAME`) VALUES
+(0, 'bbbb'),
+(2, 'Boy'),
+(3, 'hyu');
+
 -- --------------------------------------------------------
 
 --
@@ -129,6 +146,13 @@ CREATE TABLE `manufacturers` (
   `COUNTRY` char(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Tablo döküm verisi `manufacturers`
+--
+
+INSERT INTO `manufacturers` (`MANUFACTURER_ID`, `MANUFACTURER_NAME`, `MANUFACTURER_ADDRESS`, `CITY`, `COUNTRY`) VALUES
+(1, 'Deneme', 'dasfsdfs', 1, 'TUR');
+
 -- --------------------------------------------------------
 
 --
@@ -151,12 +175,12 @@ CREATE TABLE `organisations` (
 --
 
 INSERT INTO `organisations` (`ORG_ID`, `ORG_NAME`, `PARENT_ORG`, `ORG_ABSTRACT`, `ORG_ADDRESS`, `ORG_CITY`, `ORG_DISTRICT`, `ORG_TYPE`) VALUES
-(1, 'Kocalar A.S', 0, 1, 'aaa', 1, NULL, 1),
+(1, 'Koca A.S', 0, 0, 'aaa', 1, '', 0),
 (2, 'Hasanlar', 1, 1, 'ddfsfdsf', 1, NULL, 2),
-(4, 'Babalar', 0, 1, 'adfaf', 1, NULL, 2),
+(4, 'Babalar', 0, 0, 'adfaf', 1, '', 0),
 (5, 'Hasanlar', 4, 0, 'sadfaf', 1, NULL, 1),
 (7, 'Karahan', 4, 1, 'Yenimahalle', 1, '', 1),
-(21, 'Deneme', 0, 0, 'Yenimahalle', 1, '', 0);
+(29, '0 olacak', 0, 0, '23wfaf', 1, 'f', 1);
 
 -- --------------------------------------------------------
 
@@ -205,7 +229,13 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`M_SYSCODE`, `M_CODE`, `M_NAME`, `M_SHORTNAME`, `M_PARENTCODE`, `M_ABSTRACT`, `M_CATEGORY`, `IS_ACTIVE`) VALUES
-(1, '1', '', 'short', '2', 1, 'Deterjan', 1);
+(1, '1', 'HERTY', 'short', '2', 0, 'Deterjan', 0),
+(4, '2', 'Deterjan', 'dtj', '0', 0, 'Ev isleri', 0),
+(5, '3', 'Calgon', 'clg', '1', 1, 'ev isleri', 0),
+(7, '4', 'Ali', 'faf', '0', 1, 'dfag', 1),
+(701, '40', 'Deneme1', 'de', '3', 0, 'Ev isleri', 0),
+(702, '41', 'Child1', 'ch', '3', 0, 'Ev isleri', 1),
+(705, '42', 'Bardak', 'brd', '0', 1, 'Ev Esyasi', 1);
 
 -- --------------------------------------------------------
 
@@ -220,6 +250,14 @@ CREATE TABLE `product_brands` (
   `M_SYSCODE` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Tablo döküm verisi `product_brands`
+--
+
+INSERT INTO `product_brands` (`BRAND_BARCODE`, `BRAND_NAME`, `MANUFACTURER_ID`, `M_SYSCODE`) VALUES
+('123345', 'Pasabahce', 1, 705),
+('1233452', 'Bim', 1, 705);
+
 -- --------------------------------------------------------
 
 --
@@ -232,6 +270,16 @@ CREATE TABLE `product_features` (
   `MINVAL` float DEFAULT NULL,
   `MAXVAL` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Tablo döküm verisi `product_features`
+--
+
+INSERT INTO `product_features` (`M_SYSCODE`, `FEATURE_ID`, `MINVAL`, `MAXVAL`) VALUES
+(1, 3, 0, 3),
+(4, 2, 324, 3333),
+(7, 2, 1, 2),
+(701, 2, 2222, 222222);
 
 -- --------------------------------------------------------
 
@@ -374,25 +422,25 @@ ALTER TABLE `country_city`
 -- Tablo için AUTO_INCREMENT değeri `features`
 --
 ALTER TABLE `features`
-  MODIFY `FEATURE_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `FEATURE_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `manufacturers`
 --
 ALTER TABLE `manufacturers`
-  MODIFY `MANUFACTURER_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `MANUFACTURER_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `organisations`
 --
 ALTER TABLE `organisations`
-  MODIFY `ORG_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `ORG_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `product`
 --
 ALTER TABLE `product`
-  MODIFY `M_SYSCODE` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `M_SYSCODE` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=706;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `users`

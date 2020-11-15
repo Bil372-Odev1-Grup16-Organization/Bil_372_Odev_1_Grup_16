@@ -14,6 +14,7 @@ $organisations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="content read">
 	<h2>All Organisations</h2>
 	<a href="create_organisation.php" class="add-product">Add a new organisation</a>
+	<input class="form-control" id="myInput" type="text" placeholder="Search..">
 	<table>
         <thead>
             <tr>
@@ -28,7 +29,7 @@ $organisations = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td></td>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable">
             <?php foreach ($organisations as $organisation): ?>
             <tr>
                 <td><?=$organisation['ORG_ID']?></td>

@@ -7,6 +7,8 @@ $stmt = $pdo->prepare('SELECT * FROM ORGANISATIONS ORDER BY ORG_ID');
 $stmt->execute();
 $organisations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+
+
 ?>
 
 <?=template_header('Read')?>
@@ -30,38 +32,42 @@ $organisations = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </tr>
         </thead>
         <tbody id="myTable">
-            <?php foreach ($organisations as $organisation): ?>
+            <?php foreach ($organisations as $element): ?>
             <tr>
-                <td><?=$organisation['ORG_ID']?></td>
-                <td><?=$organisation['ORG_NAME']?></td>
-                <?php   $stmt = $pdo->prepare('SELECT ORG_NAME FROM ORGANISATIONS  WHERE ORG_ID = ?');                            ?>
-                <?php   $stmt->execute([$organisation['PARENT_ORG']]);                           ?>
-                <?php   $temp = $stmt->fetch();                           ?>
-                <?php   if(!$temp):                          ?>
-                    <td><?="NONE"?></td>
-                <?php   else:                         ?>
-                    <td><?=$temp['ORG_NAME']?></td>
-                <?php  endif;     ?>
-                <td><?=$organisation['ORG_ABSTRACT']?></td>
-                <td><?=$organisation['ORG_ADDRESS']?></td>
-                <?php $stmt = $pdo->prepare('SELECT CITY_NAME FROM COUNTRY_CITY  WHERE CITY_ID = ?');           ?>
-                <?php  $stmt->execute([$organisation['ORG_CITY']]);           ?>
-                <?php   $temp = $stmt->fetch();        ?>
+							<?php   $stmt = $pdo->prepare('SELECT ORG_NAME FROM ORGANISATIONS  WHERE ORG_ID = ?');                            ?>
+							<?php   $stmt->execute([$element['PARENT_ORG']]);                           ?>
+							<?php   $parent_org = $stmt->fetch();                           ?>
 
-                <td><?=$temp['CITY_NAME']?></td>
-                <td><?=$organisation['ORG_DISTRICT']?></td>
+							<?php $stmt = $pdo->prepare('SELECT CITY_NAME FROM COUNTRY_CITY  WHERE CITY_ID = ?');           ?>
+							<?php  $stmt->execute([$element['ORG_CITY']]);           ?>
+							<?php   $city = $stmt->fetch();        ?>
 
-                <?php  if($organisation['ORG_TYPE'] == 0):  ?>
-                <?php  $temp='Supplier'  ?>
-                <?php  elseif($organisation['ORG_TYPE'] == 1): ?>
-                <?php  $temp='Consumer'  ?>
+
+							<?php $stmt = $pdo->prepare('SELECT ORG_TYPE FROM ORGANISATIONS  WHERE ORG_ID = ?');           ?>
+							<?php  $stmt->execute([$element['ORG_TYPE']]);           ?>
+							<?php   $type = $stmt->fetch();        ?>
+
+
+
+                <td><?=$element['ORG_ID']?></td>
+                <td><?=$element['ORG_NAME']?></td>
+                <td><?=$parent_org['ORG_NAME']?></td>
+                <td><?=$element['ORG_ABSTRACT']?></td>
+								<td><?= $element['ORG_ADDRESS'] ?></td>
+								<td><?=$city['CITY_NAME']?></td>
+								<td><?= $element['ORG_DISTRICT'] ?></td>
+
+                <?php  if($element['ORG_TYPE'] == 0):  ?>
+                <?php  $type='Supplier'  ?>
+                <?php  elseif($element['ORG_TYPE'] == 1): ?>
+                <?php  $type='Consumer'  ?>
                 <?php else :  ?>
-                <?php  $temp='Both'  ?>
+                <?php  $type='Both'  ?>
                 <?php endif;  ?>
-                <td><?=$temp?></td>
+                <td><?=$type?></td>
                 <td class="actions">
-                    <a href="update_organisation.php?ORG_ID=<?=$organisation['ORG_ID']?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
-                    <a href="delete_organisation.php?ORG_ID=<?=$organisation['ORG_ID']?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
+                    <a href="update_organisation.php?ORG_ID=<?=$element['ORG_ID']?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="delete_organisation.php?ORG_ID=<?=$element['ORG_ID']?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -70,3 +76,4 @@ $organisations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <?=template_footer()?>
+

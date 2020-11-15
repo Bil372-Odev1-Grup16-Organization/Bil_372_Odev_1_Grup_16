@@ -3,7 +3,7 @@ include 'functions.php';
 $pdo = pdo_connect_mysql();
 
 if (isset($_POST['submit'])) {
-    echo "Enter correct values";
+    echo "Don't leave any field empty";
     $stmt = $pdo->prepare('INSERT INTO PRODUCT_FEATURES(M_SYSCODE,FEATURE_ID,MINVAL,MAXVAL) VALUES (?,?,?,?)');
     if($stmt->execute([$_POST['product'],$_POST['feature'], $_POST['minval'],$_POST['maxval']])){
         echo("<script>alert('Created Successfully')</script>");

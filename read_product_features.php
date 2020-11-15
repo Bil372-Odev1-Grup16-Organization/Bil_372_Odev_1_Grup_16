@@ -18,7 +18,7 @@ $product_features = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 <div class="content read">
-	<h2>All Links</h2>
+	<h2>All Product & Features</h2>
 	<a href="create_product_features.php" class="add-product">Link Product & Features</a>
 	<input class="form-control" id="myInput" type="text" placeholder="Search..">
 	<table>

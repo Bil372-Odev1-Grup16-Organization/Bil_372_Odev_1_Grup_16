@@ -19,7 +19,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <thead>
             <tr>
                 <td>#</td>
-                <td>FEATURE_NAME</td>
+                <td>Feature Name</td>
                 <td></td>
             </tr>
         </thead>

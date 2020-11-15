@@ -29,7 +29,10 @@ if (isset($_GET['FEATURE_ID'])) {
         <input type="text" name="FEATURE_NAME" placeholder="Example Value" value="<?=$contact['FEATURE_NAME']?>" id="FEATURE_NAME">
         <input type="submit" value="Update">
     </form>
-    <?php if ($msg): ?>
+    <p><?php
+    echo "<script>alert('$msg')</script>";
+    echo "<script>window.location = 'read_feature.php';</script>";
+    ?></p>
     <p><?=$msg?></p>
     <?php endif; ?>
 </div>

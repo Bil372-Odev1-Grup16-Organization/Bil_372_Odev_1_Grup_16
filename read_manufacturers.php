@@ -17,10 +17,10 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <thead>
             <tr>
                 <td>#</td>
-                <td>MANUFACTURER_NAME</td>
-                <td>MANUFACTURER_ADDRESS</td>
-                <td>CITY</td>
-                <td>COUNTRY</td>
+                <td>Manufacturer Name</td>
+                <td>Manufacturer Address</td>
+                <td>Manufacturer City</td>
+                <td>Manufacturer Country</td>
                 <td></td>
             </tr>
         </thead>

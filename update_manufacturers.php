@@ -11,7 +11,7 @@ if (isset($_GET['MANUFACTURER_ID'])) {
 
         $stmt = $pdo->prepare('UPDATE MANUFACTURERS SET MANUFACTURER_NAME = ?, MANUFACTURER_ADDRESS = ?, CITY = ?, COUNTRY = ? WHERE MANUFACTURER_ID = ?');
         $stmt->execute([$name, $address, $city, $country, $_GET['MANUFACTURER_ID']]);
-        $msg = 'Updated Successfully!';
+        $msg = 'Manufacturer updated successfully!';
     }
     $stmt = $pdo->prepare('SELECT * FROM MANUFACTURERS WHERE MANUFACTURER_ID = ?');
     $stmt->execute([$_GET['MANUFACTURER_ID']]);
@@ -42,7 +42,10 @@ if (isset($_GET['MANUFACTURER_ID'])) {
         <input type="submit" value="Update">
     </form>
     <?php if ($msg): ?>
-    <p><?=$msg?></p>
+    <p><?php
+    echo "<script>alert('$msg')</script>";
+    echo "<script>window.location = 'read_manufacturers.php';</script>";
+    ?></p>
     <?php endif; ?>
 </div>
 

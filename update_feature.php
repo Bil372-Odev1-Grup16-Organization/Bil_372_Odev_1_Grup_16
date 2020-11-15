@@ -7,7 +7,7 @@ if (isset($_GET['FEATURE_ID'])) {
         $name = isset($_POST['FEATURE_NAME']) ? $_POST['FEATURE_NAME'] : '';
         $stmt = $pdo->prepare('UPDATE FEATURES SET FEATURE_NAME = ? WHERE FEATURE_ID = ?');
         $stmt->execute([$name, $_GET['FEATURE_ID']]);
-        $msg = 'Updated Successfully!';
+        $msg = 'Feature updated successfully!';
     }
     $stmt = $pdo->prepare('SELECT * FROM FEATURES WHERE FEATURE_ID = ?');
     $stmt->execute([$_GET['FEATURE_ID']]);
@@ -29,11 +29,11 @@ if (isset($_GET['FEATURE_ID'])) {
         <input type="text" name="FEATURE_NAME" placeholder="Example Value" value="<?=$contact['FEATURE_NAME']?>" id="FEATURE_NAME">
         <input type="submit" value="Update">
     </form>
+    <?php if ($msg): ?>
     <p><?php
     echo "<script>alert('$msg')</script>";
     echo "<script>window.location = 'read_feature.php';</script>";
     ?></p>
-    <p><?=$msg?></p>
     <?php endif; ?>
 </div>
 

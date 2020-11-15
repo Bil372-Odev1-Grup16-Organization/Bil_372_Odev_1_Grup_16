@@ -10,9 +10,18 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?= template_header('Read') ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+</head>
+
+
+
 <div class="content read">
 	<h2>All Products</h2>
 	<a href="create_product.php" class="add-product">Add a new product</a>
+    <input class="form-control" id="myInput" type="text" placeholder="Search..">
 	<table>
         <thead>
             <tr>
@@ -27,7 +36,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td></td>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable">
             <?php foreach ($product as $element): ?>
             <tr>
                 <td><?= $element['M_SYSCODE'] ?></td>
@@ -54,3 +63,4 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?= template_footer()
 ?>
+

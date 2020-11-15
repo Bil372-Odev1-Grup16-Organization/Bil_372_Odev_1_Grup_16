@@ -3,7 +3,7 @@ include 'functions.php';
 
 $pdo = pdo_connect_mysql();
 
-$stmt = $pdo->prepare('SELECT * FROM BRAND_ORGS ORDER BY M_SYSCODE');
+$stmt = $pdo->prepare('SELECT * FROM BRAND_ORGS ORDER BY LOT_ID');
 $stmt->execute();
 $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -18,15 +18,14 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <thead>
             <tr>
                 <td>#</td>
-                <td>LOT_ID</td>
                 <td>ORG_ID</td>
                 <td>BRAND_BARCODE</td>
-                <td>QUANTITY</td>
-								<td>UNIT</td>
                 <td>EXPIRY_DATE</td>
                 <td>BASEPRICE</td>
-                <td>IN</td>
-								<td>OUT</td>
+                <td>IN_AMOUNT</td>
+		<td>OUT_AMOUNT</td>
+		<td>QUANTITY</td>
+		<td>UNIT</td>
                 <td></td>
             </tr>
         </thead>
@@ -36,12 +35,12 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?= $element['LOT_ID'] ?></td>
                 <td><?= $element['ORG_ID'] ?></td>
                 <td><?= $element['BRAND_BARCODE'] ?></td>
-                <td><?= $element['QUANTITY'] ?></td>
-								<td><?= $element['UNIT'] ?></td>
                 <td><?= $element['EXPIRY_DATE'] ?></td>
                 <td><?= $element['BASEPRICE'] ?></td>
-                <td><?= $element['IN'] ?></td>
-								<td><?= $element['OUT'] ?></td>
+                <td><?= $element['IN_AMOUNT'] ?></td>
+		<td><?= $element['OUT_AMOUNT'] ?></td>
+		<td><?= $element['QUANTITY'] ?></td>
+		<td><?= $element['UNIT'] ?></td>
                 <td class="actions">
                     <a href="update_brand_organisations.php?M_SYSCODE=<?= $element[
                         'M_SYSCODE'

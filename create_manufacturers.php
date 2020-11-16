@@ -44,13 +44,13 @@ select {
 <div class="content update">
 	<h2>Add Manufacturer</h2>
     <form action="create_manufacturers.php" method="post">
-        <label for="MANUFACTURER_NAME">MANUFACTURER_NAME</label>
-        <label for="MANUFACTURER_ADDRESS">MANUFACTURER_ADDRESS</label>
+        <label for="MANUFACTURER_NAME">Manufacturer Name</label>
+        <label for="MANUFACTURER_ADDRESS">Manufacturer Address</label>
         <input type="text" name="MANUFACTURER_NAME" placeholder="example value" id="MANUFACTURER_NAME">
         <input type="text" name="M_NAME" placeholder="example value" id="MANUFACTURER_ADDRESS">
 
-        <label for="CITY">CITY</label>
-        <label for="COUNTRY">COUNTRY</label>
+        <label for="CITY">City</label>
+        <label for="COUNTRY">Country</label>
 
         <select name="CITY" required="required">
             <option disabled selected>Select a city </option>

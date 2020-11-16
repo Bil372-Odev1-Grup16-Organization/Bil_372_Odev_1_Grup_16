@@ -24,10 +24,10 @@ $product_features = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	<table>
         <thead>
             <tr>
-                <td>PRODUCT</td>
-                <td>FEATURE</td>
-                <td>MINVAL</td>
-                <td>MAXVAL</td>
+                <td>Product</td>
+                <td>Feature</td>
+                <td>Minimum Value</td>
+                <td>Maximum Value</td>
                 
             </tr>
         </thead>

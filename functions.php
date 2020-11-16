@@ -2,8 +2,8 @@
 function pdo_connect_mysql() {
     $DATABASE_HOST = 'localhost';
     $DATABASE_USER = 'root';
-    $DATABASE_PASS = '';
-    $DATABASE_NAME = 'ODEV1';
+    $DATABASE_PASS = 'rootroot';
+    $DATABASE_NAME = 'odev1';
     try {
     	return new PDO('mysql:host=' . $DATABASE_HOST . ';dbname=' . $DATABASE_NAME . ';charset=utf8', $DATABASE_USER, $DATABASE_PASS);
     } catch (PDOException $exception) {
@@ -39,20 +39,18 @@ echo <<<EOT
     });
     </script>
     <nav class="navtop">
-    	<div>
-        <h1>Panel</h1>
-          <div>
-            <a href="index.php"><i class="fas fa-home"></i>Home</a>
-            <a href="read_product.php"><i class="fas fa-hammer"></i>Products</a>
-            <a href="read_feature.php"><i class="fas fa-toolbox"></i>Features</a>
-            <a href="read_manufacturers.php"><i class="fas fa-industry"></i>Manufacturers</a>
-            <a href="read_product_brands.php"><i class="fas fa-copyright"></i>Product Brands</a>
-            <a href="read_alternativebrands.php"><i class="fas fa-copyright"></i>Alternative Brands</a>
-	        <a href="read_product_features.php"><i class="fas fa-toolbox"></i>Product Features</a>
-	        <a href="read_brand_organisations.php"><i class="fas fa-school"></i>Brand Organisations</a>
-            <a href="read_organisations.php"><i class="fas fa-sitemap"></i>Organisations</a>
-          </div>
-    	</div>
+      <div>
+        <a href="index.php"><i class="fas fa-home"></i>Home</a>
+        <a href="read_product.php"><i class="fas fa-hammer"></i>Products</a>
+        <a href="read_feature.php"><i class="fas fa-toolbox"></i>Features</a>
+        <a href="read_product_features.php"><i class="fas fa-toolbox"></i>Product Features</a>
+        <a href="read_manufacturers.php"><i class="fas fa-industry"></i>Manufacturers</a>
+        <a href="read_product_brands.php"><i class="fas fa-copyright"></i>Product Brands</a>
+        <a href="read_organisations.php"><i class="fas fa-sitemap"></i>Organisations</a>
+        <a href="read_brand_organisations.php"><i class="fas fa-school"></i>Brand Organisations</a>
+        <a href="read_flow.php"><i class="fas fa-exchange-alt"></i>Flow</a>
+        <a href="read_alternativebrands.php"><i class="fas fa-copyright"></i>Alternative Brands</a>
+      </div>
     </nav>
 EOT;
 }

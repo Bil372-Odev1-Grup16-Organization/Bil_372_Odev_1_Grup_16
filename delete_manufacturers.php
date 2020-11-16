@@ -17,7 +17,7 @@ if (isset($_GET['MANUFACTURER_ID'])) {
         if ($_GET['confirm'] == 'yes') {
             $stmt = $pdo->prepare('DELETE FROM MANUFACTURERS WHERE MANUFACTURER_ID = ?');
             $stmt->execute([$_GET['MANUFACTURER_ID']]);
-            $msg = 'You have deleted the selecteed manufacturer!';
+            $msg = 'Manufacturer deleted successfully!';
         } else {
             header('Location: read_manufacturers.php');
             exit;
@@ -33,10 +33,13 @@ if (isset($_GET['MANUFACTURER_ID'])) {
 <div class="manufacturer delete">
 	<h2>Delete Manufacturer #<?=$product['MANUFACTURER_ID']?></h2>
     <?php if ($msg): ?>
-    <p><?=$msg?></p>
+    <p><?php
+    echo "<script>alert('$msg')</script>";
+    echo "<script>window.location = 'read_manufacturers.php';</script>";
+    ?></p>
     <?php else: ?>
 	<p>Are you sure you want to delete the selected manufacturer #<?=$product['MANUFACTURER_ID']?>?</p>
-    <div class="yesno">
+    <div class="yesno1">
         <a href="delete_manufacturers.php?MANUFACTURER_ID=<?=$product['MANUFACTURER_ID']?>&confirm=yes">Yes</a>
         <a href="delete_manufacturers.php?MANUFACTURER_ID=<?=$product['MANUFACTURER_ID']?>&confirm=no">No</a>
     </div>

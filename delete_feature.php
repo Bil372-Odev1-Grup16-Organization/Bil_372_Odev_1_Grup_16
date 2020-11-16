@@ -17,7 +17,7 @@ if (isset($_GET['FEATURE_ID'])) {
         if ($_GET['confirm'] == 'yes') {
             $stmt = $pdo->prepare('DELETE FROM FEATURES WHERE FEATURE_ID = ?');
             $stmt->execute([$_GET['FEATURE_ID']]);
-            $msg = 'You have deleted the selecteed feature!';
+            $msg = 'Feature deleted successfully!';
         } else {
             header('Location: read_feature.php');
             exit;
@@ -33,10 +33,13 @@ if (isset($_GET['FEATURE_ID'])) {
 <div class="feature delete">
 	<h2>Delete Feature #<?=$product['FEATURE_ID']?></h2>
     <?php if ($msg): ?>
-    <p><?=$msg?></p>
+    <p><?php
+    echo "<script>alert('$msg')</script>";
+    echo "<script>window.location = 'read_feature.php';</script>";
+    ?></p>
     <?php else: ?>
 	<p>Are you sure you want to delete the selected feature #<?=$product['FEATURE_ID']?>?</p>
-    <div class="yesno">
+    <div class="yesno1">
         <a href="delete_feature.php?FEATURE_ID=<?=$product['FEATURE_ID']?>&confirm=yes">Yes</a>
         <a href="delete_feature.php?FEATURE_ID=<?=$product['FEATURE_ID']?>&confirm=no">No</a>
     </div>

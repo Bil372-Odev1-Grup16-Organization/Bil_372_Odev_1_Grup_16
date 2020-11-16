@@ -12,9 +12,9 @@ if (isset($_GET['ORG_ID'])) {
         $result = mysqli_query($conn,$sql);
         $row =mysqli_fetch_assoc($result);
         $city= $row["CITY_ID"];
-        $district = mysqli_real_escape_string($conn,$_POST['district']);     
-        $abstract =  mysqli_real_escape_string($conn,$_POST['abstract']);  
-        $typeString=mysqli_real_escape_string($conn,$_POST['type']); 
+        $district = mysqli_real_escape_string($conn,$_POST['district']);
+        $abstract =  mysqli_real_escape_string($conn,$_POST['abstract']);
+        $typeString=mysqli_real_escape_string($conn,$_POST['type']);
         if(strcmp($typeString,"Supplier") == 0){
             $type=0;
         }
@@ -24,7 +24,7 @@ if (isset($_GET['ORG_ID'])) {
         else{
             $type=2;
         }
-        $parents=mysqli_real_escape_string($conn,$_POST['parent']); 
+        $parents=mysqli_real_escape_string($conn,$_POST['parent']);
         if(strcmp($parents,"NONE")==0){
             $parentid=0;
         }
@@ -38,7 +38,7 @@ if (isset($_GET['ORG_ID'])) {
             $row =mysqli_fetch_assoc($result);
             $parentid= $row["ORG_ID"];
         }
-        
+
         $sql="SELECT ORG_ID FROM ORGANISATIONS WHERE ORG_NAME = \"$parentOfParent\"";
         $result = mysqli_query($conn,$sql);
         while( $row = mysqli_fetch_assoc($result)){
@@ -51,16 +51,16 @@ if (isset($_GET['ORG_ID'])) {
                 $row2=mysqli_fetch_assoc($result2);
                 $parentid= $row2["ORG_ID"];
         }
-        }  
+        }
         $OrgId=$_GET['ORG_ID'] ;
         $sql = "UPDATE ORGANISATIONS SET ORG_NAME= '$orgName', PARENT_ORG =$parentid , ORG_ABSTRACT=$abstract, ORG_ADDRESS='$address', ORG_CITY=$city, ORG_DISTRICT='$district' ,ORG_TYPE = $type WHERE ORG_ID = $OrgId";
-        if (!mysqli_query($conn, $sql)){  
+        if (!mysqli_query($conn, $sql)){
             if(strpos(mysqli_error($conn), "Duplicate") !== false){
                 $error = "A Organisation which has this name and parent already exists ". "<br>";
-            }   
+            }
             else{
-                echo "Error: "  . mysqli_error($conn); 
-            }                
+                echo "Error: "  . mysqli_error($conn);
+            }
         }
         $msg = "Updated Successfully";
     }
@@ -73,7 +73,7 @@ if (isset($_GET['ORG_ID'])) {
         exit('Organisation doesn\'t exist with that M_SYSCODE!');
     }
 } else {
-    exit('No 0RG_ID is selected!');
+    exit('No ORG_ID is selected!');
 }
 ?>
 
@@ -94,57 +94,61 @@ select {
         <label for="ORG_NAME">ORG_NAME</label>
         <label for="ORG_PARENT">PARENT</label>
         <input type="text" name="org-name" placeholder="Value" value="<?=$organisation['ORG_NAME']?>" required="required">
-        
+
         <select  name="parent"  required="required" >
                 <option value="" disabled selected>   Select your parent Company   </option>
                 <option>NONE</option>
                 <?php  $OrgId= $organisation['ORG_ID'];
                        $sql = "SELECT * FROM ORGANISATIONS WHERE ORG_ID NOT LIKE $OrgId";
-                       $result = mysqli_query($conn,$sql);  
+                       $result = mysqli_query($conn,$sql);
                        while($row = mysqli_fetch_assoc($result)) {
-                        if($row['ORG_ABSTRACT'] == 0):   
+                        if($row['ORG_ABSTRACT'] == 0):
                         $tmp= $row["ORG_ID"];
                         if($row["PARENT_ORG"]== 0){ ?>
-                            <option><?php echo $row["ORG_NAME"]. "--" ."NONE" ;  ?></option> 
-                        <?php }    
+                            <option><?php echo $row["ORG_NAME"]. "--" ."NONE" ;  ?></option>
+                        <?php }
                         $sql2="SELECT ORG_NAME, ORG_ID, ORG_ABSTRACT FROM ORGANISATIONS WHERE PARENT_ORG = $tmp ";
                         $result2 = mysqli_query($conn,$sql2);
                         while($row2=mysqli_fetch_assoc($result2)){
-                            if($row2['ORG_ID'] != $OrgId and $row2['ORG_ABSTRACT'] == 0){ 
+                            if($row2['ORG_ID'] != $OrgId and $row2['ORG_ABSTRACT'] == 0){
                                             ?>
                                <option><?php echo $row2["ORG_NAME"]. "--" .$row["ORG_NAME"] ;  ?></option>
-                        <?php  } } endif;}               ?>      
+                        <?php  } } endif;}               ?>
         </select>
 
 
-        <label for="ORG_ABSTRACT">Is Abstract?</label>
         <label for="ORG_ADDRESS">ORG_ADDRESS</label>
-        <input type="text" name="abstract" placeholder="Value" value="<?=$organisation['ORG_ABSTRACT']?>" >
+        <label for="ORG_TYPE">Type</label>
         <input type="text" name="address" placeholder="Value" value="<?=$organisation['ORG_ADDRESS']?>" >
+        <select  name="type"  >
+                <option>Supplier</option>
+                <option>Consumer</option>
+                <option>Both</option>
+        </select>
 
         <label for="ORG_DISTRICT">ORG_DISTRICT</label>
         <label for="ORG_CITY">City</label>
         <input type="text" name="district" placeholder="Example Value" value="<?=$organisation['ORG_DISTRICT']?>" >
         <select  name="city"  required="required"  >
                 <?php  $sql = "SELECT CITY_NAME FROM COUNTRY_CITY";
-                       $result = mysqli_query($conn,$sql);  
+                       $result = mysqli_query($conn,$sql);
                        while($row = mysqli_fetch_assoc($result)) {        ?>
                             <option><?php echo $row["CITY_NAME"] ;  ?></option>
-                       <?php   }           ?>      
+                       <?php   }           ?>
         </select>
 
-        <label for="ORG_TYPE">Type</label>
-        <label for="ORG_TYPE"> </label>
-        <select  name="type"  >
-                <option>Supplier</option>
-                <option>Consumer</option>
-                <option>Both</option>            
-        </select>
-        
+        <!-- need debug here -->
+        <label for="ORG_ABSTRACT">Is Abstract?</label>
+        <label></label>
+        <label><input style="width: 0px" type="checkbox" name="ORG_ABSTRACT" id="ORG_ABSTRACT"> Yes</label>
+        <label></label>
+
+
         <input type="submit" name= "submit" value="Update" style="margin: 0px 0px 0px 100px ;">
     </form>
     <?php if ($msg): ?>
-    <p><?=$msg?></p>
+    <p><?php echo("<script>alert('$msg')</script>");
+     echo("<script>window.location = 'read_organisations.php';</script>");    ?></p>
     <?php endif; ?>
 </div>
 

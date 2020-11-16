@@ -46,7 +46,7 @@ if (isset($_GET['M_SYSCODE'])) {
                     $stmt->execute([$product['M_CODE']]);
                 }
 
-                $msg .= 'You have deleted the selected product! (CASCADE)';
+                $msg .= 'Product deleted in cascade successfully!';
             } elseif ($_GET['option'] == 'link') {
                 //abstract ise secilemez degilse bu urunu parent alanlarin parentini guncelle.
                 //bu urunu inactive yap
@@ -62,7 +62,7 @@ if (isset($_GET['M_SYSCODE'])) {
                 );
                 $stmt->execute([$parentOfThisProduct, $product['M_CODE']]);
 
-                $msg = 'You have deleted the selected product! (LINK)';
+                $msg = 'Product deleted and childeren linked successfully!';
             }
         } else {
             header('Location: read_product.php');
@@ -81,16 +81,6 @@ if (isset($_GET['M_SYSCODE'])) {
 ?>
 
 <?= template_header('Delete') ?>
-
-<!-- style element to center delete box
-<style>
-    .container {
-        text-align: center;
-    }
-</style>
--->
-
-<div class="container">
     <div class="product delete">
 	<h2>Delete Product #<?= $product['M_SYSCODE'] ?></h2>
     <?php if ($msg): ?>
@@ -103,20 +93,19 @@ if (isset($_GET['M_SYSCODE'])) {
 	<p>Are you sure you want to delete the selected product #<?= $product[
      'M_SYSCODE'
  ] ?>?</p>
-    <div class="yesno">
+    <div class="yesno1">
         <a href="delete_product.php?M_SYSCODE=<?= $product['M_SYSCODE'] ?>&confirm=yes">Yes</a>
         <a href="delete_product.php?M_SYSCODE=<?= $product['M_SYSCODE'] ?>&confirm=no">No</a>
     </div>
         <?php elseif ($_GET['confirm'] == 'yes'): ?>
 
         <p>Cascade Delete or Link Child Products to Parent Product #<?= $product['M_SYSCODE'] ?>?</p>
-        <div class="yesno">
+        <div class="yesno2">
             <a href="delete_product.php?M_SYSCODE=<?= $product['M_SYSCODE'] ?>&confirm=yes&option=cascade">Cascade delete</a>
             <a href="delete_product.php?M_SYSCODE=<?= $product[ 'M_SYSCODE'] ?>&confirm=yes&option=link">Link child products to parent product</a>
         </div>
         <?php endif; ?>
     <?php endif; ?>
-</div>
 </div>
 
 <?= template_footer()

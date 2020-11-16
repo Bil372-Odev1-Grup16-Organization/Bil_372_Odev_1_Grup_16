@@ -1,19 +1,17 @@
-$id<?php
+<?php
 include 'functions.php';
 $pdo = pdo_connect_mysql();
 $msg = '';
 if (isset($_GET['MANUFACTURER_ID'])) {
     if (!empty($_POST)) {
-        $id = isset($_POST['MANUFACTURER_ID']) ? $_POST['MANUFACTURER_ID'] : NULL;
         $name = isset($_POST['MANUFACTURER_NAME']) ? $_POST['MANUFACTURER_NAME'] : '';
         $address = isset($_POST['MANUFACTURER_ADDRESS']) ? $_POST['MANUFACTURER_ADDRESS'] : '';
         $city = isset($_POST['CITY']) ? $_POST['CITY'] : '';
         $country = isset($_POST['COUNTRY']) ? $_POST['COUNTRY'] : '';
 
-        //$created = isset($_POST['created']) ? $_POST['created'] : date('Y-m-d H:i:s');
-        $stmt = $pdo->prepare('UPDATE MANUFACTURERS SET MANUFACTURER_ID = ?, MANUFACTURER_NAME = ?, MANUFACTURER_ADDRESS = ?, CITY = ?, COUNTRY = ? WHERE MANUFACTURER_ID = ?');
-        $stmt->execute([$id, $name, $address, $city, $country, $_GET['MANUFACTURER_ID']]);
-        $msg = 'Updated Successfully!';
+        $stmt = $pdo->prepare('UPDATE MANUFACTURERS SET MANUFACTURER_NAME = ?, MANUFACTURER_ADDRESS = ?, CITY = ?, COUNTRY = ? WHERE MANUFACTURER_ID = ?');
+        $stmt->execute([$name, $address, $city, $country, $_GET['MANUFACTURER_ID']]);
+        $msg = 'Manufacturer updated successfully!';
     }
     $stmt = $pdo->prepare('SELECT * FROM MANUFACTURERS WHERE MANUFACTURER_ID = ?');
     $stmt->execute([$_GET['MANUFACTURER_ID']]);
@@ -22,7 +20,7 @@ if (isset($_GET['MANUFACTURER_ID'])) {
         exit('Manufacturer doesn\'t exist with that Manufacturer ID!');
     }
 } else {
-    exit('No MANUFACTURER_ID is selected!');
+    exit('No Manufacturer is selected!');
 }
 ?>
 
@@ -44,7 +42,10 @@ if (isset($_GET['MANUFACTURER_ID'])) {
         <input type="submit" value="Update">
     </form>
     <?php if ($msg): ?>
-    <p><?=$msg?></p>
+    <p><?php
+    echo "<script>alert('$msg')</script>";
+    echo "<script>window.location = 'read_manufacturers.php';</script>";
+    ?></p>
     <?php endif; ?>
 </div>
 

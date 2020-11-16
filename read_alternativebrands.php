@@ -20,6 +20,7 @@ $alternativebrands = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="content read">
 	<h2>All Brands and Their Alternatives</h2>
 	<a href="create_alternativebrand.php" class="add-product">Link Brands</a>
+	<input class="form-control" id="myInput" type="text" placeholder="Search..">
 	<table>
         <thead>
             <tr>
@@ -30,7 +31,7 @@ $alternativebrands = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 
             </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable">
             <?php foreach ($alternativebrands as $element): ?>
             <tr>
                 <?php  $stmt = $pdo->prepare('SELECT BRAND_NAME FROM PRODUCT_BRANDS WHERE BRAND_BARCODE=?');       ?>

@@ -10,14 +10,6 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?= template_header('Read') ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  
-</head>
-
-
-
 <div class="content read">
 	<h2>All Products</h2>
 	<a href="create_product.php" class="add-product">Add a new product</a>
@@ -26,13 +18,13 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <thead>
             <tr>
                 <td>#</td>
-                <td>M_CODE</td>
-                <td>M_NAME</td>
-                <td>M_SHORTNAME</td>
-                <td>M_PARENTCODE</td>
-                <td>M_ABSTRACT</td>
-                <td>M_CATEGORY</td>
-                <td>IS_ACTIVE</td>
+                <td>Product Code</td>
+                <td>Product Name</td>
+                <td>Product's Short Name</td>
+                <td>Parent Product</td>
+                <td>Abstractness Status</td>
+                <td>Category</td>
+                <td>Activity Status</td>
                 <td></td>
             </tr>
         </thead>
@@ -63,4 +55,3 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?= template_footer()
 ?>
-

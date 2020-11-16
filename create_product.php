@@ -6,6 +6,7 @@ $msg = '';
 // Check if the data is empty
 if (!empty($_POST)) {
     // Insert values into columns
+    $id = isset($_POST['M_SYSCODE']) && !empty($_POST['M_SYSCODE']) && $_POST['M_SYSCODE'] != 'auto' ? $_POST['M_SYSCODE'] : NULL;
     $code = isset($_POST['M_CODE']) ? $_POST['M_CODE'] : '';
     $name = isset($_POST['M_NAME']) ? $_POST['M_NAME'] : '';
     $shortname = isset($_POST['M_SHORTNAME']) ? $_POST['M_SHORTNAME'] : '';
@@ -14,11 +15,10 @@ if (!empty($_POST)) {
     $category = isset($_POST['M_CATEGORY']) ? $_POST['M_CATEGORY'] : '';
     $active = isset($_POST['IS_ACTIVE']) ? $_POST['IS_ACTIVE'] : '';
     // Insert new record into the contacts table
-    $stmt = $pdo->prepare('INSERT INTO PRODUCT VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)');
-    $stmt->execute([$code,$name, $shortname,$parentcode, $abstract, $category,$active,]);
+    $stmt = $pdo->prepare('INSERT INTO PRODUCT VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+    $stmt->execute([$id, $code,$name, $shortname,$parentcode, $abstract, $category,$active,]);
     // Output message
-    $msg = 'Created Successfully!';
-    header("location: read_product.php");
+    $msg = 'Product created successfully!';
 }
 ?>
 
@@ -27,30 +27,37 @@ if (!empty($_POST)) {
 <div class="content update">
 	<h2>Create Product</h2>
     <form action="create_product.php" method="post">
-        <label for="M_CODE">M_CODE</label>
-        <label for="M_NAME">M_NAME</label>
+        <label for="M_CODE">Product Code</label>
+        <label for="M_NAME">Product Name</label>
         <input type="text" name="M_CODE" placeholder="example value" id="M_CODE">
         <input type="text" name="M_NAME" placeholder="example value" id="M_NAME">
 
-        <label for="M_SHORTNAME">M_SHORTNAME</label>
-        <label for="M_PARENTCODE">M_PARENTCODE</label>
+        <label for="M_SHORTNAME">Product's Short Name</label>
+        <label for="M_PARENTCODE">Parent Product</label>
         <input type="text" name="M_SHORTNAME" placeholder="evample value" id="M_SHORTNAME">
         <input type="text" name="M_PARENTCODE" placeholder="example value" id="M_PARENTCODE">
 
-        <label for="M_ABSTRACT">M_ABSTRACT</label>
-        <label for="M_CATEGORY">M_CATEGORY</label>
-        <input type="text" name="M_ABSTRACT" placeholder="example value" id="M_ABSTRACT">
+        <label for="M_CATEGORY">Category</label>
+        <label></label>
         <input type="text" name="M_CATEGORY" placeholder="example value" id="M_CATEGORY">
+        <label></label>
 
-        <label for="IS_ACTIVE">IS_ACTIVE</label>
-        <label></label>
-        <input type="text" name="IS_ACTIVE" placeholder="example value" id="IS_ACTIVE">
-        <label></label>
+        <label for="M_ABSTRACT">Abstractness Status</label>
+        <label for="IS_ACTIVE">Activity Status</label>
+        <label><input style="width: 0px" type="checkbox" name="M_ABSTRACT" value="1" id="M_ABSTRACT"> Yes</label>
+        <label><input style="width: 0px" type="checkbox" name="IS_ACTIVE" value="1" id="IS_ACTIVE"> Yes</label>
 
         <input type="submit" value="Create">
     </form>
     <?php if ($msg): ?>
-    <p><?= $msg ?></p>
+    <?php
+        $abstract = !isset($_POST['M_ABSTRACT']) ? 0 : '';
+        $active = !isset($_POST['IS_ACTIVE']) ? 0 : '';
+    ?>
+    <p><?php
+    echo "<script>alert('$msg')</script>";
+    echo "<script>window.location = 'read_product.php';</script>";
+    ?></p>
     <?php endif; ?>
 </div>
 

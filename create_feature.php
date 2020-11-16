@@ -12,12 +12,11 @@ if (!empty($_POST)) {
     $stmt = $pdo->prepare('INSERT INTO FEATURES VALUES (?, ?)');
     $stmt->execute([$id, $name]);
     // Output message
-    $msg = 'Created Successfully!';
+    $msg = 'Feature created successfully!';
 }
 ?>
 
 <?=template_header('Create')?>
-
 <div class="content update">
 	<h2>Create Feature</h2>
     <form action="create_feature.php" method="post">
@@ -29,7 +28,10 @@ if (!empty($_POST)) {
         <input type="submit" value="Create">
     </form>
     <?php if ($msg): ?>
-    <p><?=$msg?></p>
+    <p><?php
+    echo "<script>alert('$msg')</script>";
+    echo "<script>window.location = 'read_feature.php';</script>";
+    ?></p>
     <?php endif; ?>
 </div>
 

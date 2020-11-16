@@ -12,18 +12,19 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="content read">
 	<h2>All Manufacturers</h2>
 	<a href="create_manufacturers.php" class="add-product">Add a new manufacturer</a>
+	<input class="form-control" id="myInput" type="text" placeholder="Search..">
 	<table>
         <thead>
             <tr>
                 <td>#</td>
-                <td>MANUFACTURER_NAME</td>
-                <td>MANUFACTURER_ADDRESS</td>
-                <td>CITY</td>
-                <td>COUNTRY</td>
+                <td>Manufacturer Name</td>
+                <td>Manufacturer Address</td>
+                <td>Manufacturer City</td>
+                <td>Manufacturer Country</td>
                 <td></td>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable">
             <?php foreach ($product as $element): ?>
             <tr>
                 <td><?= $element['MANUFACTURER_ID'] ?></td>

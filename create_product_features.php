@@ -57,8 +57,8 @@ select {
         <?php endforeach; ?>
     </select>
 
-    <label for="MINVAL">MINVAL </label>
-    <label for="MAXVAL">MAXVAL</label>
+    <label for="MINVAL">Minimum Value</label>
+    <label for="MAXVAL">Maximum Value</label>
     <input type="number" name="minval" placeholder="example value" min="0" required="required">
     <input type="number" name="maxval" placeholder="example value" min="0" required="required">      
 

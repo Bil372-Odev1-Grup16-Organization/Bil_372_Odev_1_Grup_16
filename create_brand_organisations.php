@@ -75,7 +75,7 @@ select {
 
       <label for="UNIT">Unit</label>
       <label></label>
-      <select  name="unit"  >
+      <select  name="UNIT"  >
                 <option>kg</option>
                 <option>number</option>
                 <option>litres</option>

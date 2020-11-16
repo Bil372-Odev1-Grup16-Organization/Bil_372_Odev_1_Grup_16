@@ -47,7 +47,7 @@ select {
     <form action="create_brand_organisations.php" method="post">
 
       <label for="ORG_ID">Organisation ID</label>
-      <label for="BRAND_BARCODE">Barcode</label>
+      <label for="BRAND_BARCODE">Brand Barcode</label>
 
       <select name="ORG_ID" required="required">
           <option disabled selected>Select an organisation </option>
@@ -56,25 +56,27 @@ select {
           <?php endforeach; ?>
       </select>
 
-      <select name="BRAND_BARCODE" required="required">
+      <select name="BRAND_BARCODE" required="required" style="margin-left: 25px">
           <option disabled selected>Select a brand </option>
           <?php foreach($brand as $brand): ?>
               <option value="<?= $brand['BRAND_BARCODE']; ?>"><?= $brand['BRAND_NAME']; ?></option>
           <?php endforeach; ?>
       </select>
 
-      <label for="EXPIRY_DATE">EXPIRY_DATE</label>
-      <label for="BASE_PRICE">BASE_PRICE</label>
+      <label for="EXPIRY_DATE">Expiry Date</label>
+      <label for="BASE_PRICE">Base Price</label>
       <input type="date" name="EXPIRY_DATE" placeholder="example value" id="EXPIRY_DATE">
       <input type="float" name="BASE_PRICE" placeholder="example value" id="BASE_PRICE">
 
-      <label for="IN_AMOUNT">IN_AMOUNT</label>
-      <label for="OUT_AMOUNT">OUT_AMOUNT</label>
+      <label for="IN_AMOUNT">In Amount</label>
+      <label for="OUT_AMOUNT">Out Amount</label>
       <input type="float" name="IN_AMOUNT" placeholder="example value" id="IN_AMOUNT">
       <input type="float" name="OUT_AMOUNT" placeholder="example " id="OUT_AMOUNT">
 
-      <label for="UNIT">UNIT</label>
+      <label for="UNIT">Unit</label>
+      <label></label>
       <input type="number" name="UNIT" placeholder="example value" id="UNIT">
+      <label></label>
 
       <input type="submit" value="Create">
     </form>
@@ -84,5 +86,3 @@ select {
 </div>
 
 <?=template_footer()?>
-
-

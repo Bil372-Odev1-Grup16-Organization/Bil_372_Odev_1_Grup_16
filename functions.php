@@ -17,7 +17,8 @@ echo <<<EOT
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>$title</title>
+        <title>$title</title>
+        <link href="reset.css" rel="stylesheet" type="text/css">
 		<link href="style.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
         <title>Bootstrap Example</title>

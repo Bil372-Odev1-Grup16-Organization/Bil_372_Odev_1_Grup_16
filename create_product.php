@@ -44,8 +44,8 @@ if (!empty($_POST)) {
 
         <label for="M_ABSTRACT">Abstractness Status</label>
         <label for="IS_ACTIVE">Activity Status</label>
-        <label><input style="width: 0px" type="checkbox" name="M_ABSTRACT" value="1" id="M_ABSTRACT"> Yes</label>
-        <label><input style="width: 0px" type="checkbox" name="IS_ACTIVE" value="1" id="IS_ACTIVE"> Yes</label>
+        <label><input style="width: 20px" type="checkbox" name="M_ABSTRACT" value="1" id="M_ABSTRACT"> Yes</label>
+        <label><input style="width: 20px" type="checkbox" name="IS_ACTIVE" value="1" id="IS_ACTIVE"> Yes</label>
 
         <input type="submit" value="Create">
     </form>

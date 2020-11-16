@@ -51,7 +51,11 @@ $organisations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <td><?=$element['ORG_ID']?></td>
                 <td><?=$element['ORG_NAME']?></td>
-                <td><?=$parent_org['ORG_NAME']?></td>
+                <?php   if(!$parent_org):                          ?>
+	                     <td><?="NONE"?></td>
+	                 <?php   else:                         ?>
+	                     <td><?=$parent_org['ORG_NAME']?></td>
+	                 <?php  endif;     ?>
                 <td><?=$element['ORG_ABSTRACT']?></td>
 								<td><?= $element['ORG_ADDRESS'] ?></td>
 								<td><?=$city['CITY_NAME']?></td>

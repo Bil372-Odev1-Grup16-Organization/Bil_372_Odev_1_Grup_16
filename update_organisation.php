@@ -13,7 +13,12 @@ if (isset($_GET['ORG_ID'])) {
         $row =mysqli_fetch_assoc($result);
         $city= $row["CITY_ID"];
         $district = mysqli_real_escape_string($conn,$_POST['district']);
-        $abstract =  mysqli_real_escape_string($conn,$_POST['abstract']);
+        if(isset($_POST['abstract'])){
+            $abstract = 1;
+        }
+        else{
+            $abstract=0;
+        }
         $typeString=mysqli_real_escape_string($conn,$_POST['type']);
         if(strcmp($typeString,"Supplier") == 0){
             $type=0;
@@ -140,7 +145,7 @@ select {
         <!-- need debug here -->
         <label for="ORG_ABSTRACT">Is Abstract?</label>
         <label></label>
-        <label><input style="width: 0px" type="checkbox" name="ORG_ABSTRACT" id="ORG_ABSTRACT"> Yes</label>
+        <label><input style="width: 20px" type="checkbox" name="abstract"> Yes</label>
         <label></label>
 
 

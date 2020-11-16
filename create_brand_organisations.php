@@ -75,7 +75,11 @@ select {
 
       <label for="UNIT">Unit</label>
       <label></label>
-      <input type="number" name="UNIT" placeholder="example value" id="UNIT">
+      <select  name="unit"  >
+                <option>kg</option>
+                <option>number</option>
+                <option>litres</option>
+        </select>
       <label></label>
 
       <input type="submit" value="Create">

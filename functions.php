@@ -51,14 +51,61 @@ echo <<<EOT
         <a href="read_brand_organisations.php"><i class="fas fa-school"></i>Brand Organisations</a>
         <a href="read_flow.php"><i class="fas fa-exchange-alt"></i>Flow</a>
         <a href="read_alternativebrands.php"><i class="fas fa-copyright"></i>Alternative Brands</a>
-        <a href="read_organisations.php"><i class="fas fa-sitemap"></i>Organisations</a>
-        <a href="logout.php" style="margin-left: 30px;">
+        
+        <a href="logout.php" style="margin-left: auto;">
         <span class="glyphicon glyphicon-log-out" style="color:black;" onmouseover="this.style.color='red';" onmouseout="this.style.color='black';"></span>
         </a>
       </div>
     </nav>
 EOT;
 }
+
+function template_header_organisation($title){
+    echo <<<EOT
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <title>$title</title>
+        <link href="reset.css" rel="stylesheet" type="text/css">
+		<link href="style.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	</head>
+    <body>
+    <script>
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+    </script>
+    <nav class="navtop">
+      <div>
+        <a href="organisation_index.php"><i class="fas fa-home"></i>Home</a>
+        <a href="read_brand_organisations.php" style="margin-left: 300px; font-size: 20px;" ><i class="fas fa-school"></i>Brand Organisations</a>
+        <a href="read_flow.php" style="margin-left: 250px; font-size: 20px;" ><i class="fas fa-exchange-alt"></i>Flow</a>
+        
+        <a href="logout.php" style="margin-left: auto;" >
+        <span class="glyphicon glyphicon-log-out" style="color:black;" onmouseover="this.style.color='red';" onmouseout="this.style.color='black';"></span>
+        </a>
+      </div>
+    </nav>
+EOT;
+
+
+
+
+
+ }
 function template_footer() {
 echo <<<EOT
     </body>

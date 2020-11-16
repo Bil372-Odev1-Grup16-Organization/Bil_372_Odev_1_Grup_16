@@ -125,7 +125,7 @@ select {
         <!-- need debug here -->
         <label for="ORG_ABSTRACT">Is Abstract? </label>
         <label></label>
-        <label><input style="width: 0px" type="checkbox" name="M_ABSTRACT" value="1" id="ORG_ABSTRACT"> Yes</label>
+        <label><input style="width: 20px" type="checkbox" name="M_ABSTRACT" value="1" id="ORG_ABSTRACT"> Yes</label>
         <label></label>
 
         <!--<label for="created">Created on </label>

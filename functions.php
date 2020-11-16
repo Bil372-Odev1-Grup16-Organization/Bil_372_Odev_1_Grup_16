@@ -91,8 +91,8 @@ function template_header_organisation($title){
     <nav class="navtop">
       <div>
         <a href="organisation_index.php" style="font-size: 20px;" ><i class="fas fa-home"></i>Home</a>
-        <a href="read_brand_organisations.php" style="margin-left: 340px; font-size: 20px;" ><i class="fas fa-school"></i>Brand Organisations</a>
-        <a href="read_flow.php" style="margin-left: 250px; font-size: 20px;" ><i class="fas fa-exchange-alt"></i>Flow</a>
+        <a href="read_brand_organisations.php" style="margin-left: 450px; font-size: 20px;" ><i class="fas fa-school"></i>Brand Organisations</a>
+        <a href="read_flow.php" style="margin-left: 50px; font-size: 20px;" ><i class="fas fa-exchange-alt"></i>Flow</a>
         
         <a href="logout.php" style="margin-left: auto;" >
         <span class="glyphicon glyphicon-log-out" style="color:black;" onmouseover="this.style.color='red';" onmouseout="this.style.color='black';"></span>

@@ -32,7 +32,6 @@ select {
   width: 400px;
   height:43px;
   border-radius: 4px;
-
 }
 </style>
 
@@ -41,24 +40,23 @@ select {
 <div class="content update">
 	<h2>Create Product Brand</h2>
     <form action="create_product_brands.php" method="post">
-      <label for="BRAND_BARCODE">BRAND_BARCODE</label>
-      <label for="BRAND_NAME">BRAND_NAME</label>
+      <label for="BRAND_BARCODE">Brand Barcode</label>
+      <label for="BRAND_NAME">Brand Name</label>
       <input type="text" name="BRAND_BARCODE" placeholder="example value" id="BRAND_BARCODE">
       <input type="text" name="BRAND_NAME" placeholder="example value" id="BRAND_NAME">
 
-
       <label for="M_SYSCODE">Product</label>
-      <label for="MANUFACTURER_NAME">MANUFACTURER_NAME</label>
+      <label for="MANUFACTURER_NAME">Manufacturer Name</label>
 
       <select name="M_SYSCODE" required="required">
-          <option disabled selected>Select a manufacturer </option>
+          <option disabled selected>Select a product</option>
           <?php foreach($product as $product): ?>
               <option value="<?= $product['M_SYSCODE']; ?>"><?= $product['M_NAME']; ?></option>
           <?php endforeach; ?>
       </select>
 
-      <select name="MANUFACTURER_ID" required="required">
-          <option disabled selected>Select a manufacturer </option>
+      <select name="MANUFACTURER_ID" required="required" style="margin-left: 25px">
+          <option disabled selected>Select a manufacturer</option>
           <?php foreach($manufacturer as $manufacturer): ?>
               <option value="<?= $manufacturer['MANUFACTURER_ID']; ?>"><?= $manufacturer['MANUFACTURER_NAME']; ?></option>
           <?php endforeach; ?>
@@ -67,9 +65,13 @@ select {
       <input type="submit" value="Create">
     </form>
     <?php if ($msg): ?>
-    <p><?=$msg?></p>
+        <p>
+        <?php
+        echo "<script>alert('$msg')</script>";
+        echo "<script>window.location = 'read_product_brands.php';</script>";
+        ?>
+        </p>
     <?php endif; ?>
 </div>
 
 <?=template_footer()?>
-

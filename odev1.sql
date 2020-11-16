@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 15 Kas 2020, 15:47:36
+-- Üretim Zamanı: 16 Kas 2020, 17:33:11
 -- Sunucu sürümü: 10.4.14-MariaDB
 -- PHP Sürümü: 7.4.11
 
@@ -229,13 +229,15 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`M_SYSCODE`, `M_CODE`, `M_NAME`, `M_SHORTNAME`, `M_PARENTCODE`, `M_ABSTRACT`, `M_CATEGORY`, `IS_ACTIVE`) VALUES
-(1, '1', 'HERTY', 'short', '2', 0, 'Deterjan', 0),
+(1, '1', 'HERTY', 'short', '2', 1, 'Deterjan', 0),
 (4, '2', 'Deterjan', 'dtj', '0', 0, 'Ev isleri', 0),
 (5, '3', 'Calgon', 'clg', '1', 1, 'ev isleri', 0),
 (7, '4', 'Ali', 'faf', '0', 1, 'dfag', 1),
 (701, '40', 'Deneme1', 'de', '3', 0, 'Ev isleri', 0),
 (702, '41', 'Child1', 'ch', '3', 0, 'Ev isleri', 1),
-(705, '42', 'Bardak', 'brd', '0', 1, 'Ev Esyasi', 1);
+(705, '42', 'Bardak', 'brd', '0', 1, 'Ev Esyasi', 1),
+(706, '456', 'Yenideneme', 'ghh', '3', 0, 'deneme', 1),
+(707, 'sdf', 'sdfasdf', 'dfasf', '33', 1, 'afsdsdf', 1);
 
 -- --------------------------------------------------------
 
@@ -255,7 +257,7 @@ CREATE TABLE `product_brands` (
 --
 
 INSERT INTO `product_brands` (`BRAND_BARCODE`, `BRAND_NAME`, `MANUFACTURER_ID`, `M_SYSCODE`) VALUES
-('123345', 'Pasabahce', 1, 705),
+('123345', 'pasa', 1, 705),
 ('1233452', 'Bim', 1, 705);
 
 -- --------------------------------------------------------
@@ -319,7 +321,9 @@ ALTER TABLE `alternative_brands`
 -- Tablo için indeksler `brand_orgs`
 --
 ALTER TABLE `brand_orgs`
-  ADD PRIMARY KEY (`LOT_ID`,`ORG_ID`,`BRAND_BARCODE`,`EXPIRY_DATE`);
+  ADD PRIMARY KEY (`LOT_ID`,`ORG_ID`,`BRAND_BARCODE`,`EXPIRY_DATE`),
+  ADD KEY `ORG_ID` (`ORG_ID`),
+  ADD KEY `BRAND_BARCODE` (`BRAND_BARCODE`);
 
 --
 -- Tablo için indeksler `country`
@@ -348,8 +352,8 @@ ALTER TABLE `flow`
   ADD PRIMARY KEY (`SOURCE_LOT_ID`,`SOURCE_ORG_ID`,`TARGET_ORG_ID`,`TARGET_LOT_ID`,`BRAND_BARCODE`),
   ADD KEY `BRAND_BARCODE` (`BRAND_BARCODE`),
   ADD KEY `TARGET_LOT_ID` (`TARGET_LOT_ID`),
-  ADD KEY `SOURCE_ORG_ID` (`SOURCE_ORG_ID`),
-  ADD KEY `TARGET_ORG_ID` (`TARGET_ORG_ID`);
+  ADD KEY `flow_ibfk_4` (`SOURCE_ORG_ID`),
+  ADD KEY `flow_ibfk_5` (`TARGET_ORG_ID`);
 
 --
 -- Tablo için indeksler `manufacturers`
@@ -434,13 +438,13 @@ ALTER TABLE `manufacturers`
 -- Tablo için AUTO_INCREMENT değeri `organisations`
 --
 ALTER TABLE `organisations`
-  MODIFY `ORG_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `ORG_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `product`
 --
 ALTER TABLE `product`
-  MODIFY `M_SYSCODE` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=706;
+  MODIFY `M_SYSCODE` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=708;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `users`
@@ -462,6 +466,13 @@ ALTER TABLE `alternative_brands`
   ADD CONSTRAINT `alternative_brands_ibfk_4` FOREIGN KEY (`ALTERNATIVE_M_SYSCODE`) REFERENCES `product` (`M_SYSCODE`);
 
 --
+-- Tablo kısıtlamaları `brand_orgs`
+--
+ALTER TABLE `brand_orgs`
+  ADD CONSTRAINT `brand_orgs_ibfk_1` FOREIGN KEY (`ORG_ID`) REFERENCES `organisations` (`ORG_ID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `brand_orgs_ibfk_2` FOREIGN KEY (`BRAND_BARCODE`) REFERENCES `product_brands` (`BRAND_BARCODE`);
+
+--
 -- Tablo kısıtlamaları `country_city`
 --
 ALTER TABLE `country_city`
@@ -474,8 +485,8 @@ ALTER TABLE `flow`
   ADD CONSTRAINT `flow_ibfk_1` FOREIGN KEY (`BRAND_BARCODE`) REFERENCES `product_brands` (`BRAND_BARCODE`),
   ADD CONSTRAINT `flow_ibfk_2` FOREIGN KEY (`SOURCE_LOT_ID`) REFERENCES `brand_orgs` (`LOT_ID`),
   ADD CONSTRAINT `flow_ibfk_3` FOREIGN KEY (`TARGET_LOT_ID`) REFERENCES `brand_orgs` (`LOT_ID`),
-  ADD CONSTRAINT `flow_ibfk_4` FOREIGN KEY (`SOURCE_ORG_ID`) REFERENCES `organisations` (`ORG_ID`),
-  ADD CONSTRAINT `flow_ibfk_5` FOREIGN KEY (`TARGET_ORG_ID`) REFERENCES `organisations` (`ORG_ID`);
+  ADD CONSTRAINT `flow_ibfk_4` FOREIGN KEY (`SOURCE_ORG_ID`) REFERENCES `organisations` (`ORG_ID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `flow_ibfk_5` FOREIGN KEY (`TARGET_ORG_ID`) REFERENCES `organisations` (`ORG_ID`) ON DELETE CASCADE;
 
 --
 -- Tablo kısıtlamaları `manufacturers`

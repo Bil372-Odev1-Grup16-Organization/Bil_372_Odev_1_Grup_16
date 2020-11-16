@@ -90,8 +90,8 @@ function template_header_organisation($title){
     </script>
     <nav class="navtop">
       <div>
-        <a href="organisation_index.php"><i class="fas fa-home"></i>Home</a>
-        <a href="read_brand_organisations.php" style="margin-left: 300px; font-size: 20px;" ><i class="fas fa-school"></i>Brand Organisations</a>
+        <a href="organisation_index.php" style="font-size: 20px;" ><i class="fas fa-home"></i>Home</a>
+        <a href="read_brand_organisations.php" style="margin-left: 340px; font-size: 20px;" ><i class="fas fa-school"></i>Brand Organisations</a>
         <a href="read_flow.php" style="margin-left: 250px; font-size: 20px;" ><i class="fas fa-exchange-alt"></i>Flow</a>
         
         <a href="logout.php" style="margin-left: auto;" >

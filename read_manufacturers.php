@@ -19,8 +19,8 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td>#</td>
                 <td>Manufacturer Name</td>
                 <td>Manufacturer Address</td>
-                <td>Manufacturer City</td>
-                <td>Manufacturer Country</td>
+                <td>City</td>
+                <td>Country</td>
                 <td></td>
             </tr>
         </thead>

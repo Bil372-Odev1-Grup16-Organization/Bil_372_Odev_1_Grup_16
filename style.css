@@ -176,21 +176,7 @@ body {
 .update form input[type="submit"]:hover {
   	background-color: #32a367;
 }
-.delete .yesno {
-  	display: flex;
-}
-.delete .yesno a {
-  	display: inline-block;
-  	text-decoration: none;
-  	background-color: #38b673;
-  	font-weight: bold;
-  	color: #FFFFFF;
-  	padding: 10px 15px;
-  	margin: 15px 10px 15px 0;
-}
-.delete .yesno a:hover {
-  	background-color: #32a367;
-}
+
 .delete {
     text-align: center;
 }

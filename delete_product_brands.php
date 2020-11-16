@@ -34,18 +34,17 @@ if (isset($_GET['BRAND_BARCODE']) & isset($_GET['M_SYSCODE'])) {
 <?=template_header('Delete')?>
 
 <div class="product brand delete">
-  <!-- double pk situation
-	<h2>Delete Product Brand #<?=$product['MANUFACTURER_ID']?></h2>
-  <-->
+	<h2>Delete Product Brand #<?=$product['BRAND_BARCODE']?></h2>
     <?php if ($msg): ?>
-    <p><?=$msg?></p>
+        <p><?php
+        echo "<script>alert('$msg')</script>";
+        echo "<script>window.location = 'read_product_brands.php';</script>";
+        ?></p>
     <?php else: ?>
-    <!-- double pk in product
-	<p>Are you sure you want to delete the selected product brand #<?=$product['MANUFACTURER_ID']?>?</p>
-    <div class="yesno">
-        <a href="delete_product_brands.php?MANUFACTURER_ID=<?=$product['MANUFACTURER_ID']?>&confirm=yes">Yes</a>
-        <a href="delete_product_brands.php?MANUFACTURER_ID=<?=$product['MANUFACTURER_ID']?>&confirm=no">No</a>
-        <-->
+	<p>Are you sure you want to delete the selected product brand #<?=$product['BRAND_BARCODE']?>?</p>
+    <div class="yesno1">
+        <a href="delete_product_brands.php?BRAND_BARCODE=<?=$product['BRAND_BARCODE']?>&M_SYSCODE=<?=$product['M_SYSCODE']?>&confirm=yes">Yes</a>
+        <a href="delete_product_brands.php?BRAND_BARCODE=<?=$product['BRAND_BARCODE']?>&M_SYSCODE=<?=$product['M_SYSCODE']?>&confirm=no">No</a>
     </div>
     <?php endif; ?>
 </div>

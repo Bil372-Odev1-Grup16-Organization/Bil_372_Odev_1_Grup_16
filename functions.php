@@ -51,6 +51,9 @@ echo <<<EOT
 	        <a href="read_product_features.php"><i class="fas fa-toolbox"></i>Product Features</a>
 	        <a href="read_brand_organisations.php"><i class="fas fa-school"></i>Brand Organisations</a>
             <a href="read_organisations.php"><i class="fas fa-sitemap"></i>Organisations</a>
+            <a href="logout.php" style="margin-left: 15px;">
+            <span class="glyphicon glyphicon-log-out" style="color:black;" onmouseover="this.style.color='red';" onmouseout="this.style.color='black';"></span>
+            </a>
           </div>
     	</div>
     </nav>

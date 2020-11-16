@@ -1,8 +1,10 @@
 <?php
 include 'functions.php';
-// Your PHP code here.
+
 session_start();
-// Home Page template below.
+ if(!isset($_SESSION['NAME'])){
+	header("location: login.php");
+ }
 ?>
 
 <?=template_header('Home page')?>

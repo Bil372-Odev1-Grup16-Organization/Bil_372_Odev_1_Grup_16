@@ -42,9 +42,6 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		<td><?= $element['QUANTITY'] ?></td>
 		<td><?= $element['UNIT'] ?></td>
                 <td class="actions">
-                    <a href="update_brand_organisations.php?M_SYSCODE=<?= $element[
-                        'M_SYSCODE'
-                    ] ?>" class="edit"><i class="far fa-edit"></i>UPDATE</a>
                     <a href="delete_brand_organisations.php?M_SYSCODE=<?= $element[
                         'M_SYSCODE'
                     ] ?>" class="trash"><i class="far fa-trash-alt"></i>DELETE</a>

@@ -43,15 +43,17 @@ echo <<<EOT
         <a href="index.php"><i class="fas fa-home"></i>Home</a>
         <a href="read_product.php"><i class="fas fa-hammer"></i>Products</a>
         <a href="read_feature.php"><i class="fas fa-toolbox"></i>Features</a>
-        <a href="read_product_features.php"><i class="fas fa-toolbox"></i>Product Features</a>
+        <a href="read_product_features.php" style="width:120px;"><i class="fas fa-toolbox"></i>Product Features</a>
         <a href="read_manufacturers.php"><i class="fas fa-industry"></i>Manufacturers</a>
-        <a href="read_product_brands.php"><i class="fas fa-copyright"></i>Product Brands</a>
+        <a href="read_product_brands.php" style="width:100px;><i class="fas fa-copyright"></i>Product Brands</a>
         <a href="read_organisations.php"><i class="fas fa-sitemap"></i>Organisations</a>
         <a href="read_brand_organisations.php"><i class="fas fa-school"></i>Brand Organisations</a>
         <a href="read_flow.php"><i class="fas fa-exchange-alt"></i>Flow</a>
         <a href="read_alternativebrands.php"><i class="fas fa-copyright"></i>Alternative Brands</a>
         <a href="read_organisations.php"><i class="fas fa-sitemap"></i>Organisations</a>
-        
+        <a href="logout.php" style="margin-left: 30px;">
+        <span class="glyphicon glyphicon-log-out" style="color:black;" onmouseover="this.style.color='red';" onmouseout="this.style.color='black';"></span>
+        </a>
       </div>
     </nav>
 EOT;

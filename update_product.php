@@ -64,25 +64,27 @@ if (isset($_GET['M_SYSCODE'])) {
             'M_PARENTCODE'
         ] ?>" id="M_PARENTCODE">
 
-        <label for="M_ABSTRACT">Abstractness Status</label>
         <label for="M_CATEGORY">Category</label>
-        <input type="text" name="M_ABSTRACT" placeholder="Example Value" value="<?= $contact[
-            'M_ABSTRACT'
-        ] ?>" id="M_ABSTRACT">
-        <input type="text" name="M_CATEGORY" placeholder="Example Value" value="<?= $contact[
+        <label></label>
+        <input type="text" name="M_CATEGORY" placeholder="Value" value="<?= $contact[
             'M_CATEGORY'
         ] ?>" id="M_CATEGORY">
+        <label></label>
 
+        <!-- should be checked if it is already checked -->
+        <!-- need debug -->
+        <label for="M_ABSTRACT">Abstractness Status</label>
         <label for="IS_ACTIVE">Activity Status</label>
-        <label></label>
-        <input type="text" name="IS_ACTIVE" placeholder="Example Value" value="<?= $contact[
-            'IS_ACTIVE'
-        ] ?>" id="IS_ACTIVE">
-        <label></label>
+        <label><input style="width: 0px" type="checkbox" name="M_ABSTRACT" value="1" id="M_ABSTRACT"> Yes</label>
+        <label><input style="width: 0px" type="checkbox" name="IS_ACTIVE" value="1" id="IS_ACTIVE"> Yes</label>
 
         <input type="submit" value="Update">
     </form>
     <?php if ($msg): ?>
+    <?php
+        $abstract = isset($_POST['M_ABSTRACT']) ? 1 : 0;
+        $active = isset($_POST['IS_ACTIVE']) ? 1 : 0;
+    ?>
     <p><?php
     echo "<script>alert('$msg')</script>";
     echo "<script>window.location = 'read_product.php';</script>";

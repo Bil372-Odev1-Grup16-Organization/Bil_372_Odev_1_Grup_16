@@ -37,19 +37,23 @@ if (!empty($_POST)) {
         <input type="text" name="M_SHORTNAME" placeholder="evample value" id="M_SHORTNAME">
         <input type="text" name="M_PARENTCODE" placeholder="example value" id="M_PARENTCODE">
 
-        <label for="M_ABSTRACT">Abstractness Status</label>
         <label for="M_CATEGORY">Category</label>
-        <input type="text" name="M_ABSTRACT" placeholder="example value" id="M_ABSTRACT">
+        <label></label>
         <input type="text" name="M_CATEGORY" placeholder="example value" id="M_CATEGORY">
+        <label></label>
 
+        <label for="M_ABSTRACT">Abstractness Status</label>
         <label for="IS_ACTIVE">Activity Status</label>
-        <label></label>
-        <input type="text" name="IS_ACTIVE" placeholder="example value" id="IS_ACTIVE">
-        <label></label>
+        <label><input style="width: 0px" type="checkbox" name="M_ABSTRACT" value="1" id="M_ABSTRACT"> Yes</label>
+        <label><input style="width: 0px" type="checkbox" name="IS_ACTIVE" value="1" id="IS_ACTIVE"> Yes</label>
 
         <input type="submit" value="Create">
     </form>
     <?php if ($msg): ?>
+    <?php
+        $abstract = !isset($_POST['M_ABSTRACT']) ? 0 : '';
+        $active = !isset($_POST['IS_ACTIVE']) ? 0 : '';
+    ?>
     <p><?php
     echo "<script>alert('$msg')</script>";
     echo "<script>window.location = 'read_product.php';</script>";

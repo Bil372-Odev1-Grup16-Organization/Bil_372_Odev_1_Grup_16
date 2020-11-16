@@ -29,8 +29,8 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?=$contact['FEATURE_ID']?></td>
                 <td><?=$contact['FEATURE_NAME']?></td>
                 <td class="actions">
-                    <a href="update_feature.php?FEATURE_ID=<?=$contact['FEATURE_ID']?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
-                    <a href="delete_feature.php?FEATURE_ID=<?=$contact['FEATURE_ID']?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
+                    <a href="update_feature.php?FEATURE_ID=<?=$contact['FEATURE_ID']?>" class="edit"><i class="far fa-edit"></i>UPDATE</a>
+                    <a href="delete_feature.php?FEATURE_ID=<?=$contact['FEATURE_ID']?>" class="trash"><i class="far fa-trash-alt"></i>DELETE</a>
                 </td>
             </tr>
             <?php endforeach; ?>

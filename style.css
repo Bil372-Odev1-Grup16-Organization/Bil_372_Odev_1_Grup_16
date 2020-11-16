@@ -133,16 +133,16 @@ body {
   	padding: 10px 12px;
 }
 .read table tbody tr td.actions .trash {
-  	background-color: #EF476F;
+  	background-color: RGB(236,82,95);
 }
 .read table tbody tr td.actions .trash:hover {
-  	background-color: #8F2A42;
+  	background-color: RGB(216,62,75);
 }
 .read table tbody tr td.actions .edit {
-  	background-color: #118AB2;
+  	background-color: RGB(122,125,155);
 }
 .read table tbody tr td.actions .edit:hover {
-  	background-color: #0A526A;
+  	background-color: RGB(102,105,135);
 }
 .update form {
   	padding: 15px 0;

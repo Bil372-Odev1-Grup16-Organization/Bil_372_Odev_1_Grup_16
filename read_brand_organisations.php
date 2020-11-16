@@ -44,10 +44,10 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td class="actions">
                     <a href="update_brand_organisations.php?M_SYSCODE=<?= $element[
                         'M_SYSCODE'
-                    ] ?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
+                    ] ?>" class="edit"><i class="far fa-edit"></i>UPDATE</a>
                     <a href="delete_brand_organisations.php?M_SYSCODE=<?= $element[
                         'M_SYSCODE'
-                    ] ?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
+                    ] ?>" class="trash"><i class="far fa-trash-alt"></i>DELETE</a>
                 </td>
             </tr>
             <?php endforeach; ?>

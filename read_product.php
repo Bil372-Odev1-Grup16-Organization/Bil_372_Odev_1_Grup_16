@@ -40,12 +40,8 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?= $element['M_CATEGORY'] ?></td>
                 <td><?= $element['IS_ACTIVE'] ?></td>
                 <td class="actions">
-                    <a href="update_product.php?M_SYSCODE=<?= $element[
-                        'M_SYSCODE'
-                    ] ?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
-                    <a href="delete_product.php?M_SYSCODE=<?= $element[
-                        'M_SYSCODE'
-                    ] ?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
+                    <a href="update_product.php?M_SYSCODE=<?= $element['M_SYSCODE' ] ?>" class="edit"><i class="far fa-edit"></i>UPDATE</a>
+                    <a href="delete_product.php?M_SYSCODE=<?= $element[ 'M_SYSCODE'] ?>" class="trash"><i class="far fa-trash-alt"></i>DELETE</a>
                 </td>
             </tr>
             <?php endforeach; ?>

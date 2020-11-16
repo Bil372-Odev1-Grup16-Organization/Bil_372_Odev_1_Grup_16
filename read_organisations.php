@@ -70,8 +70,8 @@ $organisations = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php endif;  ?>
                 <td><?=$type?></td>
                 <td class="actions">
-                    <a href="update_organisation.php?ORG_ID=<?=$element['ORG_ID']?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
-                    <a href="delete_organisation.php?ORG_ID=<?=$element['ORG_ID']?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
+                    <a href="update_organisation.php?ORG_ID=<?=$element['ORG_ID']?>" class="edit"><i class="far fa-edit"></i>UPDATE</a>
+                    <a href="delete_organisation.php?ORG_ID=<?=$element['ORG_ID']?>" class="trash"><i class="far fa-trash-alt"></i>DELETE</a>
                 </td>
             </tr>
             <?php endforeach; ?>

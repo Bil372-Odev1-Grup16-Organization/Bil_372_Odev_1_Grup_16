@@ -6,7 +6,7 @@ $msg = '';
 // Check if the data is empty
 if (!empty($_POST)) {
     // Insert values into columns
-    $id = isset($_POST['M_SYSCODE']) && !empty($_POST['MANUFACTURER_ID']) && $_POST['MANUFACTURER_ID'] != 'auto' ? $_POST['MANUFACTURER_ID'] : NULL;
+    $id = isset($_POST['M_SYSCODE']) && !empty($_POST['M_SYSCODE']) && $_POST['M_SYSCODE'] != 'auto' ? $_POST['M_SYSCODE'] : NULL;
     $name = isset($_POST['MANUFACTURER_NAME']) ? $_POST['MANUFACTURER_NAME'] : '';
     $address = isset($_POST['MANUFACTURER_ADDRESS']) ? $_POST['MANUFACTURER_ADDRESS'] : '';
     $city = isset($_POST['CITY']) ? $_POST['CITY'] : '';
@@ -15,33 +15,63 @@ if (!empty($_POST)) {
     $stmt = $pdo->prepare('INSERT INTO MANUFACTURERS VALUES (?, ?, ?, ?, ?)');
     $stmt->execute([$id, $name, $address, $city, $country]);
     // Output message
-    $msg = 'Manufacturer created successfully!';
+    $msg = 'Created Successfully!';
 }
+
+$sql = "SELECT CITY_ID, CITY_NAME FROM COUNTRY_CITY";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$cities = $stmt->fetchAll();
+
+$sql = "SELECT COUNTRY_CODE, COUNTRY_NAME FROM COUNTRY";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$country = $stmt->fetchAll();
+
 ?>
+
+<style>
+select {
+  width: 400px;
+  height:43px;
+  border-radius: 4px;
+
+}
+</style>
 
 <?=template_header('Create')?>
 
 <div class="content update">
 	<h2>Add Manufacturer</h2>
     <form action="create_manufacturers.php" method="post">
-        <label for="MANUFACTURER_NAME">Manufacturer Name</label>
-        <label for="MANUFACTURER_ADDRESS">Manufacturer Address</label>
+        <label for="MANUFACTURER_NAME">MANUFACTURER_NAME</label>
+        <label for="MANUFACTURER_ADDRESS">MANUFACTURER_ADDRESS</label>
         <input type="text" name="MANUFACTURER_NAME" placeholder="example value" id="MANUFACTURER_NAME">
-        <input type="text" name="MANUFACTURER_ADDRESS" placeholder="example value" id="MANUFACTURER_ADDRESS">
+        <input type="text" name="M_NAME" placeholder="example value" id="MANUFACTURER_ADDRESS">
 
-        <label for="CITY">City</label>
-        <label for="COUNTRY">Country</label>
-        <input type="text" name="CITY" placeholder="example value" id="CITY">
-        <input type="text" name="COUNTRY" placeholder="example value" id="COUNTRY">
+        <label for="CITY">CITY</label>
+        <label for="COUNTRY">COUNTRY</label>
+
+        <select name="CITY" required="required">
+            <option disabled selected>Select a city </option>
+            <?php foreach($cities as $cities): ?>
+                <option value="<?= $cities['CITY_ID']; ?>"><?= $cities['CITY_NAME']; ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <select name="COUNTRY" required="required">
+            <option disabled selected>Select a country </option>
+            <?php foreach($country as $country): ?>
+                <option value="<?= $country['COUNTRY_CODE']; ?>"><?= $country['COUNTRY_NAME']; ?></option>
+            <?php endforeach; ?>
+        </select>
 
         <input type="submit" value="Create">
     </form>
     <?php if ($msg): ?>
-    <p><?php
-    echo "<script>alert('$msg')</script>";
-    echo "<script>window.location = 'read_manufacturers.php';</script>";
-    ?></p>
+    <p><?=$msg?></p>
     <?php endif; ?>
 </div>
 
 <?=template_footer()?>
+

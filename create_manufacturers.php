@@ -6,7 +6,7 @@ $msg = '';
 // Check if the data is empty
 if (!empty($_POST)) {
     // Insert values into columns
-    $id = isset($_POST['M_SYSCODE']) && !empty($_POST['M_SYSCODE']) && $_POST['M_SYSCODE'] != 'auto' ? $_POST['M_SYSCODE'] : NULL;
+    $id = isset($_POST['MANUFACTURER_ID']) && !empty($_POST['MANUFACTURER_ID']) && $_POST['MANUFACTURER_ID'] != 'auto' ? $_POST['MANUFACTURER_ID'] : NULL;
     $name = isset($_POST['MANUFACTURER_NAME']) ? $_POST['MANUFACTURER_NAME'] : '';
     $address = isset($_POST['MANUFACTURER_ADDRESS']) ? $_POST['MANUFACTURER_ADDRESS'] : '';
     $city = isset($_POST['CITY']) ? $_POST['CITY'] : '';

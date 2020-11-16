@@ -24,7 +24,10 @@
         $row =mysqli_fetch_assoc($result);
         $name= $row["NAME"];
         $_SESSION['NAME'] = $name;
+        if($name == 'Admin')
          header("location: index.php");
+        else
+        header("location: organisation_index.php");
       }else {
          $error = "USERNAME OR PASSWORD IS INVALID";
          

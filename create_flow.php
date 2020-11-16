@@ -9,15 +9,55 @@ if (!empty($_POST)) {
     $source_lot = isset($_POST['SOURCE_LOT_ID']) ? $_POST['SOURCE_LOT_ID'] : '';
     $source_org = isset($_POST['SOURCE_ORG_ID']) ? $_POST['SOURCE_ORG_ID'] : '';
     $target_lot = isset($_POST['TARGET_LOT_ID']) ? $_POST['TARGET_LOT_ID'] : '';
-    $target_org = isset($_POST['TARGET_LOT_ID']) ? $_POST['TARGET_LOT_ID'] : '';
+    $target_org = isset($_POST['TARGET_ORG_ID']) ? $_POST['TARGET_ORG_ID'] : '';
     $barcode = isset($_POST['BRAND_BARCODE']) ? $_POST['BRAND_BARCODE'] : '';
     $quantitiy = isset($_POST['QUANTITIY']) ? $_POST['QUANTITIY'] : '';
     $flowdate = isset($_POST['FLOWDATE']) ? $_POST['FLOWDATE'] : '';
-    // Insert new record into the contacts table
-    $stmt = $pdo->prepare('INSERT INTO FLOW VALUES (?, ?, ?, ?, ?,?, ?)');
-    $stmt->execute([$source_lot, $source_org,$target_lot, $target_org, $barcode, $quantitiy, $flowdate]);
-    // Output message
-    $msg = 'Created Successfully!';
+
+    //if target is a consumer
+    $sql2="SELECT ORG_TYPE FROM organisations WHERE ORG_TYPE = 1 AND ORG_ID = \"$source_org\"";
+    $type = $pdo->prepare($sql);
+    $type->execute();
+
+      //checking if transferring to inside
+      if($source_org == $target_org){
+
+          $sql3="UPDATE brand_orgs SET OUT_AMOUNT = OUT_AMOUNT+$quantitiy, IN_AMOUNT = IN_AMOUNT-$quantitiy WHERE ORG_ID = \"$target_org\" AND BRAND_BARCODE = \"$barcode\"";
+          $update = $pdo->prepare($sql3);
+          $update->execute();
+
+          $stmt = $pdo->prepare('INSERT INTO flow VALUES (?, ?, ?, ?, ?, ?, ?)');
+          $stmt->execute([$source_lot, $source_org,$target_lot, $target_org, $barcode, $quantitiy, $flowdate]);
+          // Output message
+          $msg = 'Inside transferred moved successfully!';
+      }else{  //if transferring to outside
+
+        if($type == '1'){
+          $msg = 'Buyer cannot transfer!';
+        }else{
+
+              $result=$sth->fetchColumn();
+
+              $sql3="UPDATE brand_orgs SET OUT_AMOUNT = OUT_AMOUNT+$quantitiy WHERE ORG_ID = \"$target_org\" AND BRAND_BARCODE = \"$barcode\"";
+              $update = $pdo->prepare($sql3);
+              $update->execute();
+
+              $sql4="UPDATE brand_orgs SET OUT_AMOUNT = IN_AMOUNT + $quantitiy  WHERE ORG_ID = \"$source_org\" AND BRAND_BARCODE = \"$barcode\"";
+              $update2 = $pdo->prepare($sql4);
+              $update2->execute();
+
+              $stmt = $pdo->prepare('INSERT INTO flow VALUES (?, ?, ?, ?, ?, ?, ?)');
+              $stmt->execute([$source_lot, $source_org,$target_lot, $target_org, $barcode, $quantitiy, $flowdate]);
+              // Output message
+              $msg = 'Outside transferred moved successfully!';
+
+
+        }
+      }
+
+
+
+
 }
 
 $sql = "SELECT LOT_ID FROM brand_orgs";
@@ -31,17 +71,17 @@ $stmt->execute();
 $target = $stmt->fetchAll();
 
 
-$sql = "SELECT ORG_ID FROM brand_orgs";
+$sql = "SELECT ORG_ID, ORG_NAME FROM organisations";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $source_org = $stmt->fetchAll();
 
-$sql = "SELECT ORG_ID FROM brand_orgs";
+$sql = "SELECT ORG_ID, ORG_NAME FROM organisations";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $target_org = $stmt->fetchAll();
 
-$sql = "SELECT BRAND_BARCODE, BRAND_NAME FROM PRODUCT_BRANDS";
+$sql = "SELECT BRAND_BARCODE, BRAND_NAME FROM product_brands";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $brand = $stmt->fetchAll();
@@ -86,15 +126,17 @@ select {
         <select name="SOURCE_ORG_ID" required="required">
             <option disabled selected>Select a source org </option>
             <?php foreach($source_org as $source_org): ?>
-                <option value="<?= $source_org['ORG_ID']; ?>"><?= $source_org['ORG_ID']; ?></option>
+                <option value="<?= $source_org['ORG_ID']; ?>"><?= $source_org['ORG_NAME']; ?></option>
             <?php endforeach; ?>
         </select>
 
         <select name="TARGET_ORG_ID" required="required">
             <option disabled selected>Select a target org </option>
             <?php foreach($target_org as $target_org): ?>
-                <option value="<?= $target_org['ORG_ID']; ?>"><?= $target_org['ORG_ID']; ?></option>
+                <option value="<?= $target_org['ORG_ID']; ?>"><?= $target_org['ORG_NAME']; ?></option>
             <?php endforeach; ?>
+
+
         </select>
 
         <label for="BRAND_BARCODE">Brand</label>
@@ -122,3 +164,4 @@ select {
 </div>
 
 <?=template_footer()?>
+

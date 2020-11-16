@@ -2,6 +2,7 @@
 include 'functions.php';
 $pdo = pdo_connect_mysql();
 $msg = '';
+
 if (isset($_GET['MANUFACTURER_ID'])) {
     if (!empty($_POST)) {
         $name = isset($_POST['MANUFACTURER_NAME']) ? $_POST['MANUFACTURER_NAME'] : '';
@@ -22,9 +23,28 @@ if (isset($_GET['MANUFACTURER_ID'])) {
 } else {
     exit('No Manufacturer is selected!');
 }
+
+$sql = "SELECT CITY_ID, CITY_NAME FROM COUNTRY_CITY";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$cities = $stmt->fetchAll();
+
+$sql = "SELECT COUNTRY_CODE, COUNTRY_NAME FROM COUNTRY";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$country = $stmt->fetchAll();
+
 ?>
 
-<?=template_header('Read')?>
+<style>
+select {
+  width: 400px;
+  height:43px;
+  border-radius: 4px;
+}
+</style>
+
+<?=template_header('Update')?>
 
 <div class="content update">
 	<h2>Update Manufacturer #<?=$contact['MANUFACTURER_ID']?></h2>
@@ -36,8 +56,19 @@ if (isset($_GET['MANUFACTURER_ID'])) {
 
         <label for="CITY">CITY</label>
         <label for="COUNTRY">COUNTRY</label>
-        <input type="text" name="CITY" placeholder="Example Value" value="<?=$contact['CITY']?>" id="CITY">
-        <input type="text" name="COUNTRY" placeholder="Example Value" value="<?=$contact['COUNTRY']?>" id="COUNTRY">
+        <select name="CITY" required="required">
+            <option disabled selected>Select a city </option>
+            <?php foreach($cities as $cities): ?>
+                <option value="<?= $cities['CITY_ID']; ?>"><?= $cities['CITY_NAME']; ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <select name="COUNTRY" required="required" style="margin-left: 25px">
+            <option disabled selected>Select a country </option>
+            <?php foreach($country as $country): ?>
+                <option value="<?= $country['COUNTRY_CODE']; ?>"><?= $country['COUNTRY_NAME']; ?></option>
+            <?php endforeach; ?>
+        </select>
 
         <input type="submit" value="Update">
     </form>

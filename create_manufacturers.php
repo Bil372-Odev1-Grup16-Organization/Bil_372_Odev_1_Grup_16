@@ -44,13 +44,13 @@ select {
 <div class="content update">
 	<h2>Add Manufacturer</h2>
     <form action="create_manufacturers.php" method="post">
-        <label for="MANUFACTURER_NAME">Manufacturer Name</label>
-        <label for="MANUFACTURER_ADDRESS">Manufacturer Address</label>
+        <label for="MANUFACTURER_NAME">MANUFACTURER_NAME</label>
+        <label for="MANUFACTURER_ADDRESS">MANUFACTURER_ADDRESS</label>
         <input type="text" name="MANUFACTURER_NAME" placeholder="example value" id="MANUFACTURER_NAME">
         <input type="text" name="M_NAME" placeholder="example value" id="MANUFACTURER_ADDRESS">
 
-        <label for="CITY">City</label>
-        <label for="COUNTRY">Country</label>
+        <label for="CITY">CITY</label>
+        <label for="COUNTRY">COUNTRY</label>
 
         <select name="CITY" required="required">
             <option disabled selected>Select a city </option>
@@ -59,7 +59,7 @@ select {
             <?php endforeach; ?>
         </select>
 
-        <select name="COUNTRY" required="required">
+        <select name="COUNTRY" required="required" style="margin-left: 25px">
             <option disabled selected>Select a country </option>
             <?php foreach($country as $country): ?>
                 <option value="<?= $country['COUNTRY_CODE']; ?>"><?= $country['COUNTRY_NAME']; ?></option>
@@ -74,4 +74,3 @@ select {
 </div>
 
 <?=template_footer()?>
-

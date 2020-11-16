@@ -11,9 +11,9 @@ if (!empty($_POST)) {
     $name = isset($_POST['M_NAME']) ? $_POST['M_NAME'] : '';
     $shortname = isset($_POST['M_SHORTNAME']) ? $_POST['M_SHORTNAME'] : '';
     $parentcode = isset($_POST['M_PARENTCODE']) ? $_POST['M_PARENTCODE'] : '';
-    $abstract = isset($_POST['M_ABSTRACT']) ? $_POST['M_ABSTRACT'] : '';
+    $abstract = isset($_POST['M_ABSTRACT']) ? 1 : 0;
     $category = isset($_POST['M_CATEGORY']) ? $_POST['M_CATEGORY'] : '';
-    $active = isset($_POST['IS_ACTIVE']) ? $_POST['IS_ACTIVE'] : '';
+    $active = isset($_POST['IS_ACTIVE']) ? 1 : 0;
     // Insert new record into the contacts table
     $stmt = $pdo->prepare('INSERT INTO PRODUCT VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
     $stmt->execute([$id, $code,$name, $shortname,$parentcode, $abstract, $category,$active,]);

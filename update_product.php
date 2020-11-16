@@ -8,9 +8,9 @@ if (isset($_GET['M_SYSCODE'])) {
         $name = isset($_POST['M_NAME']) ? $_POST['M_NAME'] : '';
         $shortname = isset($_POST['M_SHORTNAME']) ? $_POST['M_SHORTNAME'] : '';
         $parentcode = isset($_POST['M_PARENTCODE']) ? $_POST['M_PARENTCODE'] : '';
-        $abstract = isset($_POST['M_ABSTRACT']) ? $_POST['M_ABSTRACT'] : '';
+        $abstract = isset($_POST['M_ABSTRACT']) ? 1 : 0 ;
         $category = isset($_POST['M_CATEGORY']) ? $_POST['M_CATEGORY'] : '';
-        $active = isset($_POST['IS_ACTIVE']) ? $_POST['IS_ACTIVE'] : '';
+        $active = isset($_POST['IS_ACTIVE']) ? 1 : 0;
 
         // line[16, 31] and line[32, 40] should change order ?
         $stmt = $pdo->prepare(
@@ -75,8 +75,8 @@ if (isset($_GET['M_SYSCODE'])) {
         <!-- need debug -->
         <label for="M_ABSTRACT">Abstractness Status</label>
         <label for="IS_ACTIVE">Activity Status</label>
-        <label><input style="width: 0px" type="checkbox" name="M_ABSTRACT" value="1" id="M_ABSTRACT"> Yes</label>
-        <label><input style="width: 0px" type="checkbox" name="IS_ACTIVE" value="1" id="IS_ACTIVE"> Yes</label>
+        <label><input style="width: 20px" type="checkbox" name="M_ABSTRACT" value="1" id="M_ABSTRACT"> Yes</label>
+        <label><input style="width: 20px" type="checkbox" name="IS_ACTIVE" value="1" id="IS_ACTIVE"> Yes</label>
 
         <input type="submit" value="Update">
     </form>

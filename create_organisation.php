@@ -10,9 +10,9 @@ if(isset($_POST['submit'])) {
     $result = mysqli_query($conn,$sql);
     $row =mysqli_fetch_assoc($result);
     $city= $row["CITY_ID"];
-    $district = mysqli_real_escape_string($conn,$_POST['district']);     
-    $abstract =  mysqli_real_escape_string($conn,$_POST['abstract']); 
-    $typeString=mysqli_real_escape_string($conn,$_POST['type']); 
+    $district = mysqli_real_escape_string($conn,$_POST['district']);
+    $abstract =  mysqli_real_escape_string($conn,$_POST['abstract']);
+    $typeString=mysqli_real_escape_string($conn,$_POST['type']);
     if(strcmp($typeString,"Supplier") == 0){
         $type=0;
     }
@@ -22,7 +22,7 @@ if(isset($_POST['submit'])) {
     else{
         $type=2;
     }
-    $parents=mysqli_real_escape_string($conn,$_POST['parent']); 
+    $parents=mysqli_real_escape_string($conn,$_POST['parent']);
     if(strcmp($parents,"NONE")==0){
         $parentid=0;
     }
@@ -36,7 +36,7 @@ if(isset($_POST['submit'])) {
         $row =mysqli_fetch_assoc($result);
         $parentid= $row["ORG_ID"];
     }
-    
+
     $sql="SELECT ORG_ID FROM ORGANISATIONS WHERE ORG_NAME = \"$parentOfParent\"";
     $result = mysqli_query($conn,$sql);
     while( $row = mysqli_fetch_assoc($result)){
@@ -49,19 +49,19 @@ if(isset($_POST['submit'])) {
             $row2=mysqli_fetch_assoc($result2);
             $parentid= $row2["ORG_ID"];
     }
-    }  
+    }
 
     $sql = "INSERT   INTO ORGANISATIONS (ORG_NAME, PARENT_ORG , ORG_ABSTRACT, ORG_ADDRESS, ORG_CITY,ORG_DISTRICT,ORG_TYPE) VALUES ('$orgName',$parentid,$abstract,'$address',$city,'$district',$type)";
-    if (!mysqli_query($conn, $sql)){  
+    if (!mysqli_query($conn, $sql)){
         if(strpos(mysqli_error($conn), "Duplicate")){
             $error = "A Organisation which has this name and parent already exists ". "<br>";
-        }   
+        }
         else{
-            echo "Error: "  . mysqli_error($conn); 
-        }             
+            echo "Error: "  . mysqli_error($conn);
+        }
 
     }
-    $msg = "Created Successfully"; 
+    $msg = "Created Successfully";
 }
 ?>
 <style>
@@ -74,7 +74,7 @@ select {
 
 
 <?=template_header('Create')?>
-  
+
 <div class="content update">
 	<h2>Create Organisation</h2>
     <form action="create_organisation.php" method="post">
@@ -85,26 +85,30 @@ select {
                 <option value="" disabled selected>   Select your parent Company   </option>
                 <option>NONE</option>
                 <?php  $sql = "SELECT * FROM ORGANISATIONS";
-                       $result = mysqli_query($conn,$sql);  
-                       while($row = mysqli_fetch_assoc($result)) {  
+                       $result = mysqli_query($conn,$sql);
+                       while($row = mysqli_fetch_assoc($result)) {
                         if($row['ORG_ABSTRACT'] == 0):
                             $tmp= $row["ORG_ID"];
                             if($row["PARENT_ORG"]== 0){ ?>
-                                <option><?php echo $row["ORG_NAME"]. "--" ."NONE" ;  ?></option> 
-                            <?php }    
+                                <option><?php echo $row["ORG_NAME"]. "--" ."NONE" ;  ?></option>
+                            <?php }
                             $sql2="SELECT ORG_NAME,ORG_ABSTRACT FROM ORGANISATIONS WHERE PARENT_ORG = $tmp ";
                             $result2 = mysqli_query($conn,$sql2);
                             while($row2=mysqli_fetch_assoc($result2)){     ?>
                               <?php  if($row2["ORG_ABSTRACT"] == 0): ?>
                                     <option><?php echo $row2["ORG_NAME"]. "--" .$row["ORG_NAME"] ;  ?></option>
-                              <?php    endif;               ?> 
-                        <?php   } endif; }               ?>      
+                              <?php    endif;               ?>
+                        <?php   } endif; }               ?>
         </select>
 
-        <label for="ORG_ABSTRACT">Is Abstract? </label>
-        <label for="ORG_ADDRESS">ORG_ADRESS</label>
-        <input type="text" name="abstract" placeholder="evample value" >
+        <label for="ORG_ADDRESS">ORG_ADDRESS</label>
+        <label for="ORG_TYPE">Type</label>
         <input type="text" name="address" placeholder="example value" >
+        <select  name="type"  >
+                <option>Supplier</option>
+                <option>Consumer</option>
+                <option>Both</option>
+        </select>
 
         <label for="ORG_DISTRICT">ORG_DISTRICT</label>
         <label for="ORG_CITY">City</label>
@@ -112,22 +116,21 @@ select {
         <select  name="city"  required="required"  >
                 <option value="" disabled selected>City</option>
                 <?php  $sql = "SELECT CITY_NAME FROM COUNTRY_CITY";
-                       $result = mysqli_query($conn,$sql);  
+                       $result = mysqli_query($conn,$sql);
                        while($row = mysqli_fetch_assoc($result)) {        ?>
                             <option><?php echo $row["CITY_NAME"] ;  ?></option>
-                       <?php   }           ?>      
+                       <?php   }           ?>
         </select>
-                       
-        <label for="ORG_TYPE">Type</label>
-        <label for="ORG_TYPE"> </label>
-        <select  name="type"  >
-                <option>Supplier</option>
-                <option>Consumer</option>
-                <option>Both</option>            
-        </select>
+
+        <!-- need debug here -->
+        <label for="ORG_ABSTRACT">Is Abstract? </label>
+        <label></label>
+        <label><input style="width: 0px" type="checkbox" name="M_ABSTRACT" value="1" id="ORG_ABSTRACT"> Yes</label>
+        <label></label>
+
         <!--<label for="created">Created on </label>
-         <input type="datetime-local" name="created" value="<?=date('Y-m-d\TH:i')?>" -->                
-        <input type="submit" name="submit" value="Create" style="margin: 0px 0px 0px 100px ;">
+         <input type="datetime-local" name="created" value="<?=date('Y-m-d\TH:i')?>" -->
+        <input type="submit" name="submit" value="Create">
     </form>
     <?php if ($msg): ?>
     <p><?php echo("<script>alert('$msg')</script>");

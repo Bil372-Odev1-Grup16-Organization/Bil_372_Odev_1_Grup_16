@@ -1,75 +1,155 @@
 <?php
 include 'functions.php';
+include 'connect.php';
 $pdo = pdo_connect_mysql();
 $msg = '';
 if (isset($_GET['ORG_ID'])) {
-    if (!empty($_POST)) {
-        $name = isset($_POST['ORG_NAME']) ? $_POST['ORG_NAME'] : '';
-        $parent_org = isset($_POST['PARENT_ORG']) ? $_POST['PARENT_ORG'] : '';
-        $abstract = isset($_POST['ORG_ABSTRACT']) ? $_POST['ORG_ABSTRACT'] : '';
-        $address = isset($_POST['ORG_ADDRESS']) ? $_POST['ORG_ADDRESS'] : '';
-        $city = isset($_POST['ORG_CITY']) ? $_POST['ORG_CITY'] : '';
-        $district = isset($_POST['ORG_DISTRICT']) ? $_POST['ORG_DISTRICT'] : '';
-        $type = isset($_POST['ORG_TYPE']) ? $_POST['ORG_TYPE'] : '';
+    if (isset($_POST['submit'])) {
+        $orgName = mysqli_real_escape_string($conn,$_POST['org-name']);
+        $address = mysqli_real_escape_string($conn,$_POST['address']);
+        $cityName = mysqli_real_escape_string($conn,$_POST['city']);
+        $sql="SELECT CITY_ID FROM COUNTRY_CITY WHERE CITY_NAME = \"$cityName\"";
+        $result = mysqli_query($conn,$sql);
+        $row =mysqli_fetch_assoc($result);
+        $city= $row["CITY_ID"];
+        $district = mysqli_real_escape_string($conn,$_POST['district']);
+        $abstract =  mysqli_real_escape_string($conn,$_POST['abstract']);
+        $typeString=mysqli_real_escape_string($conn,$_POST['type']);
+        if(strcmp($typeString,"Supplier") == 0){
+            $type=0;
+        }
+        else if(strcmp($typeString,"Consumer") == 0){
+            $type=1;
+        }
+        else{
+            $type=2;
+        }
+        $parents=mysqli_real_escape_string($conn,$_POST['parent']);
+        if(strcmp($parents,"NONE")==0){
+            $parentid=0;
+        }
+        else{
+        $arr=explode("--", $parents);
+        $parent=$arr[0];
+        $parentOfParent=$arr[1];
+        if(strcmp($parentOfParent, "NONE")==0){
+            $sql="SELECT ORG_ID FROM ORGANISATIONS WHERE ORG_NAME = \"$parent\" AND PARENT_ORG = 0";
+            $result = mysqli_query($conn,$sql);
+            $row =mysqli_fetch_assoc($result);
+            $parentid= $row["ORG_ID"];
+        }
 
-        $stmt = $pdo->prepare(
-            'UPDATE ORGANISATIONS SET ORG_NAME = ?, PARENT_ORG = ?, ORG_ABSTRACT = ?, ORG_ADDRESS = ?, ORG_CITY = ?, ORG_DISTRICT = ?, ORG_TYPE = ? WHERE ORG_ID = ?'
-        );
-        $stmt->execute([
-            $name,
-            $parent_org,
-            $abstract,
-            $address,
-            $city,
-            $district,
-            $type,
-            $_GET['ORG_ID'],
-        ]);
-        $msg = 'Updated Successfully!';
-        header("location: read_organisations.php");
+        $sql="SELECT ORG_ID FROM ORGANISATIONS WHERE ORG_NAME = \"$parentOfParent\"";
+        $result = mysqli_query($conn,$sql);
+        while( $row = mysqli_fetch_assoc($result)){
+                $parentOfParent_id= $row["ORG_ID"];
+                $sql2="SELECT ORG_ID FROM ORGANISATIONS WHERE PARENT_ORG = $parentOfParent_id AND ORG_NAME = \"$parent\" ";
+                $result2 = mysqli_query($conn,$sql2);
+                if(mysqli_num_rows($result2)<1){
+                    continue;
+                }
+                $row2=mysqli_fetch_assoc($result2);
+                $parentid= $row2["ORG_ID"];
+        }
+        }
+        $OrgId=$_GET['ORG_ID'] ;
+        $sql = "UPDATE ORGANISATIONS SET ORG_NAME= '$orgName', PARENT_ORG =$parentid , ORG_ABSTRACT=$abstract, ORG_ADDRESS='$address', ORG_CITY=$city, ORG_DISTRICT='$district' ,ORG_TYPE = $type WHERE ORG_ID = $OrgId";
+        if (!mysqli_query($conn, $sql)){
+            if(strpos(mysqli_error($conn), "Duplicate") !== false){
+                $error = "A Organisation which has this name and parent already exists ". "<br>";
+            }
+            else{
+                echo "Error: "  . mysqli_error($conn);
+            }
+        }
+        $msg = "Updated Successfully";
     }
+
+
     $stmt = $pdo->prepare('SELECT * FROM ORGANISATIONS WHERE ORG_ID = ?');
     $stmt->execute([$_GET['ORG_ID']]);
-    $contact = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!$contact) {
-        exit('Product doesn\'t exist with that ORG_ID!');
+    $organisation = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$organisation) {
+        exit('Organisation doesn\'t exist with that M_SYSCODE!');
     }
 } else {
     exit('No ORG_ID is selected!');
 }
 ?>
 
-<?= template_header('Update') ?>
+
+<style>
+select {
+  width: 400px;
+  height:43px;
+  border-radius: 4px;
+}
+</style>
+
+<?=template_header('Update organisation')?>
 
 <div class="content update">
-	<h2>Update Organisation #<?= $contact['ORG_ID'] ?></h2>
-    <form action="update_organisation.php?ORG_ID=<?= $contact['ORG_ID'] ?>" method="post">
+	<h2>Update Organisation #<?=$organisation['ORG_ID']?></h2>
+    <form action="update_organisation.php?ORG_ID=<?=$organisation['ORG_ID']?>" method="post">
         <label for="ORG_NAME">ORG_NAME</label>
-        <label for="PARENT_ORG">PARENT_ORG</label>
-        <input type="text" name="ORG_NAME" placeholder="Value" value="<?= $contact['ORG_NAME'] ?>" id="ORG_NAME">
-        <input type="text" name="PARENT_ORG" placeholder="Value" value="<?= $contact['PARENT_ORG'] ?>" id="PARENT_ORG">
+        <label for="ORG_PARENT">PARENT</label>
+        <input type="text" name="org-name" placeholder="Value" value="<?=$organisation['ORG_NAME']?>" required="required">
 
-        <label for="ORG_ABSTRACT">ORG_ABSTRACT</label>
+        <select  name="parent"  required="required" >
+                <option value="" disabled selected>   Select your parent Company   </option>
+                <option>NONE</option>
+                <?php  $OrgId= $organisation['ORG_ID'];
+                       $sql = "SELECT * FROM ORGANISATIONS WHERE ORG_ID NOT LIKE $OrgId";
+                       $result = mysqli_query($conn,$sql);
+                       while($row = mysqli_fetch_assoc($result)) {
+                        if($row['ORG_ABSTRACT'] == 0):
+                        $tmp= $row["ORG_ID"];
+                        if($row["PARENT_ORG"]== 0){ ?>
+                            <option><?php echo $row["ORG_NAME"]. "--" ."NONE" ;  ?></option>
+                        <?php }
+                        $sql2="SELECT ORG_NAME, ORG_ID, ORG_ABSTRACT FROM ORGANISATIONS WHERE PARENT_ORG = $tmp ";
+                        $result2 = mysqli_query($conn,$sql2);
+                        while($row2=mysqli_fetch_assoc($result2)){
+                            if($row2['ORG_ID'] != $OrgId and $row2['ORG_ABSTRACT'] == 0){
+                                            ?>
+                               <option><?php echo $row2["ORG_NAME"]. "--" .$row["ORG_NAME"] ;  ?></option>
+                        <?php  } } endif;}               ?>
+        </select>
+
+
         <label for="ORG_ADDRESS">ORG_ADDRESS</label>
-        <input type="text" name="ORG_ABSTRACT" placeholder="Value" value="<?= $contact['ORG_ABSTRACT'] ?>" id="ORG_ABSTRACT">
-        <input type="text" name="ORG_ADDRESS" placeholder="Value" value="<?= $contact['ORG_ADDRESS'] ?>" id="ORG_ADDRESS">
+        <label for="ORG_TYPE">Type</label>
+        <input type="text" name="address" placeholder="Value" value="<?=$organisation['ORG_ADDRESS']?>" >
+        <select  name="type"  >
+                <option>Supplier</option>
+                <option>Consumer</option>
+                <option>Both</option>
+        </select>
 
-        <label for="ORG_CITY">ORG_CITY</label>
-        <label for="ORG_DISTRICT">M_CATEGORY</label>
-        <input type="text" name="ORG_CITY" placeholder="Example Value" value="<?= $contact['ORG_CITY'] ?>" id="ORG_CITY">
-        <input type="text" name="ORG_DISTRICT" placeholder="Example Value" value="<?= $contact['ORG_DISTRICT'] ?>" id="ORG_DISTRICT">
+        <label for="ORG_DISTRICT">ORG_DISTRICT</label>
+        <label for="ORG_CITY">City</label>
+        <input type="text" name="district" placeholder="Example Value" value="<?=$organisation['ORG_DISTRICT']?>" >
+        <select  name="city"  required="required"  >
+                <?php  $sql = "SELECT CITY_NAME FROM COUNTRY_CITY";
+                       $result = mysqli_query($conn,$sql);
+                       while($row = mysqli_fetch_assoc($result)) {        ?>
+                            <option><?php echo $row["CITY_NAME"] ;  ?></option>
+                       <?php   }           ?>
+        </select>
 
-        <label for="ORG_TYPE">ORG_TYPE</label>
+        <!-- need debug here -->
+        <label for="ORG_ABSTRACT">Is Abstract?</label>
         <label></label>
-        <input type="text" name="ORG_TYPE" placeholder="Example Value" value="<?= $contact['ORG_TYPE'] ?>" id="ORG_TYPE">
+        <label><input style="width: 0px" type="checkbox" name="ORG_ABSTRACT" id="ORG_ABSTRACT"> Yes</label>
         <label></label>
 
-        <input type="submit" value="Update">
+
+        <input type="submit" name= "submit" value="Update" style="margin: 0px 0px 0px 100px ;">
     </form>
     <?php if ($msg): ?>
-    <p><?= $msg ?></p>
+    <p><?php echo("<script>alert('$msg')</script>");
+     echo("<script>window.location = 'read_organisations.php';</script>");    ?></p>
     <?php endif; ?>
 </div>
 
-<?= template_footer()
-?>
+<?=template_footer()?>

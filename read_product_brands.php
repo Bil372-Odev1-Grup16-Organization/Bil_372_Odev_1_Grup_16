@@ -28,10 +28,10 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <thead>
             <tr>
 
-                <td>BRAND_BARCODE</td>
-                <td>BRAND_NAME</td>
-                <td>MANUFACTURER_NAME</td>
-                <td>M_SYSCODE</td>
+                <td>Brand Barcode</td>
+                <td>Brand Name</td>
+                <td>Manufacturer Name</td>
+                <td>Product Name</td>
                 <td></td>
             </tr>
         </thead>
@@ -48,7 +48,12 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 	$temp = $stmt->fetch();
 				?>
                 <td><?= $temp['MANUFACTURER_NAME'] ?></td>
-                <td><?= $element['M_SYSCODE'] ?></td>
+                <?php
+                    $stmt = $pdo->prepare('SELECT M_NAME FROM PRODUCT  WHERE M_SYSCODE = ?');
+                    $stmt->execute([$element['M_SYSCODE']]);
+                    $temp = $stmt->fetch();
+                ?>
+                <td><?= $temp['M_NAME'] ?></td>
                 <td class="actions">
                     <a href="update_product_brands.php?BRAND_BARCODE=<?= $element[
                         'BRAND_BARCODE'

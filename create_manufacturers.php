@@ -52,8 +52,8 @@ select {
 <div class="content update">
 	<h2>Add Manufacturer</h2>
     <form action="create_manufacturers.php" method="post">
-        <label for="Manufacturer Name">MANUFACTURER_NAME</label>
-        <label for="Manufacturer Address">MANUFACTURER_ADDRESS</label>
+        <label for="MANUFACTURER_NAME">Manufacturer Name</label>
+        <label for="MANUFACTURER_ADDRESS">Manufacturer Address</label>
         <input type="text" name="MANUFACTURER_NAME" placeholder="example value" id="MANUFACTURER_NAME">
         <input type="text" name="M_NAME" placeholder="example value" id="MANUFACTURER_ADDRESS">
 

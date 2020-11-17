@@ -1,5 +1,5 @@
 <?php
-asession_start();
+session_start();
 if(!isset($_SESSION['NAME'])){ //session check
    header("location: login.php");
 }

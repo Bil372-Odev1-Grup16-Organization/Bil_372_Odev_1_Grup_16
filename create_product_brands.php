@@ -50,8 +50,8 @@ select {
     <form action="create_product_brands.php" method="post">
       <label for="BRAND_BARCODE">Brand Barcode</label>
       <label for="BRAND_NAME">Brand Name</label>
-      <input type="text" name="BRAND_BARCODE" placeholder="example value" id="BRAND_BARCODE">
-      <input type="text" name="BRAND_NAME" placeholder="example value" id="BRAND_NAME">
+      <input type="text" name="BRAND_BARCODE" placeholder="example value" required="required" id="BRAND_BARCODE">
+      <input type="text" name="BRAND_NAME" placeholder="example value" required="required" id="BRAND_NAME">
 
       <label for="M_SYSCODE">Product Name</label>
       <label for="MANUFACTURER_NAME">Manufacturer Name</label>

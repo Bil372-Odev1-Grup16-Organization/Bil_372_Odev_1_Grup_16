@@ -30,7 +30,7 @@ if (!empty($_POST)) {
     <form action="create_feature.php" method="post">
         <label for="FEATURE_NAME">Feature Name</label>
         <label></label>
-        <input type="text" name="FEATURE_NAME" placeholder="example value" id="FEATURE_NAME">
+        <input type="text" name="FEATURE_NAME" placeholder="example value" required="required" id="FEATURE_NAME">
         <label></label>
 
         <input type="submit" value="Create">

@@ -99,7 +99,7 @@ select {
 }
 </style>
 
-<?=template_header('Update organisation')?>
+<?=template_header('Update')?>
 
 <div class="content update">
 	<h2>Update Organisation #<?=$organisation['ORG_ID']?></h2>

@@ -57,13 +57,13 @@ select {
 <div class="content update">
 	<h2>Update Manufacturer #<?=$contact['MANUFACTURER_ID']?></h2>
     <form action="update_manufacturers.php?MANUFACTURER_ID=<?=$contact['MANUFACTURER_ID']?>" method="post">
-        <label for="MANUFACTURER_NAME">MANUFACTURER_NAME</label>
-        <label for="MANUFACTURER_ADDRESS">MANUFACTURER_ADDRESS</label>
+        <label for="MANUFACTURER_NAME">Manufacturer Name</label>
+        <label for="MANUFACTURER_ADDRESS">Manufacturer Address</label>
         <input type="text" name="MANUFACTURER_NAME" placeholder="Example Value" value="<?=$contact['MANUFACTURER_NAME']?>" id="MANUFACTURER_NAME">
         <input type="text" name="MANUFACTURER_ADDRESS" placeholder="Example Value" value="<?=$contact['MANUFACTURER_ADDRESS']?>" id="MANUFACTURER_ADDRESS">
 
-        <label for="CITY">CITY</label>
-        <label for="COUNTRY">COUNTRY</label>
+        <label for="CITY">City</label>
+        <label for="COUNTRY">Country</label>
         <select name="CITY" required="required">
             <option disabled selected>Select a city </option>
             <?php foreach($cities as $cities): ?>

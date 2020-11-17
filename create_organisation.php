@@ -116,7 +116,7 @@ select {
 
         <label for="ORG_ADDRESS">Address</label>
         <label for="ORG_TYPE">Organisation Type</label>
-        <input type="text" name="address" placeholder="example value" >
+        <input type="text" name="address" placeholder="example value" required="required">
         <select  name="type"  >
                 <option>Supplier</option>
                 <option>Consumer</option>

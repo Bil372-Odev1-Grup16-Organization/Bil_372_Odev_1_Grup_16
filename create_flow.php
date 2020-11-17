@@ -181,11 +181,11 @@ select {
             <?php endforeach; ?>
         </select>
 
-        <input type="text" name="QUANTITIY" placeholder="example value" style="margin-left: 25px;">
+        <input type="text" name="QUANTITIY" placeholder="example value" style="margin-left: 25px;"required="required" >
 
         <label for="FLOWDATE">Flow Date</label>
         <label></label>
-        <input type="date" name="FLOWDATE" placeholder="example value">
+        <input type="date" name="FLOWDATE" placeholder="example value" required="required" >
         <label></label>
 
 

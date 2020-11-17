@@ -38,9 +38,9 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							<?php   $stmt->execute([$element['SOURCE_ORG_ID']]);                           ?>
 							<?php   $source_org = $stmt->fetch();                           ?>
 
-							<?php   $stmt = $pdo->prepare('SELECT ORG_NAME FROM ORGANISATIONS  WHERE ORG_ID = ?');                            ?>
-							<?php   $stmt->execute([$element['TARGET_ORG_ID']]);                           ?>
-							<?php   $target_org = $stmt->fetch();                           ?>
+							<?php   $stmt2 = $pdo->prepare('SELECT ORG_NAME FROM ORGANISATIONS  WHERE ORG_ID = ?');                            ?>
+							<?php   $stmt2->execute([$element['TARGET_ORG_ID']]);                           ?>
+							<?php   $target_org = $stmt2->fetch();                           ?>
 
 							<?php   $stmt = $pdo->prepare('SELECT BRAND_NAME FROM PRODUCT_BRANDS  WHERE BRAND_BARCODE = ?');                            ?>
 							<?php   $stmt->execute([$element['BRAND_BARCODE']]);                           ?>
@@ -49,7 +49,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?= $element['SOURCE_LOT_ID'] ?></td>
                 <td><?= $source_org['ORG_NAME'] ?></td>
                 <td><?= $element['TARGET_LOT_ID'] ?></td>
-                <td><?= $element['TARGET_ORG_ID'] ?></td>
+                <td><?= $target_org['ORG_NAME'] ?></td>
                 <td><?= $brand['BRAND_NAME'] ?></td>
                 <td><?= $element['QUANTITY'] ?></td>
                 <td><?= $element['FLOWDATE'] ?></td>

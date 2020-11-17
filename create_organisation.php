@@ -3,6 +3,10 @@ session_start();
 if(!isset($_SESSION['NAME'])){ //session check
    header("location: login.php");
 }
+if($_SESSION['NAME'] != 'Admin'){
+    echo("<script>alert('Unauthorized Access')</script>");
+    echo("<script>window.location = 'logout.php';</script>"); 
+}
 include ("connect.php");
 include 'functions.php';
 $msg = '';
@@ -137,8 +141,6 @@ select {
         <label><input style="width: 20px" type="checkbox" name="abstract" value="1" > Yes</label>
         <label></label>
 
-        <!--<label for="created">Created on </label>
-         <input type="datetime-local" name="created" value="<?=date('Y-m-d\TH:i')?>" -->
         <input type="submit" name="submit" value="Create">
     </form>
     <?php if ($msg): ?>

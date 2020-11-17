@@ -3,6 +3,10 @@ session_start();
 if(!isset($_SESSION['NAME'])){ //session check
    header("location: login.php");
 }
+if($_SESSION['NAME'] != 'Admin'){
+    echo("<script>alert('Unauthorized Access')</script>");
+    echo("<script>window.location = 'logout.php';</script>"); 
+}
 include 'functions.php';
 
 $pdo = pdo_connect_mysql();

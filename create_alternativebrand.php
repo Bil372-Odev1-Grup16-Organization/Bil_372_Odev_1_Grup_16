@@ -5,7 +5,7 @@ if(!isset($_SESSION['NAME'])){ //session check
 }
 if($_SESSION['NAME'] != 'Admin'){
     echo("<script>alert('Unauthorized Access')</script>");
-    echo("<script>window.location = 'logout.php';</script>"); 
+    echo("<script>window.location = 'logout.php';</script>");
 }
 
 include 'functions.php';
@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
     if($stmt->execute([$brand[1],$brand[0], $alternativebrand[1],$alternativebrand[0]])){
         echo("<script>alert('Created Successfully')</script>");
         echo("<script>window.location = 'read_alternativebrands.php';</script>");
-    }    
+    }
 }
 
 $sql = "SELECT BRAND_BARCODE, M_SYSCODE,BRAND_NAME FROM PRODUCT_BRANDS";
@@ -36,7 +36,7 @@ select {
   width: 400px;
   height:43px;
   border-radius: 4px;
-  
+
 }
 </style>
 
@@ -44,10 +44,11 @@ select {
 <?=template_header('Create')?>
 
 <div class="content update">
-<form action="" method="post">
+    <h2>Link Alternative Brands</h2>
+    <form action="" method="post">
 
-    <label for="Brand" style="margin-top: 75px;">Brand</label>  
-    <label for="Alternative Brand" style="margin-top: 75px;" >Alternative Brand</label>   
+    <label for="Brand">Brand</label>
+    <label for="Alternative Brand">Alternative Brand</label>
     <select name="brand" required="required">
         <option disabled selected>Select a brand </option>
         <?php foreach($brands as $brand): ?>
@@ -57,7 +58,7 @@ select {
             <option value="<?= $brand['M_SYSCODE'] . '|' . $brand['BRAND_BARCODE']; ?>"><?= $brand['BRAND_NAME'].  ' ' . $product['M_NAME']; ?></option>
         <?php endforeach; ?>
     </select>
-        
+
     <select name="alternativebrand" style="margin-left: 25px">
         <option disabled selected required="required">Select an alternative brand </option>
         <?php foreach($brands as $brand): ?>
@@ -67,8 +68,8 @@ select {
             <option value="<?= $brand['M_SYSCODE'] . '|' . $brand['BRAND_BARCODE']; ?>"><?= $brand['BRAND_NAME']. '  ' . $product['M_NAME']; ?></option>
         <?php endforeach; ?>
     </select>
- 
 
-    <input type="submit" name="submit" value="Link" style="margin-top: 30px; margin-left:300px;">
+
+    <input type="submit" name="submit" value="Link">
 </form>
 </div>

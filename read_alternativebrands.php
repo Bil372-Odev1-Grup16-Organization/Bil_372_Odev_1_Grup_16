@@ -5,7 +5,7 @@ if(!isset($_SESSION['NAME'])){ //session check
 }
 if($_SESSION['NAME'] != 'Admin'){
     echo("<script>alert('Unauthorized Access')</script>");
-    echo("<script>window.location = 'logout.php';</script>"); 
+    echo("<script>window.location = 'logout.php';</script>");
 }
 include 'functions.php';
 
@@ -27,16 +27,16 @@ $alternativebrands = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <div class="content read">
 	<h2>All Brands and Their Alternatives</h2>
-	<a href="create_alternativebrand.php" class="add-product">Link Brands</a>
+	<a href="create_alternativebrand.php" class="add-product">Link Alternative Brands</a>
 	<input class="form-control" id="myInput" type="text" placeholder="Search..">
 	<table>
         <thead>
             <tr>
-                <td>BRAND_BARCODE</td>
-                <td>BRAND</td>
-                <td>ALTERNATIVE BRAND_BARCODE</td>
-                <td>ALTERNATIVE BRAND</td>
-                
+                <td>Brand Barcode</td>
+                <td>Brand Name</td>
+                <td>Alternative Brand Barcode</td>
+                <td>Alternative Brand</td>
+
             </tr>
         </thead>
         <tbody id="myTable">
@@ -54,7 +54,7 @@ $alternativebrands = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?= $brandName['BRAND_NAME'] ?></td>
                 <td><?= $element['ALTERNATIVE_BRAND_BARCODE'] ?></td>
                 <td><?= $alternativebrandName['BRAND_NAME'] ?></td>
-                            
+
             </tr>
             <?php endforeach; ?>
         </tbody>

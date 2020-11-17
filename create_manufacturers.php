@@ -54,8 +54,8 @@ select {
     <form action="create_manufacturers.php" method="post">
         <label for="MANUFACTURER_NAME">Manufacturer Name</label>
         <label for="MANUFACTURER_ADDRESS">Manufacturer Address</label>
-        <input type="text" name="MANUFACTURER_NAME" placeholder="example value" id="MANUFACTURER_NAME">
-        <input type="text" name="M_NAME" placeholder="example value" id="MANUFACTURER_ADDRESS">
+        <input type="text" name="MANUFACTURER_NAME" placeholder="example value" required="required" id="MANUFACTURER_NAME">
+        <input type="text" name="M_NAME" placeholder="example value" required="required" id="MANUFACTURER_ADDRESS">
 
         <label for="CITY">City</label>
         <label for="COUNTRY">Country</label>

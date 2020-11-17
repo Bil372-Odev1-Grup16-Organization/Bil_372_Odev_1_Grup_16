@@ -15,30 +15,38 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?= template_header_organisation('Read') ?>
 
 <div class="content read">
-	<h2>All Products</h2>
+	<h2>All Brand Organisations</h2>
 	<a href="org_create_brand_organisations.php" class="add-product">Link Product & Features</a>
 	<input class="form-control" id="myInput" type="text" placeholder="Search..">
 	<table>
         <thead>
             <tr>
                 <td>#</td>
-                <td>ORG_ID</td>
-                <td>BRAND_BARCODE</td>
-                <td>EXPIRY_DATE</td>
-                <td>BASEPRICE</td>
-                <td>IN_AMOUNT</td>
-		<td>OUT_AMOUNT</td>
-		<td>QUANTITY</td>
-		<td>UNIT</td>
+                <td>Organisation Name</td>
+                <td>Brand Name</td>
+                <td>Expiry Date</td>
+                <td>Base Price</td>
+                <td>In Amount</td>
+		<td>Out Amount</td>
+		<td>Quantity</td>
+		<td>Unit</td>
                 <td></td>
             </tr>
         </thead>
         <tbody id="myTable">
             <?php foreach ($product as $element): ?>
             <tr>
+
+              <?php   $stmt = $pdo->prepare('SELECT BRAND_NAME FROM PRODUCT_BRANDS WHERE BRAND_BARCODE = ?');                            ?>
+              <?php   $stmt->execute([$element['BRAND_BARCODE']]);                           ?>
+              <?php   $brand = $stmt->fetch();                           ?>
+	          <?php   $stmt = $pdo->prepare('SELECT ORG_NAME FROM ORGANISATIONS WHERE ORG_ID = ?');                            ?>
+              <?php   $stmt->execute([$element['ORG_ID']]);                           ?>
+              <?php   $name = $stmt->fetch();                           ?>
+
                 <td><?= $element['LOT_ID'] ?></td>
-                <td><?= $element['ORG_ID'] ?></td>
-                <td><?= $element['BRAND_BARCODE'] ?></td>
+                <td><?= $name['ORG_NAME'] ?></td>
+                <td><?= $brand['BRAND_NAME'] ?></td>
                 <td><?= $element['EXPIRY_DATE'] ?></td>
                 <td><?= $element['BASEPRICE'] ?></td>
                 <td><?= $element['IN_AMOUNT'] ?></td>
@@ -46,7 +54,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		<td><?= $element['QUANTITY'] ?></td>
 		<td><?= $element['UNIT'] ?></td>
                 <td class="actions">
-                    <a href="org_delete_brand_organisations.php?M_SYSCODE=<?= $element[
+                    <a href="delete_brand_organisations.php?M_SYSCODE=<?= $element[
                         'M_SYSCODE'
                     ] ?>" class="trash"><i class="far fa-trash-alt"></i>DELETE</a>
                 </td>
@@ -58,3 +66,4 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?= template_footer()
 ?>
+

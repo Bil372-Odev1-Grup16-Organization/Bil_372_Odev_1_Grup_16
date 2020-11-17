@@ -21,13 +21,13 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	<table>
         <thead>
             <tr>
-                <td>SOURCE_LOT_ID</td>
-                <td>SOURCE_ORG_ID</td>
-                <td>TARGET_LOT_ID</td>
-                <td>TARGET_ORG_ID</td>
-                <td>BRAND_BARCODE</td>
-                <td>QUANTITY</td>
-                <td>FLOWDATE</td>
+                <td>Source Lot ID</td>
+                <td>Source Organisation</td>
+                <td>Target Lot ID</td>
+                <td>Target Organisation</td>
+                <td>Brand Name</td>
+                <td>Quantity</td>
+                <td>Flow Date</td>
                 <td></td>
             </tr>
         </thead>

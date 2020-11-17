@@ -75,7 +75,7 @@ select {
       <label for="IN_AMOUNT">In Amount</label>
       <label for="OUT_AMOUNT">Out Amount</label>
       <input type="float" name="IN_AMOUNT" placeholder="example value" required="required" id="IN_AMOUNT">
-      <input type="float" name="OUT_AMOUNT" placeholder="example " required="required" id="OUT_AMOUNT">
+      <input type="float" name="OUT_AMOUNT" placeholder="example value" required="required" id="OUT_AMOUNT">
 
       <label for="UNIT">Unit</label>
       <label></label>

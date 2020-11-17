@@ -59,8 +59,8 @@ select {
     <form action="update_manufacturers.php?MANUFACTURER_ID=<?=$contact['MANUFACTURER_ID']?>" method="post">
         <label for="MANUFACTURER_NAME">Manufacturer Name</label>
         <label for="MANUFACTURER_ADDRESS">Manufacturer Address</label>
-        <input type="text" name="MANUFACTURER_NAME" placeholder="Example Value" value="<?=$contact['MANUFACTURER_NAME']?>" id="MANUFACTURER_NAME">
-        <input type="text" name="MANUFACTURER_ADDRESS" placeholder="Example Value" value="<?=$contact['MANUFACTURER_ADDRESS']?>" id="MANUFACTURER_ADDRESS">
+        <input type="text" name="MANUFACTURER_NAME" placeholder="Example Value" value="<?=$contact['MANUFACTURER_NAME']?>" required="required" id="MANUFACTURER_NAME">
+        <input type="text" name="MANUFACTURER_ADDRESS" placeholder="Example Value" value="<?=$contact['MANUFACTURER_ADDRESS']?>" required="required" id="MANUFACTURER_ADDRESS">
 
         <label for="CITY">City</label>
         <label for="COUNTRY">Country</label>

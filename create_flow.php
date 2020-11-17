@@ -1,12 +1,4 @@
 <?php
-session_start();
-if(!isset($_SESSION['NAME'])){ //session check
-   header("location: login.php");
-}
-if($_SESSION['NAME'] != 'Admin'){
-    echo("<script>alert('Unauthorized Access')</script>");
-    echo("<script>window.location = 'logout.php';</script>"); 
-}
 include 'functions.php';
 $pdo = pdo_connect_mysql();
 $msg = '';
@@ -23,38 +15,64 @@ if (!empty($_POST)) {
     $flowdate = isset($_POST['FLOWDATE']) ? $_POST['FLOWDATE'] : '';
 
     //if target is a consumer
-    $sql2="SELECT ORG_TYPE FROM organisations WHERE ORG_TYPE = 1 AND ORG_ID = \"$source_org\"";
+    $sql="SELECT ORG_TYPE FROM organisations WHERE ORG_ID = \"$source_org\"";
     $type = $pdo->prepare($sql);
     $type->execute();
+    $row = (int)$type->fetchColumn();
 
       //checking if transferring to inside
       if($source_org == $target_org){
 
-          $sql3="UPDATE brand_orgs SET OUT_AMOUNT = OUT_AMOUNT+$quantitiy, IN_AMOUNT = IN_AMOUNT-$quantitiy WHERE ORG_ID = \"$target_org\" AND BRAND_BARCODE = \"$barcode\"";
-          $update = $pdo->prepare($sql3);
-          $update->execute();
+          $sql_amount="SELECT IN_AMOUNT FROM brand_orgs WHERE ORG_ID = \"$target_org\"";
+          $type2 = $pdo->prepare($sql_amount);
+          $type2->execute();
+          $count2 = (int)$type2->fetchColumn();
+          $count2 = $count2 - $quantitiy;
 
-          $stmt = $pdo->prepare('INSERT INTO flow VALUES (?, ?, ?, ?, ?, ?, ?)');
-          $stmt->execute([$source_lot, $source_org,$target_lot, $target_org, $barcode, $quantitiy, $flowdate]);
-          $msg = 'Inside transferred moved successfully!';
+          if($count2 > 0){
+            $sql3="UPDATE brand_orgs SET OUT_AMOUNT = OUT_AMOUNT+$quantitiy, IN_AMOUNT = IN_AMOUNT-$quantitiy WHERE ORG_ID = \"$target_org\" AND BRAND_BARCODE = \"$barcode\"";
+            $update = $pdo->prepare($sql3);
+            $update->execute();
+
+            $stmt = $pdo->prepare('INSERT INTO flow VALUES (?, ?, ?, ?, ?, ?, ?)');
+            $stmt->execute([$source_lot, $source_org,$target_lot, $target_org, $barcode, $quantitiy, $flowdate]);
+            // Output message
+            $msg = 'Inside transferred moved successfully!';
+          }else{
+            $msg = 'Not enough quantitiy!';
+          }
+
+
       }else{  //if transferring to outside
 
-        if($type == 1){
-          $msg = 'Consumer cannot transfer a product!';
+        if($row == 1){
+          $msg = 'Buyer cannot transfer!';
         }else{
 
-              $sql3="UPDATE brand_orgs SET OUT_AMOUNT = OUT_AMOUNT+$quantitiy WHERE ORG_ID = \"$target_org\" AND BRAND_BARCODE = \"$barcode\"";
-              $update = $pdo->prepare($sql3);
-              $update->execute();
+              $sql3="SELECT IN_AMOUNT FROM brand_orgs WHERE ORG_ID = \"$source_org\"";
+              $type2 = $pdo->prepare($sql3);
+              $type2->execute();
+              $count3 = (int)$type2->fetchColumn();
+              $count3 = $count3 - $quantitiy;
 
-              $sql4="UPDATE brand_orgs SET OUT_AMOUNT = IN_AMOUNT + $quantitiy  WHERE ORG_ID = \"$source_org\" AND BRAND_BARCODE = \"$barcode\"";
-              $update2 = $pdo->prepare($sql4);
-              $update2->execute();
+              if($count3 > 0){
+                $sql3="UPDATE brand_orgs SET OUT_AMOUNT = OUT_AMOUNT+$quantitiy WHERE ORG_ID = \"$target_org\" AND BRAND_BARCODE = \"$barcode\"";
+                $update = $pdo->prepare($sql3);
+                $update->execute();
 
-              $stmt = $pdo->prepare('INSERT INTO flow VALUES (?, ?, ?, ?, ?, ?, ?)');
-              $stmt->execute([$source_lot, $source_org,$target_lot, $target_org, $barcode, $quantitiy, $flowdate]);
-              // Output message
-              $msg = 'Outside transferred moved successfully!';
+                $sql4="UPDATE brand_orgs SET OUT_AMOUNT = IN_AMOUNT + $quantitiy  WHERE ORG_ID = \"$source_org\" AND BRAND_BARCODE = \"$barcode\"";
+                $update2 = $pdo->prepare($sql4);
+                $update2->execute();
+
+                $stmt = $pdo->prepare('INSERT INTO flow VALUES (?, ?, ?, ?, ?, ?, ?)');
+                $stmt->execute([$source_lot, $source_org,$target_lot, $target_org, $barcode, $quantitiy, $flowdate]);
+                // Output message
+                $msg = 'Outside transferred moved successfully!';
+              }else{
+                $msg = 'Not enough quantitiy!';
+              }
+
+
 
 
         }
@@ -169,4 +187,5 @@ select {
 </div>
 
 <?=template_footer()?>
+
 

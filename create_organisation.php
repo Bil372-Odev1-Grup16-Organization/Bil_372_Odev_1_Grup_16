@@ -91,8 +91,8 @@ select {
 <div class="content update">
 	<h2>Create Organisation</h2>
     <form action="create_organisation.php" method="post">
-        <label for="org-name">Org_name</label>
-        <label for="parent">Parent</label>
+        <label for="org-name">Name</label>
+        <label for="parent">Parent Organisation</label>
         <input type="text" name="org-name" placeholder="Organisation Name" required="required" autofocus >
         <select  name="parent"  required="required" >
                 <option value="" disabled selected>   Select your parent Company   </option>
@@ -114,8 +114,8 @@ select {
                         <?php   } endif; }               ?>
         </select>
 
-        <label for="ORG_ADDRESS">ORG_ADDRESS</label>
-        <label for="ORG_TYPE">Type</label>
+        <label for="ORG_ADDRESS">Address</label>
+        <label for="ORG_TYPE">Organisation Type</label>
         <input type="text" name="address" placeholder="example value" >
         <select  name="type"  >
                 <option>Supplier</option>
@@ -123,7 +123,7 @@ select {
                 <option>Both</option>
         </select>
 
-        <label for="ORG_DISTRICT">ORG_DISTRICT</label>
+        <label for="ORG_DISTRICT">District</label>
         <label for="ORG_CITY">City</label>
         <input type="text" name="district" placeholder="example value" >
         <select  name="city"  required="required"  >
@@ -135,8 +135,7 @@ select {
                        <?php   }           ?>
         </select>
 
-        <!-- need debug here -->
-        <label for="ORG_ABSTRACT">Is Abstract? </label>
+        <label for="ORG_ABSTRACT">Abstractness Status</label>
         <label></label>
         <label><input style="width: 20px" type="checkbox" name="abstract" value="1" > Yes</label>
         <label></label>

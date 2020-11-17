@@ -5,7 +5,7 @@ if(!isset($_SESSION['NAME'])){ //session check
 }
 if($_SESSION['NAME'] != 'Admin'){
     echo("<script>alert('Unauthorized Access')</script>");
-    echo("<script>window.location = 'logout.php';</script>"); 
+    echo("<script>window.location = 'logout.php';</script>");
 }
 include 'functions.php';
 
@@ -19,19 +19,19 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?= template_header('Read') ?>
 
 <div class="content read">
-	<h2>All Products</h2>
+	<h2>All Flows</h2>
 	<a href="create_flow.php" class="add-product">Add a new flow</a>
     <input class="form-control" id="myInput" type="text" placeholder="Search..">
 	<table>
         <thead>
             <tr>
-                <td>SOURCE_LOT_ID</td>
-                <td>SOURCE_ORG_ID</td>
-                <td>TARGET_LOT_ID</td>
-                <td>TARGET_ORG_ID</td>
-                <td>BRAND_BARCODE</td>
-                <td>QUANTITY</td>
-                <td>FLOWDATE</td>
+                <td>Source Lot ID</td>
+                <td>Source Organisation</td>
+                <td>Target Lot ID</td>
+                <td>Target Organisation</td>
+                <td>Brand Name</td>
+                <td>Quantity</td>
+                <td>Flow Date</td>
                 <td></td>
             </tr>
         </thead>

@@ -5,7 +5,7 @@ if(!isset($_SESSION['NAME'])){ //session check
 }
 if($_SESSION['NAME'] != 'Admin'){
     echo("<script>alert('Unauthorized Access')</script>");
-    echo("<script>window.location = 'logout.php';</script>"); 
+    echo("<script>window.location = 'logout.php';</script>");
 }
 include 'functions.php';
 
@@ -31,18 +31,23 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td>EXPIRY_DATE</td>
                 <td>BASEPRICE</td>
                 <td>IN_AMOUNT</td>
-		<td>OUT_AMOUNT</td>
-		<td>QUANTITY</td>
-		<td>UNIT</td>
+            		<td>OUT_AMOUNT</td>
+            		<td>QUANTITY</td>
+            		<td>UNIT</td>
                 <td></td>
             </tr>
         </thead>
         <tbody id="myTable">
             <?php foreach ($product as $element): ?>
             <tr>
+
+              <?php   $stmt = $pdo->prepare('SELECT BRAND_NAME FROM product_brands  WHERE BRAND_BARCODE = ?');                            ?>
+              <?php   $stmt->execute([$element['BRAND_BARCODE']]);                           ?>
+              <?php   $brand = $stmt->fetch();                           ?>
+
                 <td><?= $element['LOT_ID'] ?></td>
                 <td><?= $element['ORG_ID'] ?></td>
-                <td><?= $element['BRAND_BARCODE'] ?></td>
+                <td><?= $brand['BRAND_NAME'] ?></td>
                 <td><?= $element['EXPIRY_DATE'] ?></td>
                 <td><?= $element['BASEPRICE'] ?></td>
                 <td><?= $element['IN_AMOUNT'] ?></td>
@@ -62,3 +67,4 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?= template_footer()
 ?>
+

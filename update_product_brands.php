@@ -68,7 +68,7 @@ select {
     <label for="BRAND_NAME">Brand Name</label>
     <label for="MANUFACTURER_NAME">Manufacturer Name</label>
 
-    <input type="text" name="BRAND_NAME" placeholder="example value" value="<?=$contact['BRAND_NAME']?>" >
+    <input type="text" name="BRAND_NAME" placeholder="example value" value="<?=$contact['BRAND_NAME']?>" required="required">
     <select name="MANUFACTURER_ID" required="required">
         <option disabled selected>Select a manufacturer</option>
         <?php foreach($manufacturers as $manufacturer): ?>

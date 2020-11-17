@@ -28,7 +28,7 @@ if (isset($_GET['FEATURE_ID'])) {
 }
 ?>
 
-<?=template_header('Read')?>
+<?=template_header('Update')?>
 
 <div class="content update">
 	<h2>Update Feature #<?=$contact['FEATURE_ID']?></h2>

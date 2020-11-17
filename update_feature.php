@@ -34,7 +34,7 @@ if (isset($_GET['FEATURE_ID'])) {
 	<h2>Update Feature #<?=$contact['FEATURE_ID']?></h2>
     <form action="update_feature.php?FEATURE_ID=<?=$contact['FEATURE_ID']?>" method="post">
         <label for="FEATURE_NAME">Feature Name</label>
-        <input type="text" name="FEATURE_NAME" placeholder="Example Value" value="<?=$contact['FEATURE_NAME']?>" id="FEATURE_NAME">
+        <input type="text" name="FEATURE_NAME" placeholder="Example Value" value="<?=$contact['FEATURE_NAME']?>" required="required" id="FEATURE_NAME">
         <input type="submit" value="Update">
     </form>
     <?php if ($msg): ?>

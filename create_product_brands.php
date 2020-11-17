@@ -53,7 +53,7 @@ select {
       <input type="text" name="BRAND_BARCODE" placeholder="example value" id="BRAND_BARCODE">
       <input type="text" name="BRAND_NAME" placeholder="example value" id="BRAND_NAME">
 
-      <label for="M_SYSCODE">Product</label>
+      <label for="M_SYSCODE">Product Name</label>
       <label for="MANUFACTURER_NAME">Manufacturer Name</label>
 
       <select name="M_SYSCODE" required="required">

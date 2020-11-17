@@ -69,13 +69,13 @@ select {
 
       <label for="EXPIRY_DATE">Expiry Date</label>
       <label for="BASE_PRICE">Base Price</label>
-      <input type="date" name="EXPIRY_DATE" placeholder="example value" id="EXPIRY_DATE">
-      <input type="float" name="BASE_PRICE" placeholder="example value" id="BASE_PRICE">
+      <input type="date" name="EXPIRY_DATE" placeholder="example value" required="required" id="EXPIRY_DATE">
+      <input type="float" name="BASE_PRICE" placeholder="example value" required="required" id="BASE_PRICE">
 
       <label for="IN_AMOUNT">In Amount</label>
       <label for="OUT_AMOUNT">Out Amount</label>
-      <input type="float" name="IN_AMOUNT" placeholder="example value" id="IN_AMOUNT">
-      <input type="float" name="OUT_AMOUNT" placeholder="example " id="OUT_AMOUNT">
+      <input type="float" name="IN_AMOUNT" placeholder="example value" required="required" id="IN_AMOUNT">
+      <input type="float" name="OUT_AMOUNT" placeholder="example " required="required" id="OUT_AMOUNT">
 
       <label for="UNIT">Unit</label>
       <label></label>

@@ -76,7 +76,7 @@ select {
         <?php endforeach; ?>
     </select>
 
-    <label for="product">Product</label>
+    <label for="product">Product Name</label>
     <label></label>
 
     <select name="M_SYSCODE" required="required">

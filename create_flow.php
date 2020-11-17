@@ -36,12 +36,11 @@ if (!empty($_POST)) {
 
           $stmt = $pdo->prepare('INSERT INTO flow VALUES (?, ?, ?, ?, ?, ?, ?)');
           $stmt->execute([$source_lot, $source_org,$target_lot, $target_org, $barcode, $quantitiy, $flowdate]);
-          // Output message
           $msg = 'Inside transferred moved successfully!';
       }else{  //if transferring to outside
 
-        if($type == '1'){
-          $msg = 'Buyer cannot transfer!';
+        if($type == 1){
+          $msg = 'Consumer cannot transfer a product!';
         }else{
 
               $sql3="UPDATE brand_orgs SET OUT_AMOUNT = OUT_AMOUNT+$quantitiy WHERE ORG_ID = \"$target_org\" AND BRAND_BARCODE = \"$barcode\"";

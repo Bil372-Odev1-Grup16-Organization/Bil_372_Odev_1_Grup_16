@@ -150,7 +150,6 @@ select {
                        <?php   }           ?>
         </select>
 
-        <!-- need debug here -->
         <label for="ORG_ABSTRACT">Abstractness Status</label>
         <label></label>
         <label><input style="width: 20px" type="checkbox" name="abstract"> Yes</label>

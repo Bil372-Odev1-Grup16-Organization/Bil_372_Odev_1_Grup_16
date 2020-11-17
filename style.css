@@ -69,11 +69,11 @@ body {
 .read .add-product:hover {
   	background-color: #32a367;
 }
-.read  {
+.read .pagination {
   	display: flex;
   	justify-content: flex-end;
 }
-.read  a {
+.read .pagination a {
   	display: inline-block;
   	text-decoration: none;
   	background-color: #a5a7a9;
@@ -82,7 +82,7 @@ body {
   	padding: 5px 10px;
   	margin: 15px 0 15px 5px;
 }
-.read  a:hover {
+.read .pagination a:hover {
   	background-color: #999b9d;
 }
 .read table {

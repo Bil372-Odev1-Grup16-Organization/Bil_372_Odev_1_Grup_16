@@ -58,29 +58,27 @@ if (isset($_GET['M_SYSCODE'])) {
         <label for="M_NAME">Product Name</label>
         <input type="text" name="M_CODE" placeholder="Value" value="<?= $contact[
             'M_CODE'
-        ] ?>" id="M_CODE">
+        ] ?>" required="required" id="M_CODE">
         <input type="text" name="M_NAME" placeholder="Value" value="<?= $contact[
             'M_NAME'
-        ] ?>" id="M_NAME">
+        ] ?>" required="required" id="M_NAME">
 
         <label for="M_SHORTNAME">Product's Short Name</label>
         <label for="M_PARENTCODE">Parent Product</label>
         <input type="text" name="M_SHORTNAME" placeholder="Value" value="<?= $contact[
             'M_SHORTNAME'
-        ] ?>" id="M_SHORTNAME">
+        ] ?>" required="required" id="M_SHORTNAME">
         <input type="text" name="M_PARENTCODE" placeholder="Value" value="<?= $contact[
             'M_PARENTCODE'
-        ] ?>" id="M_PARENTCODE">
+        ] ?>" required="required" id="M_PARENTCODE">
 
         <label for="M_CATEGORY">Category</label>
         <label></label>
         <input type="text" name="M_CATEGORY" placeholder="Value" value="<?= $contact[
             'M_CATEGORY'
-        ] ?>" id="M_CATEGORY">
+        ] ?>" required="required" id="M_CATEGORY">
         <label></label>
 
-        <!-- should be checked if it is already checked -->
-        <!-- need debug -->
         <label for="M_ABSTRACT">Abstractness Status</label>
         <label for="IS_ACTIVE">Activity Status</label>
         <label><input style="width: 20px" type="checkbox" name="M_ABSTRACT" value="1" id="M_ABSTRACT"> Yes</label>

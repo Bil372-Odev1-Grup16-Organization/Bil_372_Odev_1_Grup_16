@@ -104,8 +104,8 @@ select {
 <div class="content update">
 	<h2>Update Organisation #<?=$organisation['ORG_ID']?></h2>
     <form action="update_organisation.php?ORG_ID=<?=$organisation['ORG_ID']?>" method="post">
-        <label for="ORG_NAME">ORG_NAME</label>
-        <label for="ORG_PARENT">PARENT</label>
+        <label for="ORG_NAME">Name</label>
+        <label for="ORG_PARENT">Parent Organisation</label>
         <input type="text" name="org-name" placeholder="Value" value="<?=$organisation['ORG_NAME']?>" required="required">
 
         <select  name="parent"  required="required" >
@@ -130,8 +130,8 @@ select {
         </select>
 
 
-        <label for="ORG_ADDRESS">ORG_ADDRESS</label>
-        <label for="ORG_TYPE">Type</label>
+        <label for="ORG_ADDRESS">Address</label>
+        <label for="ORG_TYPE">Organisation Type</label>
         <input type="text" name="address" placeholder="Value" value="<?=$organisation['ORG_ADDRESS']?>" >
         <select  name="type"  >
                 <option>Supplier</option>
@@ -139,7 +139,7 @@ select {
                 <option>Both</option>
         </select>
 
-        <label for="ORG_DISTRICT">ORG_DISTRICT</label>
+        <label for="ORG_DISTRICT">District</label>
         <label for="ORG_CITY">City</label>
         <input type="text" name="district" placeholder="Example Value" value="<?=$organisation['ORG_DISTRICT']?>" >
         <select  name="city"  required="required"  >
@@ -151,7 +151,7 @@ select {
         </select>
 
         <!-- need debug here -->
-        <label for="ORG_ABSTRACT">Is Abstract?</label>
+        <label for="ORG_ABSTRACT">Abstractness Status</label>
         <label></label>
         <label><input style="width: 20px" type="checkbox" name="abstract"> Yes</label>
         <label></label>

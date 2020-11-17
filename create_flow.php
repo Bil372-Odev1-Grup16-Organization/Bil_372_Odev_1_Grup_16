@@ -131,21 +131,21 @@ select {
 <?=template_header('Create')?>
 
 <div class="content update">
-	<h2>Add Manufacturer</h2>
+	<h2>Add Flow</h2>
     <form action="create_flow.php" method="post">
 
-        <label for="SOURCE_LOT_ID">Source Lot</label>
-        <label for="TARGET_LOT_ID">Target Lot</label>
+        <label for="SOURCE_LOT_ID">Source Lot ID</label>
+        <label for="TARGET_LOT_ID">Target Lot ID</label>
 
         <select name="SOURCE_LOT_ID" required="required">
-            <option disabled selected>Select a target lot </option>
+            <option disabled selected>Select a target lot</option>
             <?php foreach($source as $source): ?>
                 <option value="<?= $source['LOT_ID']; ?>"><?= $source['LOT_ID']; ?></option>
             <?php endforeach; ?>
         </select>
 
-        <select name="TARGET_LOT_ID" required="required">
-            <option disabled selected>Select a target lot </option>
+        <select name="TARGET_LOT_ID" required="required" style="margin-left: 25px;">
+            <option disabled selected>Select a target lot</option>
             <?php foreach($target as $target): ?>
                 <option value="<?= $target['LOT_ID']; ?>"><?= $target['LOT_ID']; ?></option>
             <?php endforeach; ?>
@@ -155,14 +155,14 @@ select {
         <label for="TARGET_ORG_ID">Target Organisation</label>
 
         <select name="SOURCE_ORG_ID" required="required">
-            <option disabled selected>Select a source org </option>
+            <option disabled selected>Select a source organisation</option>
             <?php foreach($source_org as $source_org): ?>
                 <option value="<?= $source_org['ORG_ID']; ?>"><?= $source_org['ORG_NAME']; ?></option>
             <?php endforeach; ?>
         </select>
 
-        <select name="TARGET_ORG_ID" required="required">
-            <option disabled selected>Select a target org </option>
+        <select name="TARGET_ORG_ID" required="required" style="margin-left: 25px;">
+            <option disabled selected>Select a target organisation</option>
             <?php foreach($target_org as $target_org): ?>
                 <option value="<?= $target_org['ORG_ID']; ?>"><?= $target_org['ORG_NAME']; ?></option>
             <?php endforeach; ?>
@@ -170,7 +170,7 @@ select {
 
         </select>
 
-        <label for="BRAND_BARCODE">Brand</label>
+        <label for="BRAND_BARCODE">Brand Name</label>
         <label for="QUANTITIY">Quantity</label>
 
 
@@ -181,10 +181,12 @@ select {
             <?php endforeach; ?>
         </select>
 
-        <input type="text" name="QUANTITIY" placeholder="example value" id="QUANTITIY">
+        <input type="text" name="QUANTITIY" placeholder="example value" style="margin-left: 25px;">
 
-        <label for="FLOWDATE">Flow date</label>
-        <input type="date" name="FLOWDATE" placeholder="example value" id="FLOWDATE">
+        <label for="FLOWDATE">Flow Date</label>
+        <label></label>
+        <input type="date" name="FLOWDATE" placeholder="example value">
+        <label></label>
 
 
         <input type="submit" value="Create">
@@ -195,5 +197,3 @@ select {
 </div>
 
 <?=template_footer()?>
-
-

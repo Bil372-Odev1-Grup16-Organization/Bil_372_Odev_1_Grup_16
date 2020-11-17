@@ -61,7 +61,7 @@ select {
 
 <div class="content update">
 	<h2>Add Manufacturer</h2>
-    <form action="create_flow.php" method="post">
+    <form action="org_create_flow.php" method="post">
 
         <label for="SOURCE_LOT_ID">Source Lot</label>
         <label for="TARGET_LOT_ID">Target Lot</label>

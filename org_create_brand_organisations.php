@@ -44,7 +44,7 @@ select {
 
 <div class="content update">
 	<h2>Link Brand & Organisation</h2>
-    <form action="create_brand_organisations.php" method="post">
+    <form action="org_create_brand_organisations.php" method="post">
 
       <label for="ORG_ID">Organisation ID</label>
       <label for="BRAND_BARCODE">Brand Barcode</label>

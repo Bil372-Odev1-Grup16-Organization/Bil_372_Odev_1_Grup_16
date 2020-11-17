@@ -1,10 +1,12 @@
 <?php
+session_start();
+if(!isset($_SESSION['NAME'])){ //session check
+   header("location: login.php");
+}
+
 include 'functions.php';
 
-session_start();
- if(!isset($_SESSION['NAME'])){
-	header("location: login.php");
- }
+
 ?>
 
 <?=template_header('Home page')?>

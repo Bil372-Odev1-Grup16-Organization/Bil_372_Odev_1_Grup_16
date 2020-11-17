@@ -132,7 +132,7 @@ select {
 
         <label for="ORG_ADDRESS">Address</label>
         <label for="ORG_TYPE">Organisation Type</label>
-        <input type="text" name="address" placeholder="Value" value="<?=$organisation['ORG_ADDRESS']?>" >
+        <input type="text" name="address" placeholder="Value" value="<?=$organisation['ORG_ADDRESS']?>" required="required">
         <select  name="type"  >
                 <option>Supplier</option>
                 <option>Consumer</option>

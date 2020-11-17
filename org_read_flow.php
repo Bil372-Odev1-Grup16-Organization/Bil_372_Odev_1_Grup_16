@@ -1,4 +1,8 @@
 <?php
+session_start();
+if(!isset($_SESSION['NAME'])){ //session check
+   header("location: login.php");
+}
 include 'functions.php';
 $pdo = pdo_connect_mysql();
 $msg = '';

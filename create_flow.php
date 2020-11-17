@@ -44,8 +44,6 @@ if (!empty($_POST)) {
           $msg = 'Buyer cannot transfer!';
         }else{
 
-              $result=$sth->fetchColumn();
-
               $sql3="UPDATE brand_orgs SET OUT_AMOUNT = OUT_AMOUNT+$quantitiy WHERE ORG_ID = \"$target_org\" AND BRAND_BARCODE = \"$barcode\"";
               $update = $pdo->prepare($sql3);
               $update->execute();

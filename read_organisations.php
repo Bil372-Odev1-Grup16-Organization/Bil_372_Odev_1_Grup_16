@@ -29,13 +29,13 @@ $organisations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <thead>
             <tr>
                 <td>#</td>
-                <td>ORG_NAME</td>
-                <td>PARENT_ORG</td>
-                <td>ORG_ABSTRACT</td>
-                <td>ORG_ADDRESS</td>
-                <td>ORG_CITY</td>
-                <td>ORG_DISTRICT</td>
-                <td>ORG_TYPE</td>
+                <td>Name</td>
+                <td>Parent Organisation</td>
+                <td>Abstractness Status</td>
+                <td>Address</td>
+                <td>City</td>
+                <td>District</td>
+                <td>Organisation Type</td>
                 <td></td>
             </tr>
         </thead>

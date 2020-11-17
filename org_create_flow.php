@@ -177,10 +177,10 @@ select {
             <?php endforeach; ?>
         </select>
 
-        <input type="text" name="QUANTITIY" placeholder="example value" id="QUANTITIY">
+        <input type="text" name="QUANTITIY" placeholder="example value" id="QUANTITIY" required="required">
 
         <label for="FLOWDATE">Flow date</label>
-        <input type="date" name="FLOWDATE" placeholder="example value" id="FLOWDATE">
+        <input type="date" name="FLOWDATE" placeholder="example value" id="FLOWDATE" required="required">
 
 
         <input type="submit" value="Create">

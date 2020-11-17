@@ -37,17 +37,17 @@ if (!empty($_POST)) {
     <form action="create_product.php" method="post">
         <label for="M_CODE">Product Code</label>
         <label for="M_NAME">Product Name</label>
-        <input type="text" name="M_CODE" placeholder="example value" id="M_CODE">
-        <input type="text" name="M_NAME" placeholder="example value" id="M_NAME">
+        <input type="text" name="M_CODE" placeholder="example value" required="required" id="M_CODE">
+        <input type="text" name="M_NAME" placeholder="example value" required="required" id="M_NAME">
 
         <label for="M_SHORTNAME">Product's Short Name</label>
         <label for="M_PARENTCODE">Parent Product</label>
-        <input type="text" name="M_SHORTNAME" placeholder="evample value" id="M_SHORTNAME">
-        <input type="text" name="M_PARENTCODE" placeholder="example value" id="M_PARENTCODE">
+        <input type="text" name="M_SHORTNAME" placeholder="example value" required="required" id="M_SHORTNAME">
+        <input type="text" name="M_PARENTCODE" placeholder="example value" required="required" id="M_PARENTCODE">
 
         <label for="M_CATEGORY">Category</label>
         <label></label>
-        <input type="text" name="M_CATEGORY" placeholder="example value" id="M_CATEGORY">
+        <input type="text" name="M_CATEGORY" placeholder="example value" required="required" id="M_CATEGORY">
         <label></label>
 
         <label for="M_ABSTRACT">Abstractness Status</label>
